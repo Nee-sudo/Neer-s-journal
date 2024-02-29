@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neer's Friend Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-color:blue;">
+    <form id="neers-friend-form" action="/neers-friends" method="POST">
+        <center>
+            <h2>Neer's Friend Form</h2>
+        </center>
+        <div>
+            <label for="jobCategory">Job Category:</label>
+            <select id="jobCategory" name="jobCategory">
+                <option value="">Select Job Category</option>
+                <option value="Student">Student</option>
+                <option value="Employed">Employed</option>
+            </select>
+        </div>
+        <div>
+            <label for="country">Country:</label>
+            <select id="country" name="country">
+                <option value="">Select Country</option>
+                <option value="USA">Bharat</option>
+                <option value="Canada">Russia</option>
+                <option value="Mexico">Mexico</option>
+                <!-- Add more countries here -->
+            </select>
+        </div>
+        <div>
+            <label for="profile-picture">Profile Picture:</label>
+            <input type="file" id="profilePicture" name="profilePicture">
+        </div>
+        <div>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div>
+            <label for="personality">Personality:</label>
+            <select id="personality" name="personality">
+                <option value="">Select Personality</option>
+                <option value="extrovert">Extrovert</option>
+                <option value="introvert">Introvert</option>
+                <option value="ambivert">Ambivert</option>
+            </select>
+        </div>
+        <div>
+            <label for="joinDate">Date Joined:</label>
+            <input type="date" id="joinDate" name="joinDate">
+        </div>
+        <div>
+            <label for="thoughts">What do you think about Neeraj?</label>
+            <textarea id="thoughts" name="thoughts" rows="4"></textarea>
+        </div>
+        <div>
+            <center>
+                <button type="submit">Submit</button>
+            </center>
+        </div>
+    </form>
+</body>
+</html>

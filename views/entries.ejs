@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Journal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My Diary</h1>
+        <p>Here you can read my diary entries and share your own experiences.</p>
+
+        <div class="diary-post">
+            <div class="post-header">
+                <h2 class="post-title">My Diary Entry Title</h2>
+                <p class="post-date">February 21, 2024</p>
+            </div>
+            <div class="post-content">
+                <p>Today, I had a great day! I woke up early, went for a run, and had a productive work day.</p>
+                <p>I'm feeling really positive and motivated.</p>
+                <div class="buttons-container">
+                    <button class="like-btn">Like</button>
+                    <span class="like-count">0</span>
+                    <button class="comment-btn">Comment</button>
+                </div>
+                <div class="comment-section"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.diary-post').forEach(post => {
+            const likeBtn = post.querySelector('.like-btn');
+            const likeCount = post.querySelector('.like-count');
+            const commentBtn = post.querySelector('.comment-btn');
+            const commentSection = post.querySelector('.comment-section');
+
+            likeBtn.addEventListener('click', () => {
+                likeBtn.classList.toggle('liked');
+                likeCount.innerText = likeBtn.classList.contains('liked') ? parseInt(likeCount.innerText) + 1 : parseInt(likeCount.innerText) - 1;
+            });
+
+            commentBtn.addEventListener('click', () => {
+                if (!commentSection.querySelector('.comment-input')) {
+                    const commentInput = document.createElement('input');
+                    const postBtn = document.createElement('button');
+
+                    postBtn.innerText = 'Post';
+                    postBtn.classList.add('post-btn');
+
+                    commentInput.type = 'text';
+                    commentInput.placeholder = 'Enter your comment';
+                    commentInput.classList.add('comment-input');
+
+                    postBtn.addEventListener('click', () => {
+                        const commentText = commentInput.value;
+
+                        if (commentText) {
+                            const commentTextElement = document.createElement('p');
+                            commentTextElement.innerText = commentText;
+                            commentSection.appendChild(commentTextElement);
+
+                            commentInput.value = '';
+                            commentInput.remove();
+                            postBtn.remove();
+                        }
+                    });
+
+                    commentSection.appendChild(commentInput);
+                    commentSection.appendChild(postBtn);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

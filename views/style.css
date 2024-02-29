@@ -1,0 +1,389 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+h1, p {
+    margin-bottom: 20px;
+}
+.cta-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.cta-btn:hover {
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: #0056b3;
+}
+
+.d-block  {
+    height: 100%;
+}
+.about-me-box {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 1%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.box-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: wrap;
+    justify-content: space-around;
+   
+}
+
+.boxes{
+    justify-content: center;
+    align-items: center;
+    display: -webkit-inline-flex;
+    flex-wrap: nowrap;
+}
+@media (max-width: 768px) {
+  .boxes {
+    flex-wrap: wrap;
+  }
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+.change-color{
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Neer's friend form */
+#neers-friend-form {
+    font-family: s;
+    font-weight: bolder;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#neers-friend-form h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#neers-friend-form div {
+    margin-bottom: 15px;
+}
+
+#neers-friend-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+#neers-friend-form select {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#neers-friend-form option {
+    height: 100px;
+    font-weight: bold;
+    font-weight: small;
+}
+
+#neers-friend-form input[type="file"],
+#neers-friend-form select,
+#neers-friend-form textarea {
+    font-weight: bold;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#neers-friend-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#neers-friend-form button:hover {
+    background-color: #0056b3;
+}
+
+/* code for overlay */
+#overlay {
+    display: block;
+    position: static;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#overlay .content {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+#overlay .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#overlay .close:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* friends-details-overlay */
+.friend-details {
+    margin: 1%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+}
+
+.details p {
+    margin: 10px 0;
+}
+
+.friend-container{
+    justify-content: center;
+    align-items: center;
+    display: -webkit-inline-flex;
+    flex-wrap: nowrap;
+}
+@media (max-width: 768px) {
+    .friend-container {
+      flex-wrap: wrap;
+    }
+  }
+
+  /* Diary post css  */
+
+.diary-post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.post-date {
+    font-size: 14px;
+    color: #666;
+}
+
+.post-content {
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+h1, p {
+    margin-bottom: 20px;
+}
+.cta-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.cta-btn:hover {
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: #0056b3;
+}
+.diary-post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.post-title {
+    margin: 0;
+    font-size: 24px;
+}
+.post-date {
+    margin: 0;
+    color: #999;
+    font-size: 14px;
+}
+.post-content {
+    font-size: 16px;
+}
+.like-btn, .comment-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.like-btn:hover, .comment-btn:hover {
+    background-color: #0056b3;
+}
+.comment-section {
+    margin-top: 20px;
+}
+.comment-input {
+    width: calc(100% - 80px);
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px 0 0 5px;
+}
+.post-btn {
+    width: 80px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.post-btn:hover {
+    background-color: #0056b3;
+}
+.comment-text {
+    margin-bottom: 10px;
+}
+
+#projects{
+    background-color: darksalmon;
+}
+#projects:hover{
+    background-color: rgb(233, 122, 191);
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+#diary{
+    color: black;
+    background-color: aqua;
+    display: block;
+    position: static;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#diary:hover{
+    background-color: rgb(233, 122, 191);
+    cursor: pointer;
+    padding-right: 10px;
+}
+#aboutfriends{
+    color: white;
+    background-color: black;
+    display: block;
+    position: static;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#aboutfriends:hover{
+    background-color: rgb(233, 122, 191);
+    cursor: pointer;
+    padding-right: 10px;
+}
+#inspiration{
+    background-color: #007bff;
+}
+img{
+    width: 100%;
+    border-radius: 5px;
+}
+  /* Style for the quote text */
+  .quotes {
+    font-weight: bold;
+    font-size: 16px;
+    font-style: italic;
+    color:black;
+  }
+  
+  

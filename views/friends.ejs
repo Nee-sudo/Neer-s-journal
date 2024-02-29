@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Journal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Your CSS code for overlay container */
+  </style>
+</head>
+<body>
+  <button onclick="loadTexts()" >Load</button>
+  <div id="overlays" class="overlays">
+    <div class="overlay-content">
+      <div class="friend-details">
+        <center><h2>Friends list</h2></center>
+        <div id="friends" class="friend-container">
+          <!-- friend-details -->
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <script>
+    // Your JavaScript code
+     //fetching from database 
+  async function fetchFriends() {
+    const response = await fetch('http://localhost:3000/friends');
+    const friends = await response.json();
+
+    const friendsElement = document.getElementById('friends');
+    friends.forEach((friend) => {
+      console.log(friend);
+        const friendDiv = document.createElement('div');
+        friendDiv.classList="about-me-box";
+        friendDiv.innerHTML = `
+        <center>
+        <div class="profile-picture">
+        <img src="user.png" alt="Profile Picture">
+        <img src="${friend.profilePicture}" alt="Profile Picture">
+    </div>
+        </center>
+            <div class="details">
+                <p><strong>Name:</strong> ${friend.name}</p>
+                <p><strong>Country:</strong> ${friend.country}</p>
+                <p><strong>Gender:</strong> ${friend.gender}</p>
+                <p><strong>Personality:</strong> ${friend.personality}</p>
+                <p><strong>Join Date:</strong> ${friend.joinDate}</p>
+                <p><strong>Thoughts:</strong> ${friend.thoughts}</p>
+            </div>
+        `;
+        friendsElement.appendChild(friendDiv);
+    });
+}
+fetchFriends();
+
+
+
+async function loadTexts() {
+      const response = await fetch('/api/getAllTexts');
+      const texts = await response.json();
+  
+      const textList = document.getElementById('formattedContent');
+      textList.innerHTML = '';
+  
+      texts.forEach((text) => {
+        const listItem = document.createElement('div');
+        // listItem.innerHTML = text.content;
+        listItem.innerHTML = `
+        <div>${text.content}</div>
+        <button class="delete" onclick="deleteText('${text._id}')">Delete</button>
+      `;
+        textList.appendChild(listItem);
+      });
+    }
+  
+    loadTexts();
+  </script>
+</body>
+</html>
