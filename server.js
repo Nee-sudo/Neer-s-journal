@@ -8,6 +8,7 @@ const User = require('./models/user.js');
 const NeersFriend = require('./models/neers-friend');
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // mongoose.connect('mongodb://localhost/my-journal-app');
 mongoose.connect('mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority');
@@ -21,6 +22,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -216,6 +218,6 @@ const textSchema = new mongoose.Schema({
   });
 
 
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
+app.listen(4000, () => {
+    console.log('Server started on port 4000');
 });

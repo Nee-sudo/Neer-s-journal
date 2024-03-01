@@ -24,7 +24,7 @@
     // Your JavaScript code
      //fetching from database 
   async function fetchFriends() {
-    const response = await fetch('http://localhost:3000/friends');
+    const response = await fetch('/friends');
     const friends = await response.json();
 
     const friendsElement = document.getElementById('friends');
