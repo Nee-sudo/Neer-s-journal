@@ -124,7 +124,7 @@ app.get('/friendslist',(req,res)=>{
     res.render('friends');
 })
 
-app.get('/inspirations',(req,res)=>{
+app.get('/idols',(req,res)=>{
     res.render('inspirations');
 })
 

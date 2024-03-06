@@ -102,6 +102,6 @@ function aboutfriends(){
 }
 
 function open_inspiration(){
-  window.location.href="inspirations";
+  window.location.href="idols";
 }
 
