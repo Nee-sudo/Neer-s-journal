@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const neersFriendSchema = new mongoose.Schema({
+    name:String,
     jobCategory: String,
     country: String,
     profilePicture: String,

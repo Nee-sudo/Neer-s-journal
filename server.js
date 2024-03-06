@@ -34,11 +34,12 @@ app.use(express.static('views'));
 // data from neer friends form
 app.post('/neers-friends', async (req, res) => {
     try {
-        const { jobCategory, country, profilePicture, gender, personality, joinDate, thoughts } = req.body;
+        const { name, jobCategory, country, profilePicture, gender, personality, joinDate, thoughts } = req.body;
 
         // Validate form data here if needed
 
         const newNeersFriend = new NeersFriend({
+            name,
             jobCategory,
             country,
             profilePicture,
