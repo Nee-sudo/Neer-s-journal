@@ -5,9 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neer's Friend Form</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body style="background-color:blue;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">BHARAT</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+          <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+     <!-- banner of the site  -->
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="display: block;">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="banner.jpeg" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, quaerat. Nihil consequuntur sunt repellat, eligendi earum dolores eos deserunt perferendis aliquam fugit neque repudiandae modi ipsam, explicabo unde optio tenetur.</h5>
+          <p>kooo</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="banner.jpeg" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="banner.jpeg" alt="Third slide">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
     
     <form id="neers-friend-form" action="/neers-friends" method="POST">
         <center>
@@ -71,5 +130,9 @@
             </center>
         </div>
     </form>
+    <script src="index.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
