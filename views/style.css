@@ -82,7 +82,7 @@ textarea {
 #neers-friend-form {
     font-family: s;
     font-weight: bolder;
-    max-width: 500px;
+    max-width: 650px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -394,4 +394,20 @@ img{
     color:black;
   }
   
-  
+  .neers-friend-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  /* banner-style */
+  .carousel{
+    margin-bottom: 10px;
+  }

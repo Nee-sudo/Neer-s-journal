@@ -128,6 +128,9 @@ app.get('/friendslist',(req,res)=>{
 app.get('/idols',(req,res)=>{
     res.render('inspirations');
 })
+app.get('/friends-form',(req,res)=>{
+    res.render('friends-form');
+})
 
 app.post('/signup', (req, res) => {
     const username = req.body.username;
