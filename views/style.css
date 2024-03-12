@@ -396,6 +396,7 @@ img{
   
   .neers-friend-button {
     background-color: #4CAF50;
+    border-style: none;
     border: none;
     color: white;
     padding: 15px 32px;
