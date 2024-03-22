@@ -29,6 +29,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'views')));
+
 // Set the views directory
 app.set('views', __dirname + '/views');
 
