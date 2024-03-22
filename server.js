@@ -28,13 +28,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Set EJS as the view engine
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, 'views')));
 
 // Set the views directory
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, 'views'));
 
-// app.set("views", path.join(__dirname, "views"));
+// Serve static files from the 'views' directory
+app.use(express.static(path.join(__dirname, 'views')));
 
 // data from neer friends form
 app.post('/neers-friends', async (req, res) => {
