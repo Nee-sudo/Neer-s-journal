@@ -29,8 +29,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.set('view engine', 'ejs');
-// app.use(express.static('views'));
-app.set("views", path.join(__dirname, "views"));
+app.use(express.static('views'));
+// app.set("views", path.join(__dirname, "views"));
 
 // data from neer friends form
 app.post('/neers-friends', async (req, res) => {
