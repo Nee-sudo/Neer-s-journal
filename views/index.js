@@ -105,3 +105,20 @@ function open_inspiration(){
   window.location.href="idols";
 }
 
+
+
+function searchEntries() {
+  const searchTerm = document.getElementById('search-input').value.toLowerCase();
+  const boxes = document.querySelectorAll('.about-me-box');
+  
+  boxes.forEach(box => {
+      const title = box.querySelector('h2').innerText.toLowerCase();
+      const content = box.querySelectorAll('p')[1].innerText.toLowerCase();
+      
+      if (title.includes(searchTerm) || content.includes(searchTerm)) {
+          box.style.display = 'block';
+      } else {
+          box.style.display = 'none';
+      }
+  });
+}
