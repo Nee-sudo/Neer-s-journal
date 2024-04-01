@@ -3,12 +3,43 @@
 <head>
     <title>My Journal</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="https://icons8.com/icon/JWg8Hp9Qoytd/wolf">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active" id="homeNavItem">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active" id="contactNavItem">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item active" id="bharatNavItem">
+                    <a class="nav-link" href="#">BHARAT</a>
+                </li>
+                <li class="nav-item active" id="aboutNavItem">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+            <form class="form-inline" id="search-form">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="button" onclick="searchEntries()">Search</button>
+            </form>        
+        </div>
+    </nav>
     <div class="container">
         <h1>Welcome to My Diary</h1>
         <p>Here you can read my diary entries and share your own experiences.</p>
-
         <div class="diary-post">
             <div class="post-header">
                 <h2 class="post-title">My Diary Entry Title</h2>
@@ -26,25 +57,23 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
-                </div>
-                <div class="col-md-6">
-                    <ul class="footer-links">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-
+        </footer>
     <script>
         document.querySelectorAll('.diary-post').forEach(post => {
             const likeBtn = post.querySelector('.like-btn');
@@ -56,7 +85,6 @@
                 likeBtn.classList.toggle('liked');
                 likeCount.innerText = likeBtn.classList.contains('liked') ? parseInt(likeCount.innerText) + 1 : parseInt(likeCount.innerText) - 1;
             });
-
             commentBtn.addEventListener('click', () => {
                 if (!commentSection.querySelector('.comment-input')) {
                     const commentInput = document.createElement('input');
@@ -68,10 +96,8 @@
                     commentInput.type = 'text';
                     commentInput.placeholder = 'Enter your comment';
                     commentInput.classList.add('comment-input');
-
                     postBtn.addEventListener('click', () => {
                         const commentText = commentInput.value;
-
                         if (commentText) {
                             const commentTextElement = document.createElement('p');
                             commentTextElement.innerText = commentText;
@@ -82,12 +108,15 @@
                             postBtn.remove();
                         }
                     });
-
                     commentSection.appendChild(commentInput);
                     commentSection.appendChild(postBtn);
                 }
             });
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </body>
 </html>
