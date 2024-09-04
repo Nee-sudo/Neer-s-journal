@@ -93,3 +93,29 @@ function searchEntries() {
         }
     });
 }
+
+   // Get the modal
+   var modal = document.getElementById("loginModal");
+
+   // Get the div that opens the modal
+   var restrictedDiv = document.getElementById("restricted-info");
+
+   // Get the <span> element that closes the modal
+   var closeModal = document.getElementById("closeModal");
+
+   // When the user clicks on the div, open the modal
+   restrictedDiv.onclick = function() {
+       modal.style.display = "block";
+   }
+
+   // When the user clicks on <span> (x), close the modal
+   closeModal.onclick = function() {
+       modal.style.display = "none";
+   }
+
+   // When the user clicks anywhere outside of the modal, close it
+   window.onclick = function(event) {
+       if (event.target == modal) {
+           modal.style.display = "none";
+       }
+   }
