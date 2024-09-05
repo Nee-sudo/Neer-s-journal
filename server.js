@@ -6,7 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('./models/user.js');
-const NeersFriend = require('./models/neers-friend');
+const NeersFriend = require('./models/neers-friend'); // Already defined
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -112,6 +112,19 @@ app.get('/friends-form', isAuthenticated, (req, res) => {
     res.render('friends-form');
 });
 
+// Define the Friend model
+const friendSchema = new mongoose.Schema({
+    name: String,
+    jobCategory: String,
+    country: String,
+    profilePicture: String,
+    gender: String,
+    personality: String,
+    joinDate: Date,
+    thoughts: String
+});
+const Friend = mongoose.model('Friend', friendSchema);
+
 // Form submission route
 app.post('/neers-friends', async (req, res) => {
     try {
@@ -139,7 +152,7 @@ app.post('/neers-friends', async (req, res) => {
 // Fetch all friend details
 app.get('/friends', async (req, res) => {
     try {
-        const friends = await Friend.find();
+        const friends = await NeersFriend.find();  // Change 'Friend' to 'NeersFriend'
         console.log(friends);
         res.json(friends);
     } catch (err) {
@@ -147,6 +160,13 @@ app.get('/friends', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+
+// Define the Text model
+const textSchema = new mongoose.Schema({
+    content: String
+});
+const Text = mongoose.model('Text', textSchema);
 
 // Save text route
 app.post('/api/saveText', async (req, res) => {

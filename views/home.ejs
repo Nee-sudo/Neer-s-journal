@@ -1,45 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Neeraj's Journal</title>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://icons8.com/icon/JWg8Hp9Qoytd/wolf">
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Neeraj's Journal</title>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="https://icons8.com/icon/JWg8Hp9Qoytd/wolf">
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+      aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarColor02">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active" id="homeNavItem">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active" id="contactNavItem">
-                <a class="nav-link" href="#">Contact</a>
-            </li>
-            <li class="nav-item active" id="bharatNavItem">
-                <a class="nav-link" href="#">BHARAT</a>
-            </li>
-            <li class="nav-item active" id="aboutNavItem">
-                <a class="nav-link" href="#">About</a>
-            </li>
-        </ul>
-        <form class="form-inline" id="search-form">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="button" onclick="searchEntries()">Search</button>
-        </form>        
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active" id="homeNavItem">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active" id="contactNavItem">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item active" id="bharatNavItem">
+          <a class="nav-link" href="#">BHARAT</a>
+        </li>
+        <li class="nav-item active" id="aboutNavItem">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul>
+      <form class="form-inline" id="search-form">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="button" onclick="searchEntries()">Search</button>
+      </form>
     </div>
-</nav>
+  </nav>
 
- <!-- banner of the site  -->
+  <!-- banner of the site  -->
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="display: block;">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -50,7 +53,9 @@
       <div class="carousel-item active">
         <img class="d-block w-100" src="banner.jpeg" alt="First slide">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, quaerat. Nihil consequuntur sunt repellat, eligendi earum dolores eos deserunt perferendis aliquam fugit neque repudiandae modi ipsam, explicabo unde optio tenetur.</h5>
+          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, quaerat. Nihil consequuntur sunt
+            repellat, eligendi earum dolores eos deserunt perferendis aliquam fugit neque repudiandae modi ipsam,
+            explicabo unde optio tenetur.</h5>
           <p>kooo</p>
         </div>
       </div>
@@ -70,173 +75,219 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-<div class="container">
+  <div class="container">
     <h1>Welcome to Neeraj's Journal</h1>
     <p>Here you can read Neeraj's entries and share your own experiences.</p>
     <button class="cta-btn" id="cta-btn">Start Journaling</button>
-</div>
+  </div>
 
-<div class="editor-container" id="editor-container" style="display: none;">
+  <div class="editor-container" id="editor-container" style="display: none;">
     <div id="editor" style="height: 300px;"></div>
-    <center> 
-        <button class="cta-btn" onclick="saveText()">Save Text</button>
-        <button class="cta-btn" onclick="loadTexts()">Load Texts</button>
+    <center>
+      <button class="cta-btn" onclick="saveText()">Save Text</button>
+      <button class="cta-btn" onclick="loadTexts()">Load Texts</button>
     </center>
-</div>
+  </div>
 
-<div class="box-container">
-  <div class="boxes">
-    <!-- about me box -->
-<div class="about-me-box" onclick="openOverlay()" id="aboutme">
-  <center> <h2>About Me</h2></center>
- 
-  <p>I’m passionate about exploring new challenges and fostering positive change. My curiosity drives me to constantly seek growth and self-improvement. Whether it's tackling a new habit, learning something new, or engaging in fun and beneficial challenges, I believe in the power of perseverance and resilience.  <!-- Other content goes here -->
-</div>
-<!-- About my Friends -->
-<div class="about-me-box" onclick="aboutfriends()" id="aboutfriends">
-  <center> <h2>Friends</h2></center>
- 
-  <p>I’m incredibly fortunate to have a group of supportive and inspiring friends who bring joy and encouragement into my life. They are my biggest cheerleaders and play a significant role in my journey. Each friend adds a unique perspective and energy, making every moment memorable and enriching. I have less friend to share my feelings and they are females . <!-- Other content goes here -->
-</div>
-<!-- Check my diary -->
-<div class="about-me-box" onclick="open_diary()" id="diary" >
-  <center> <h2>Diary</h2></center>
-  
-  <p>Writing a diary helps me reflect on my experiences, stay mindful, and capture the essence of my daily life. It’s a space for self-expression, personal growth, and preserving memories. My diary is where I document my challenges, successes, and the little moments that make life special.l like to write my feelings in words coz it si btter way to be control thoughts.  <!-- Other content goes here -->
-</div>
-<!-- check my current project -->
-<div class="about-me-box" onclick="open_projects()" id="projects" >
-  <center> <h2>My Projects</h2></center>
- 
-  <p>I love diving into various projects that push my limits and encourage continuous learning. From documenting my journey on YouTube to taking on 21-day challenges, my projects are a testament to my dedication to self-improvement and creativity. Each project is an opportunity to explore new ideas and share my experiences with others</p>
-  <!-- Other content goes here -->
-</div>
+  <div class="box-container">
+    <div class="boxes">
+      <!-- about me box -->
+      <div class="about-me-box" onclick="openOverlay()" id="aboutme">
+        <center>
+          <h2>About Me</h2>
+        </center>
 
-<div class="about-me-box" onclick="open_inspiration()" id="inspiration" >
-  <center> <h2>My idols</h2></center>
-  <p>I draw inspiration from individuals who embody resilience, creativity, and a passion for growth. My idols are those who have made significant impacts in their fields and continue to inspire others with their dedication and achievements. They serve as a reminder of what’s possible when you pursue your dreams with determination and an open heart.</p>
-  <!-- Other content goes here -->
-</div>
+        <p>I’m passionate about exploring new challenges and fostering positive change. My curiosity drives me to
+          constantly seek growth and self-improvement. Whether it's tackling a new habit, learning something new, or
+          engaging in fun and beneficial challenges, I believe in the power of perseverance and resilience.
+          <!-- Other content goes here -->
+      </div>
+      <!-- About my Friends -->
+      <div class="about-me-box" onclick="aboutfriends()" id="aboutfriends">
+        <center>
+          <h2>Friends</h2>
+        </center>
 
+        <p>I’m incredibly fortunate to have a group of supportive and inspiring friends who bring joy and encouragement
+          into my life. They are my biggest cheerleaders and play a significant role in my journey. Each friend adds a
+          unique perspective and energy, making every moment memorable and enriching. I have less friend to share my
+          feelings and they are females . <!-- Other content goes here -->
+      </div>
+      <!-- Check my diary -->
+      <div class="about-me-box" onclick="open_diary()" id="diary">
+        <center>
+          <h2>Diary</h2>
+        </center>
 
-  <!-- The Modal -->
-  <div id="loginModal" class="modal">
+        <p>Writing a diary helps me reflect on my experiences, stay mindful, and capture the essence of my daily life.
+          It’s a space for self-expression, personal growth, and preserving memories. My diary is where I document my
+          challenges, successes, and the little moments that make life special.l like to write my feelings in words coz
+          it is better way to be control thoughts. <!-- Other content goes here -->
+      </div>
+      <!-- check my current project -->
+      <div class="about-me-box" onclick="open_projects()" id="projects">
+        <center>
+          <h2>My Projects</h2>
+        </center>
+
+        <p>I love diving into various projects that push my limits and encourage continuous learning. From documenting
+          my journey on YouTube to taking on 21-day challenges, my projects are a testament to my dedication to
+          self-improvement and creativity. Each project is an opportunity to explore new ideas and share my experiences
+          with others</p>
+        <!-- Other content goes here -->
+      </div>
+
+      <div class="about-me-box" onclick="open_inspiration()" id="inspiration">
+        <center>
+          <h2>My idols</h2>
+        </center>
+        <p>I draw inspiration from individuals who embody resilience, creativity, and a passion for growth. My idols are
+          those who have made significant impacts in their fields and continue to inspire others with their dedication
+          and achievements. They serve as a reminder of what’s possible when you pursue your dreams with determination
+          and an open heart.</p>
+        <!-- Other content goes here -->
+      </div>
+    </div>
+  </div>
+  <div class="premium_user">
+    <!-- premium_user box div -->
+    <div class="premium_user" id="restricted-info">
+      <center>
+        <h2>Authorized Place</h2>
+      </center>
+      <p>Not all people are allowed to open it.</p>
+    </div>
+
+    <!-- The Modal -->
+    <div id="loginModal" class="modal">
       <div class="modal-content">
-          <span class="close" id="closeModal">&times;</span>
-          <h2>Login</h2>
-          <form class="login-form">
-              <input type="text" id="username" name="username" placeholder="Username" required>
-              <input type="password" id="password" name="password" placeholder="Password" required>
-              <button type="submit">Login</button>
-          </form>
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Login</h2>
+        <form class="login-form">
+          <input type="text" id="username" name="username" placeholder="Username" required>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+          <button type="submit">Login</button>
+        </form>
       </div>
+    </div>
   </div>
-  </div>
-</div>
-<div class="neerimage">
-  <div class="content">
-      <div class="text">
-         "I navigate life with an open heart and a curious mind, <br> growth and embracing challenges with enthusiasm. "
-      </div>
-      <div class="image">
-          <img src="neer1.jpg" alt="Your Image">
-      </div>
-  </div>
+
   <div class="neerimage">
     <div class="content">
+      <div class="text">
+        "I navigate life with an open heart and a curious mind, <br> growth and embracing challenges with enthusiasm. "
+      </div>
+      <div class="image">
+        <img src="neer1.jpg" alt="Your Image">
+      </div>
+    </div>
+    <div class="neerimage">
+      <div class="content">
         <div class="image2">
-            <img src="neer2.jpg" alt="Your Image">
+          <img src="neer2.jpg" alt="Your Image">
         </div>
         <div class="text">
           "I approach challenges with curiosity and perseverance, <br>always striving to learn and grow."
         </div>
-    </div>
-  <!-- Other sections of your page -->
-</div>
-</div>
-<div class="lower-text">
-  <p>
-    I am passionate about learning and self-improvement. <br>
-  </p>
-  <p>
-    My projects, such as the Badak Library, Prayas Sankalp, and Throw Your Text, reflect my dedication to solving problems and helping others. <br> 
-  </p>
-  <p>Whether it's making it easier to share documents, fighting poverty, or simplifying text file transfers, my goal is always to make a positive impact.</p>
-  <p>In my spare time, I love diving into new challenges and documenting my journey on YouTube.</p>
-  <p>From 21-day challenges to learning new skills, I enjoy pushing my limits and sharing my experiences with others. </p>
-  <p> I believe that every day is an opportunity for growth and discovery.</p>
-</div>
-<div class="image-container">
-  <img src="70 days.jpg" alt="Image" class="image3">
-</div>
-<div class="lower-text">
-  <p class="titles">Day 7 - Embracing New Challenges</p>
-  <p>
-    Dive into Day 7 of my 21-day habit-changing journey, <br> where I embrace new and exciting challenges that push my boundaries and foster growth. <br> Join me and get inspired to step out of your comfort zone and achieve greatness!
-  </p>
-</div>
-
-<div class="image-container">
-  <img src="80 days.jpg" alt="Image" class="image3">
-</div>
-<div class="lower-text">
-  <p class="titles">Day 8 - Learning Spanish Continues</p>
-  <p>
-    On Day 8, I dive deeper into the beautiful Spanish language, <br> expanding my vocabulary and cultural understanding. <br>Come along on this adventure and discover the joy of learning something new every day. Let’s grow together!
-  </p>
-</div>
-
-<div class="image-container">
-  <img src="90 days.jpg" alt="Image" class="image3">
-</div>
-<div class="lower-text">
-  <p class="titles">Day 9 - 100 Spanish Words Challenge</p>
-  <p>
-    Witness the power of determination on Day 9 as I take on the challenge of learning 100 new Spanish words. <br> This journey proves that with dedication and passion, <br>no goal is too big. Let’s conquer new horizons together!
-  </p>
-</div>
-
-<div class="image-container">
-  <img src="100.jpg" alt="Image" class="image3">
-</div>
-<div class="lower-text">
-  <p class="titles">Day 10 - Midway Milestone</p>
-  <p>
-    Celebrate with me as we reach the halfway mark of this transformative 21-day challenge! <br> Day 10 is about reflecting on our achievements, fueling our motivation, <br>
-    and gearing up for the exciting journey ahead. Together, we can accomplish anything!
-  </p>
-</div>
-
-<div class="image-container">
-  <img src="110 days.jpg" alt="Image" class="image3">
-</div>
-<div class="lower-text">
-  <p class="titles">Day 11 - Expanding My Vocabulary</p>
-  <p>
-    Join me on Day 11 as I expand my Spanish vocabulary with 110 new words. <br> This journey is about more than just learning a language; <br>it’s about showing that perseverance and hard work can lead to incredible accomplishments. <br>Let’s continue to inspire each other!
-  </p>
-</div>
-
-<footer class="footer">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-6">
-              <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
-          </div>
-          <div class="col-md-6">
-              <ul class="footer-links">
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Terms of Service</a></li>
-                  <li><a href="#">Contact</a></li>
-              </ul>
-          </div>
       </div>
+      <!-- Other sections of your page -->
+    </div>
   </div>
-</footer>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="index.js"></script>
+  <div class="lower-text">
+    <p>
+      I am passionate about learning and self-improvement. <br>
+    </p>
+    <p>
+      My projects, such as the Badak Library, Prayas Sankalp, and Throw Your Text, reflect my dedication to solving
+      problems and helping others. <br>
+    </p>
+    <p>Whether it's making it easier to share documents, fighting poverty, or simplifying text file transfers, my goal
+      is always to make a positive impact.</p>
+    <p>In my spare time, I love diving into new challenges and documenting my journey on YouTube.</p>
+    <p>From 21-day challenges to learning new skills, I enjoy pushing my limits and sharing my experiences with others.
+    </p>
+    <p> I believe that every day is an opportunity for growth and discovery.</p>
+  </div>
+  <div class="image-container">
+    <img src="70 days.jpg" alt="Image" class="image3">
+  </div>
+  <div class="lower-text">
+    <p class="titles">Day 7 - Embracing New Challenges</p>
+    <p>
+      Dive into Day 7 of my 21-day habit-changing journey, <br> where I embrace new and exciting challenges that push my
+      boundaries and foster growth. <br> Join me and get inspired to step out of your comfort zone and achieve
+      greatness!
+    </p>
+  </div>
+
+  <div class="image-container">
+    <img src="80 days.jpg" alt="Image" class="image3">
+  </div>
+  <div class="lower-text">
+    <p class="titles">Day 8 - Learning Spanish Continues</p>
+    <p>
+      On Day 8, I dive deeper into the beautiful Spanish language, <br> expanding my vocabulary and cultural
+      understanding. <br>Come along on this adventure and discover the joy of learning something new every day. Let’s
+      grow together!
+    </p>
+  </div>
+
+  <div class="image-container">
+    <img src="90 days.jpg" alt="Image" class="image3">
+  </div>
+  <div class="lower-text">
+    <p class="titles">Day 9 - 100 Spanish Words Challenge</p>
+    <p>
+      Witness the power of determination on Day 9 as I take on the challenge of learning 100 new Spanish words. <br>
+      This journey proves that with dedication and passion, <br>no goal is too big. Let’s conquer new horizons together!
+    </p>
+  </div>
+
+  <div class="image-container">
+    <img src="100.jpg" alt="Image" class="image3">
+  </div>
+  <div class="lower-text">
+    <p class="titles">Day 10 - Midway Milestone</p>
+    <p>
+      Celebrate with me as we reach the halfway mark of this transformative 21-day challenge! <br> Day 10 is about
+      reflecting on our achievements, fueling our motivation, <br>
+      and gearing up for the exciting journey ahead. Together, we can accomplish anything!
+    </p>
+  </div>
+
+  <div class="image-container">
+    <img src="110 days.jpg" alt="Image" class="image3">
+  </div>
+  <div class="lower-text">
+    <p class="titles">Day 11 - Expanding My Vocabulary</p>
+    <p>
+      Join me on Day 11 as I expand my Spanish vocabulary with 110 new words. <br> This journey is about more than just
+      learning a language; <br>it’s about showing that perseverance and hard work can lead to incredible
+      accomplishments. <br>Let’s continue to inspire each other!
+    </p>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="index.js"></script>
 </body>
+
 </html>
