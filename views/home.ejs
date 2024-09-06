@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">zz
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -75,14 +75,41 @@
     <p>Here you can read Neeraj's entries and share your own experiences.</p>
     <button class="cta-btn" id="cta-btn">Start Journaling</button>
 </div>
+<!-- Add this to your HTML file -->
+<div id="write-pad" style="display: none;">
+    <h2>Write Your Journal</h2>
+    <form id="journal-form">
+        <label for="heading">Heading:</label>
+        <input type="text" id="heading" required><br><br>
 
-<div class="editor-container" id="editor-container" style="display: none;">
+        <label for="heading-color">Heading Color:</label>
+        <input type="color" id="heading-color" value="#000000"><br><br>
+
+        <label for="content">Content:</label>
+        <textarea id="content" required></textarea><br><br>
+
+        <label for="content-color">Content Color:</label>
+        <input type="color" id="content-color" value="#000000"><br><br>
+
+        <label for="box-color">Box Color:</label>
+        <input type="color" id="box-color" value="#ffffff"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="box-container">
+    <!-- New cards will be added here -->
+</div>
+
+
+<!-- <div class="editor-container" id="editor-container" style="display: none;">
     <div id="editor" style="height: 300px;"></div>
     <center> 
         <button class="cta-btn" onclick="saveText()">Save Text</button>
         <button class="cta-btn" onclick="loadTexts()">Load Texts</button>
     </center>
-</div>
+</div> -->
 
 <div class="box-container">
   <div class="boxes">
@@ -118,6 +145,11 @@
   <!-- Other content goes here -->
 </div>
 
+    <!-- Restricted Div -->
+    <div class="about-me-box" id="restricted-info">
+      <center><h2>Authorized Place</h2></center>
+      <p>Not all people are allowed to open it.</p>
+  </div>
 
   <!-- The Modal -->
   <div id="loginModal" class="modal">
