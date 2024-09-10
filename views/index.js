@@ -119,3 +119,40 @@ function searchEntries() {
            modal.style.display = "none";
        }
    }
+
+   document.getElementById('cta-btn').addEventListener('click', function() {
+    var writePad = document.getElementById('write-pad');
+    if (writePad.style.display === 'none' || writePad.style.display === '') {
+        writePad.style.display = 'block';
+    } else {
+        writePad.style.display = 'none';
+    }
+});
+
+document.getElementById('journal-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Get the heading, content, and colors
+    var heading = document.getElementById('heading').value;
+    var content = document.getElementById('content').value;
+    var headingColor = document.getElementById('heading-color').value;
+    var contentColor = document.getElementById('content-color').value;
+    var boxColor = document.getElementById('box-color').value;
+
+    // Create the new card
+    var newCard = document.createElement('div');
+    newCard.className = 'about-me-box';
+    newCard.style.backgroundColor = boxColor;
+    newCard.onclick = openOverlay; // Attach the existing overlay function
+    newCard.innerHTML = `
+        <center><h2 style="color: ${headingColor};">${heading}</h2></center>
+        <p style="color: ${contentColor};">${content}</p>
+    `;
+
+    // Append the new card to the box-container
+    document.querySelector('.box-container').appendChild(newCard);
+
+    // Clear the form and hide the write pad
+    document.getElementById('journal-form').reset();
+    document.getElementById('write-pad').style.display = 'none';
+});
