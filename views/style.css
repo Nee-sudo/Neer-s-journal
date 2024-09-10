@@ -5,7 +5,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f4f4f4;
+    background-color: #a319ff;
     color: #333;
 }
 .container {
@@ -41,7 +41,7 @@ h1, p {
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 1%;
-    background-color: #ffffff;
+    background-color: #d30808;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -605,6 +605,23 @@ img{
 }
 
 /* premium_page_style */
+
+
+.premium_user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh; /* Full viewport height */
+}
+
+.premium_user_box {
+  background-color: #e2e6eb;
+  color: #207edd;
+  padding: 100px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 /* style.css */
 .hustle-container {
     margin: 50px;
