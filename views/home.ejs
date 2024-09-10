@@ -81,13 +81,33 @@
     <button class="cta-btn" id="cta-btn">Start Journaling</button>
   </div>
 
-  <div class="editor-container" id="editor-container" style="display: none;">
-    <div id="editor" style="height: 300px;"></div>
-    <center>
-      <button class="cta-btn" onclick="saveText()">Save Text</button>
-      <button class="cta-btn" onclick="loadTexts()">Load Texts</button>
-    </center>
-  </div>
+<!-- Add this to your HTML file -->
+<div id="write-pad" style="display: none;">
+  <h2>Write Your Journal</h2>
+  <form id="journal-form">
+      <label for="heading">Heading:</label>
+      <input type="text" id="heading" required><br><br>
+
+      <label for="heading-color">Heading Color:</label>
+      <input type="color" id="heading-color" value="#000000"><br><br>
+
+      <label for="content">Content:</label>
+      <textarea id="content" required></textarea><br><br>
+
+      <label for="content-color">Content Color:</label>
+      <input type="color" id="content-color" value="#000000"><br><br>
+
+      <label for="box-color">Box Color:</label>
+      <input type="color" id="box-color" value="#ffffff"><br><br>
+
+      <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="box-container">
+  <!-- New cards will be added here -->
+</div>
+
 
   <div class="box-container">
     <div class="boxes">
@@ -98,8 +118,8 @@
         </center>
 
         <p>I’m passionate about exploring new challenges and fostering positive change. My curiosity drives me to
-          constantly seek growth and self-improvement. Whether it's tackling a new habit, learning something new, or
-          engaging in fun and beneficial challenges, I believe in the power of perseverance and resilience.
+          constantly seek growth and self-improvement. <br> Whether it's tackling a new habit, learning something new, or
+          engaging in fun and beneficial challenges,  <br> I believe in the power of perseverance and resilience.
           <!-- Other content goes here -->
       </div>
       <!-- About my Friends -->
@@ -130,7 +150,7 @@
           <h2>My Projects</h2>
         </center>
 
-        <p>I love diving into various projects that push my limits and encourage continuous learning. From documenting
+        <p>I love diving into various projects that push my limits and encourage continuous learning. <br> From documenting
           my journey on YouTube to taking on 21-day challenges, my projects are a testament to my dedication to
           self-improvement and creativity. Each project is an opportunity to explore new ideas and share my experiences
           with others</p>
@@ -207,7 +227,7 @@
       is always to make a positive impact.</p>
     <p>In my spare time, I love diving into new challenges and documenting my journey on YouTube.</p>
     <p>From 21-day challenges to learning new skills, I enjoy pushing my limits and sharing my experiences with others.
-    </p>
+    </p> 
     <p> I believe that every day is an opportunity for growth and discovery.</p>
   </div>
   <div class="image-container">
