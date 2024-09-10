@@ -8,6 +8,142 @@ body {
     background-color: #a319ff;
     color: #333;
 }
+/* writer-pad css  */
+/* Basic reset and layout for the write pad */
+#write-pad {
+    display: none; /* Initially hidden, can be shown with JavaScript */
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%; /* Set width as a percentage */
+    max-width: 800px; /* Optional: maximum width for larger screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+#write-pad h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+#journal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#journal-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#journal-form input[type="text"],
+#journal-form textarea,
+#journal-form input[type="color"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Set width to 100% of the parent container */
+}
+
+#journal-form textarea {
+    height: 150px;
+}
+
+#journal-form button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    width: auto; /* Ensure button width fits its content */
+}
+
+#journal-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Container for journal cards */
+.entries-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+/* Style for individual journal cards */
+.entries-container .journal-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 250px; /* Fixed width */
+    height: 200px; /* Fixed height for the collapsed state */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, width 0.3s, height 0.3s; /* Smooth transitions for expansion */
+    cursor: pointer;
+    overflow: hidden; /* Hide overflowing content in collapsed state */
+    position: relative;
+}
+
+/* Expanded state for journal cards */
+.entries-container .journal-card.expanded {
+    width: 100%; /* Full width on expansion */
+    height: auto; /* Allow height to adjust based on content */
+    max-width: 800px; /* Optional: limit maximum width when expanded */
+    transform: scale(1.05); /* Slightly enlarge the card */
+    z-index: 10; /* Bring to the front */
+    max-height: none; /* Remove height limit */
+}
+
+/* Styling for headings and content in journal cards */
+.entries-container .journal-card h3 {
+    margin-top: 0;
+    text-align: center; /* Centers the heading */
+}
+
+.entries-container .journal-card p {
+    margin: 10px 0;
+}
+
+/* Ensure other cards maintain their size when one is expanded */
+.entries-container .journal-card:not(.expanded) {
+    flex: 0 1 auto; /* Ensure non-expanded cards keep their fixed size */
+}
+
+/* Add hover effect for cards */
+.entries-container .journal-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slight shadow increase on hover */
+    transform: scale(1.02); /* Slight hover scale */
+}
+
+/* Style the close button in the expanded card */
+.journal-card .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.journal-card .close-btn:hover {
+    background-color: #ff1a1a;
+}
+
+/* writer-padd css ending  */
 .container {
     max-width: 800px;
     margin: auto;
