@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = "friendslist";
     }
 
+    document.getElementById('inspiration').addEventListener('click', open_inspiration);
     function open_inspiration() {
         window.location.href = "idols";
     }
@@ -145,7 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Get the heading, content, and colors
         var heading = document.getElementById('heading').value;
-        var content = document.getElementById('content').value;
+        var content = document.getElementById('content')
+        .value;
         var headingColor = document.getElementById('heading-color').value;
         var contentColor = document.getElementById('content-color').value;
         var boxColor = document.getElementById('box-color').value;
