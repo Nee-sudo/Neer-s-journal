@@ -92,11 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function searchEntries() {
         const searchTerm = document.getElementById('search-input').value.toLowerCase();
-        const boxes = document.querySelectorAll('.entries-box');
+        const boxes = document.querySelectorAll('.about-me-box');
 
         boxes.forEach(box => {
             const title = box.querySelector('h2').innerText.toLowerCase();
-            const content = box.querySelectorAll('p')[1].innerText.toLowerCase();
+            const content = box.querySelector('p').innerText.toLowerCase();
 
             if (title.includes(searchTerm) || content.includes(searchTerm)) {
                 box.style.display = 'block';
@@ -105,6 +105,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Attach searchEntries function to the search button
+    document.getElementById('search-button').addEventListener('click', searchEntries);
+
+
 
     // Get the modal
     var modal = document.getElementById("loginModal");
