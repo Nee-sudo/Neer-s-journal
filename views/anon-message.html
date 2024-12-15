@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Message to Neeraj</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add your custom styles here */
+        body {
+            background-color: rgb(192, 132, 252);
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        #anonymous-form {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 50%;
+            margin: auto;
+        }
+
+        #anonymous-form h2 {
+            color: rgb(102, 16, 242);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #anonymous-form label {
+            font-weight: bold;
+            color: rgb(80, 80, 80);
+        }
+
+        #anonymous-form input, 
+        #anonymous-form textarea {
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 5px;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        #anonymous-form button {
+            background-color: rgb(102, 16, 242);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #anonymous-form button:hover {
+            background-color: rgb(70, 10, 180);
+        }
+
+        footer {
+            background-color: rgb(102, 16, 242);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        /* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    /* Adjust the navbar */
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carousel-inner img {
+        height: 200px; /* Reduce banner height for smaller screens */
+    }
+
+    /* Form styling for mobile */
+    form#anonymous-form {
+        width: 90%;
+        margin: auto;
+        padding: 10px;
+    }
+
+    form#anonymous-form div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form#anonymous-form label {
+        margin-bottom: 5px;
+    }
+
+    form#anonymous-form input,
+    form#anonymous-form select,
+    form#anonymous-form textarea,
+    form#anonymous-form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    /* Footer styling for mobile */
+    .footer {
+        text-align: center;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .footer-links li {
+        margin: 0;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Neeraj's Page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Anonymous Form -->
+    <form id="anonymous-form" action="/send-message" method="POST">
+        <h2>Send a Message to Neeraj</h2>
+        <label for="name">Your Name (Optional)</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name (optional)">
+        
+        <label for="thoughts">Your Message</label>
+        <textarea id="thoughts" name="message" rows="5" placeholder="Write your anonymous message here..." required></textarea>
+        
+        <center>
+            <button type="submit">Send Message</button>
+        </center>
+    </form>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Neeraj's Journal. All Rights Reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

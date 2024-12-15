@@ -91,6 +91,15 @@ app.get('/home', isAuthenticated, (req, res) => {
         res.status(500).send('Error retrieving entries');
     });
 });
+//accessible without /home
+app.get('/', isAuthenticated, (req, res) => {
+    Entry.find({}).then((entries) => {
+        res.render('home', { entries: entries });
+    }).catch((err) => {
+        console.error(err);
+        res.status(500).send('Error retrieving entries');
+    });
+});
 
 app.get('/diary', isAuthenticated, (req, res) => {
     res.render('entries');
@@ -192,7 +201,40 @@ app.get('/api/getAllTexts', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+                                    //Anonymos message code 
+// Connect to MongoDB
+mongoose.connect("mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Define Message Schema
+const messageSchema = new mongoose.Schema({
+    content: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+});
+
+const Message = mongoose.model("Message", messageSchema);
+
+// Route for rendering the EJS file
+app.get('/anon-message', (req, res) => {
+    res.render('anon-message'); // Render the EJS file
+});
+
+// Handle Form Submission
+app.post("/send-message", async (req, res) => {
+    try {
+        const newMessage = new Message({ content: req.body.message });
+        console.log(newMessage);
+        await newMessage.save();
+        res.send("<h1>Message Sent Successfully!</h1><a href='/'>Go Back</a>");
+    } catch (error) {
+        res.status(500).send("Error saving message. Please try again later.");
+    }
+});
 // Start the server
 app.listen(4000, () => {
     console.log('Server started on port 4000');

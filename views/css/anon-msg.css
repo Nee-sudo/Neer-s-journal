@@ -1,0 +1,130 @@
+/* Add your custom styles here */
+body {
+    background-color: rgb(192, 132, 252);
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+#anonymous-form {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    margin: auto;
+}
+
+#anonymous-form h2 {
+    color: rgb(102, 16, 242);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#anonymous-form label {
+    font-weight: bold;
+    color: rgb(80, 80, 80);
+}
+
+#anonymous-form input, 
+#anonymous-form textarea {
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+#anonymous-form button {
+    background-color: rgb(102, 16, 242);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#anonymous-form button:hover {
+    background-color: rgb(70, 10, 180);
+}
+
+footer {
+    background-color: rgb(102, 16, 242);
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+}
+
+footer a {
+    color: #ffd700;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+/* Adjust the navbar */
+.navbar {
+flex-direction: column;
+text-align: center;
+}
+
+.navbar-brand {
+font-size: 1.5rem;
+}
+
+.navbar-nav {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.carousel-inner img {
+height: 200px; /* Reduce banner height for smaller screens */
+}
+
+/* Form styling for mobile */
+form#neers-friend-form {
+width: 90%;
+margin: auto;
+padding: 10px;
+}
+
+form#neers-friend-form div {
+display: flex;
+flex-direction: column;
+}
+
+form#neers-friend-form label {
+margin-bottom: 5px;
+}
+
+form#neers-friend-form input,
+form#neers-friend-form select,
+form#neers-friend-form textarea,
+form#neers-friend-form button {
+width: 100%;
+margin-bottom: 10px;
+}
+
+/* Footer styling for mobile */
+.footer {
+text-align: center;
+}
+
+.footer-links {
+display: flex;
+flex-direction: column;
+gap: 5px;
+}
+
+.footer-links li {
+margin: 0;
+}
+}
