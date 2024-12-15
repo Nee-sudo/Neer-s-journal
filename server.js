@@ -10,9 +10,16 @@ const NeersFriend = require('./models/neers-friend'); // Already defined
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
+
+const mongoURI = process.env.MONGO_URI;
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Error connecting to MongoDB:', err));
+  console.log('Mongo URI:', process.env.MONGO_URI);
+
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
