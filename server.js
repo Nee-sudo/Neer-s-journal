@@ -10,7 +10,7 @@ const NeersFriend = require('./models/neers-friend'); // Already defined
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config();
+// require('dotenv').config();
 
 
 const mongoURI = process.env.MONGO_URI;
@@ -241,6 +241,13 @@ app.post("/send-message", async (req, res) => {
     } catch (error) {
         res.status(500).send("Error saving message. Please try again later.");
     }
+});
+
+//google route 
+app.get('/google3634443e1c428dc1.html', (req, res) => {
+    const filePath = path.join(__dirname, 'google3634443e1c428dc1.html'); // Path to a local PDF
+    res.setHeader('Content-Disposition', 'inline');
+    res.sendFile(filePath);
 });
 // Start the server
 app.listen(4000, () => {
