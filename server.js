@@ -9,8 +9,7 @@ const User = require('./models/user.js');
 const NeersFriend = require('./models/neers-friend'); // Already defined
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-// require('dotenv').config();
+const cors = require('cors'); require('dotenv').config();
 
 
 const mongoURI = process.env.MONGO_URI;
@@ -210,10 +209,6 @@ app.get('/api/getAllTexts', async (req, res) => {
 });
                                     //Anonymos message code 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
