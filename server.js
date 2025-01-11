@@ -63,6 +63,13 @@ app.get('/signup', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 });
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+app.get('/anonmessage', (req, res) => {
+    res.render('anonmessage');
+});
+
 
 app.post('/signup', (req, res) => {
     const username = req.body.username;

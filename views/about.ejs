@@ -15,10 +15,39 @@
       background: #f9f9f9;
     }
     header {
-      background: #4CAF50;
+      background: #8044e0;
       color: white;
       padding: 1rem 0;
       text-align: center;
+    }
+    nav {
+      background: #333;
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #4CAF50;
     }
     .container {
       width: 90%;
@@ -62,6 +91,18 @@
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Neer's Journal</div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/home">Journal</a></li>
+      <li><a href="/home">Library</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Content -->
   <header>
     <h1>About Neer's Journal</h1>
   </header>

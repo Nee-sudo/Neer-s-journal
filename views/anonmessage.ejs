@@ -9,14 +9,9 @@
     <style>
         /* Add your custom styles here */
         body {
-            background-color: rgb(192, 132, 252);
+            background-color: linear-gradient(135deg, #6dd5ed, #2193b0);
             font-family: Arial, sans-serif;
         }
-
-        .navbar {
-            margin-bottom: 20px;
-        }
-
         #anonymous-form {
             background: white;
             border-radius: 10px;
@@ -61,7 +56,7 @@
         }
 
         footer {
-            background-color: rgb(102, 16, 242);
+            background-color: #333;
             color: white;
             text-align: center;
             padding: 15px 0;
@@ -137,30 +132,50 @@
         margin: 0;
     }
 }
+nav {
+      background: #333;
+      color: white;
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 1rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #4CAF50;
+    }
+    
 
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Neeraj's Page</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav>
+        <div class="logo">Neer's Journal</div>
+        <ul>
+          <li><a href="/" style="text-decoration: none;">Home</a></li>
+          <li><a href="/home" style="text-decoration: none;">Journal</a></li>
+          <li><a href="/home" style="text-decoration: none;">Library</a></li>
+          <li><a href="/login" style="text-decoration: none;">Login</a></li>
+        </ul>
+      </nav>
 
     <!-- Anonymous Form -->
     <form id="anonymous-form" action="/send-message" method="POST">
