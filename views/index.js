@@ -1,4 +1,4 @@
-const API_URL = 'https://neersjournal.onrender.com';
+const API_URL = 'https://neer-s-journal.onrender.com';
 
 document.addEventListener('DOMContentLoaded', function() {
     var quill = new Quill('#editor', {
