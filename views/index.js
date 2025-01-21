@@ -1,3 +1,5 @@
+const API_URL = 'https://neersjournal.onrender.com';
+
 document.addEventListener('DOMContentLoaded', function() {
     var quill = new Quill('#editor', {
         theme: 'snow'

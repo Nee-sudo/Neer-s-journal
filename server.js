@@ -17,7 +17,7 @@ const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
-  console.log('Mongo URI:', process.env.MONGO_URI);
+//   console.log('Mongo URI:', process.env.MONGO_URI);
 
 
 const app = express();
@@ -31,6 +31,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
+const corsOptions = {
+    origin: 'https://neersjournal.vercel.app', // Replace with your Vercel frontend URL
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 // Passport.js configuration
 passport.use(new LocalStrategy(User.authenticate()));
