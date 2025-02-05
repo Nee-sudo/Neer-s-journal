@@ -11,8 +11,8 @@ const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors'); require('dotenv').config();
 
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority';
 
-const mongoURI = process.env.MONGO_URI;
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
