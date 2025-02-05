@@ -11,7 +11,7 @@ const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors'); require('dotenv').config();
 
-const mongoURI = process.env.MONGO_URI || 'mongodb+srv://neer:bjFBXFCYd00Gifiv@my-journal-app.ges8oic.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/neers-journal';
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
