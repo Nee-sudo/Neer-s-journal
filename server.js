@@ -30,7 +30,11 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:4000","https:neersjournal.vercel.app"], // Allow both localhost and deployed frontend
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 
 // Passport.js configuration
 passport.use(new LocalStrategy(User.authenticate()));
@@ -127,6 +131,9 @@ app.get('/friends-form', isAuthenticated, (req, res) => {
     res.render('friends-form');
 });
 
+app.get('/anonmessage' ,(req, res) => {
+    res.render('anon-message');
+} ) ;
 // Define the Friend model
 const friendSchema = new mongoose.Schema({
     name: String,

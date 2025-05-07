@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Archive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .screenshot-card {
+      width: 300px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+    .interactions {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .comments {
+      padding: 10px;
+    }
+    .comments ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .comments ul li {
+      background: #f1f1f1;
+      padding: 5px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+    .comments form {
+      margin-top: 10px;
+      display: flex;
+      gap: 5px;
+    }
+    .comments form input {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .comments form button {
+      padding: 5px 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chat Archive</h1>
+  <div class="gallery">
+    <!-- Example screenshot card -->
+    <div class="screenshot-card">
+      <img src="img/image.png" alt="Chat Screenshot 1">
+      <div class="interactions">
+        <button onclick="likeScreenshot(1)">👍 Like (<span id="like-count-1">0</span>)</button>
+        <button onclick="dislikeScreenshot(1)">👎 Dislike (<span id="dislike-count-1">0</span>)</button>
+      </div>
+      <div class="comments">
+        <ul id="comments-1">
+          <!-- Comments will appear here -->
+        </ul>
+        <form onsubmit="addComment(event, 1)">
+          <input type="text" placeholder="Add a comment" required>
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for handling likes, dislikes, and comments
+    function likeScreenshot(id) {
+      const likeCount = document.getElementById(`like-count-${id}`);
+      likeCount.textContent = parseInt(likeCount.textContent) + 1;
+    }
+
+    function dislikeScreenshot(id) {
+      const dislikeCount = document.getElementById(`dislike-count-${id}`);
+      dislikeCount.textContent = parseInt(dislikeCount.textContent) + 1;
+    }
+
+    function addComment(event, id) {
+      event.preventDefault();
+      const input = event.target.querySelector('input');
+      const commentList = document.getElementById(`comments-${id}`);
+      const newComment = document.createElement('li');
+      newComment.textContent = input.value;
+      commentList.appendChild(newComment);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>

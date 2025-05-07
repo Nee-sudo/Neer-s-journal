@@ -1,3 +1,5 @@
+const BACKEND_URL = 'neersjournal.up.railway.app'; // Replace with your backend URL
+
 document.addEventListener('DOMContentLoaded', function() {
     var quill = new Quill('#editor', {
         theme: 'snow'
@@ -7,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const text = quill.root.innerHTML;
 
         try {
-            await fetch('/api/saveText', {
+            await fetch(`${BACKEND_URL}/api/saveText`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function deleteText(textId) {
         try {
-            await fetch(`/api/deleteText/${textId}`, {
+            await fetch(`${BACKEND_URL}/api/deleteText/${textId}`, {
                 method: 'DELETE',
             });
             loadTexts();
