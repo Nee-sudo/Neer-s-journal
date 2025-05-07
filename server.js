@@ -11,13 +11,13 @@ const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors'); require('dotenv').config();
 
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/neers-journal';
 
-const mongoURI = process.env.MONGO_URI;
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
-  console.log('Mongo URI:', process.env.MONGO_URI);
+//   console.log('Mongo URI:', process.env.MONGO_URI);
 
 
 const app = express();
@@ -30,6 +30,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
+const corsOptions = {
+    origin: 'https://neersjournal.vercel.app', // Replace with your Vercel frontend URL
+    credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(cors({
     origin: ["http://localhost:4000","https:neersjournal.vercel.app"], // Allow both localhost and deployed frontend
     methods: ["GET", "POST"],
@@ -67,6 +73,13 @@ app.get('/signup', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 });
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+app.get('/anonmessage', (req, res) => {
+    res.render('anonmessage');
+});
+
 
 app.post('/signup', (req, res) => {
     const username = req.body.username;

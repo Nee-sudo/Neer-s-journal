@@ -1,3 +1,5 @@
+const API_URL = 'https://neer-s-journal.onrender.com';
+
 const BACKEND_URL = 'neersjournal.up.railway.app'; // Replace with your backend URL
 
 document.addEventListener('DOMContentLoaded', function() {
