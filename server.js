@@ -82,10 +82,25 @@ app.post('/signup', (req, res) => {
     });
 });
 
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/home',  // Redirect to /home after successful login
-    failureRedirect: '/login'
-}));
+app.post('/login', (req, res, next) => {
+    console.log('Login attempt:', req.body); // Log the login attempt
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            console.log('Login failed: Invalid username or password'); // Log the failure
+            return res.status(401).render('login', { error: 'Invalid username or password' }); // Send error message to login page
+        }
+        req.logIn(user, (err) => {
+            if (err) {
+                return next(err);
+            }
+            console.log('User logged in:', user); // Log the user object
+            return res.redirect('/home'); // Redirect to /home after successful login
+        });
+    })(req, res, next);
+});
 
 app.get('/logout', (req, res) => {
     req.logout();
