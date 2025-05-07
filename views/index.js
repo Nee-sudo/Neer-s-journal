@@ -1,4 +1,4 @@
-const BACKEND_URL = 'neersjournal.up.railway.app'; // Replace with your backend URL
+const BACKEND_URL = 'https://neersjournal.up.railway.app'; // Replace with your backend URL
 
 document.addEventListener('DOMContentLoaded', function() {
     var quill = new Quill('#editor', {

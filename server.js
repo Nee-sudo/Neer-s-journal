@@ -31,7 +31,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-    origin: ["http://localhost:4000","https:neersjournal.vercel.app"], // Allow both localhost and deployed frontend
+    origin: ["http://localhost:4000","https:neersjournal.vercel.app","https://neersjournal.up.railway.app"], // Allow both localhost and deployed frontend
     methods: ["GET", "POST"],
     credentials: true
 }));
