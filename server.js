@@ -102,11 +102,31 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/login');
+// app.get('/logout', (req, res) => {
+//     req.logout();
+//     res.redirect('/login');
+// });
+// Example using express-session
+app.get('/logout', (req, res, next) => {
+    req.logout(function(err) {
+        if (err) { 
+            console.error('Logout error:', err);
+            return next(err); 
+        }
+        req.session.destroy(err => {
+            if (err) {
+                console.error('Error destroying session:', err);
+                return res.redirect('/');
+            }
+            res.clearCookie('connect.sid');
+            res.redirect('/login');
+        });
+    });
 });
 
+// Example with JWT (if you're using tokens, client-side logout might involve removing the token from localStorage)
+// For JWT, the logout link would typically just trigger client-side logic to remove the token and redirect.
+// However, you might have a backend route to invalidate tokens if you're managing them server-side.
 // Protected Routes
 app.get('/home', isAuthenticated, (req, res) => {
     Entry.find({}).then((entries) => {

@@ -591,6 +591,9 @@ img{
         background-color: #6c757d; /* Change to a different color */
     }
 }
+.navbar-brand{
+    font-family: cursive;
+}
 
 
 .content {

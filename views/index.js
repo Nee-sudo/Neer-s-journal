@@ -229,3 +229,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Add this to index.js
+document.getElementById('logout-button').addEventListener('click', function() {
+  // Example: Clear localStorage/sessionStorage or make a logout API call
+  // localStorage.clear(); // if you use localStorage for auth
+  // sessionStorage.clear(); // if you use sessionStorage for auth
+
+  // If you have a backend logout route, use:
+  // window.location.href = '/logout';
+
+  // For demo, just redirect to login or home
+  window.location.href = '/logout'; // Change to your login route
+});

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Neer's Journey</h1>
+            <nav>
+                <ul>
+                    <li><a href="#learning">Learning</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#languages">Languages</a></li>
+                    <li><a href="#current">Current Focus</a></li>
+                    <li><a href="#login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <style>
+        /* Variables for colors */
+:root {
+    --primary-blue: #007bff;
+    --primary-white: #ffffff;
+    --light-grey: #f8f9fa;
+    --dark-grey: #343a40;
+    --border-grey: #e9ecef;
+}
+
+/* General Body Styles */
+body {
+    font-family: 'Roboto', 'Open Sans', sans-serif; /* Fallback fonts */
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: var(--primary-white);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+header nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Main Content Sections */
+main {
+    padding: 30px 0;
+}
+
+.section-box {
+    background-color: var(--primary-white);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 40px 0;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section-box h2 {
+    color: var(--primary-blue);
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-icon {
+    margin-right: 15px;
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+}
+
+/* Grid for cards */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+/* Skill Card Styles */
+.skill-card, .project-card, .language-card {
+    background-color: var(--primary-white);
+    border: 1px solid var(--border-grey);
+    border-radius: 8px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.skill-card:hover, .project-card:hover, .language-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.skill-icon, .project-icon, .language-icon {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
+}
+
+.skill-card h3, .project-card h3, .language-card h3 {
+    color: var(--dark-grey);
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+/* Progress Bar Styles */
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--border-grey);
+    border-radius: 5px;
+    height: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--primary-blue);
+    border-radius: 5px;
+    transition: width 0.8s ease-in-out;
+}
+
+.progress-text {
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+    font-weight: 600;
+}
+
+.currently-studying {
+    margin-top: 40px;
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.currently-studying i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+/* Project Card Specifics */
+.project-card p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allows it to take up available space */
+}
+
+.project-details {
+    width: 100%;
+    text-align: left;
+    margin-top: auto; /* Pushes details to the bottom */
+}
+
+.project-details .deadline {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.project-details .deadline i {
+    margin-right: 8px;
+    color: var(--primary-blue);
+}
+
+.project-details .progress-bar-container.small {
+    height: 7px;
+    margin-top: 10px;
+}
+
+/* Language Section Specifics */
+.language-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Slightly smaller for flags */
+}
+
+.language-card .flag-icon {
+    width: 60px;
+    height: 40px;
+    border: 1px solid var(--border-grey);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.language-card .proficiency-level {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.proficiency-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--border-grey);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.proficiency-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--primary-blue);
+    border-radius: 5px;
+    width: var(--proficiency-width, 0%); /* Custom property for width */
+}
+/* Setting proficiency bar widths */
+.language-card:nth-child(1) .proficiency-bar::after { width: 100%; } /* Hindi - Native */
+.language-card:nth-child(2) .proficiency-bar::after { width: 95%; } /* English - Fluent */
+.language-card:nth-child(3) .proficiency-bar::after { width: 60%; } /* Spanish - Intermediate */
+.language-card:nth-child(4) .proficiency-bar::after { width: 20%; } /* German - Learning */
+
+.language-card.learning {
+    border: 2px dashed var(--primary-blue); /* Visual cue for learning */
+}
+.language-card.learning .language-icon {
+    font-size: 3rem;
+    color: var(--primary-blue);
+    animation: pulse 1.5s infinite ease-in-out; /* Subtle animation */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* Current Activity Section */
+.current-activity-box {
+    background-color: var(--light-grey);
+    border: 2px solid var(--primary-blue);
+    border-radius: 10px;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+}
+
+.current-activity-icon {
+    font-size: 4.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.current-activity-box p {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--dark-grey);
+    margin: 0;
+    line-height: 1.5;
+    max-width: 80%;
+}
+
+/* Login Section */
+.login-form-container {
+    background-color: var(--primary-white);
+    border: 1px solid var(--border-grey);
+    border-radius: 8px;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+.login-form-container p {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.login-form .input-group {
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--dark-grey);
+    font-weight: 500;
+}
+
+.login-form label i {
+    margin-right: 8px;
+    color: var(--primary-blue);
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: 1px solid var(--border-grey);
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.btn-login {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.signup-link a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--dark-grey); /* Using a darker shade for the footer */
+    color: var(--primary-white);
+    padding: 25px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+.social-links {
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: var(--primary-white);
+    font-size: 1.5rem;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-blue);
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+    header nav ul li {
+        margin: 8px 0;
+    }
+    .section-box {
+        padding: 30px 0;
+        margin-bottom: 30px;
+    }
+    .section-box h2 {
+        font-size: 1.8rem;
+    }
+    .section-icon {
+        font-size: 2rem;
+    }
+    .grid-container {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+        padding: 0 15px;
+    }
+    .skill-card, .project-card, .language-card {
+        padding: 20px;
+    }
+    .current-activity-box {
+        padding: 25px;
+    }
+    .current-activity-box p {
+        font-size: 1.1rem;
+    }
+    .login-form-container {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    header nav ul li a {
+        font-size: 1rem;
+    }
+    .section-box h2 {
+        font-size: 1.6rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    .section-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .currently-studying {
+        font-size: 1rem;
+    }
+}
+    </style>
+
+    <main>
+        <section id="learning" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-graduation-cap section-icon"></i> What I'm Learning</h2>
+                <div class="grid-container">
+                    <div class="skill-card">
+                        <i class="fab fa-react skill-icon"></i>
+                        <h3>React.js</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 80%;"></div>
+                        </div>
+                        <span class="progress-text">80% Mastered</span>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fab fa-python skill-icon"></i>
+                        <h3>Advanced Python</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 65%;"></div>
+                        </div>
+                        <span class="progress-text">65% Progress</span>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fas fa-database skill-icon"></i>
+                        <h3>SQL Optimization</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 90%;"></div>
+                        </div>
+                        <span class="progress-text">90% Done</span>
+                    </div>
+                    <div class="skill-card">
+                        <i class="fas fa-brain skill-icon"></i>
+                        <h3>Machine Learning Basics</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 40%;"></div>
+                        </div>
+                        <span class="progress-text">40% Started</span>
+                    </div>
+                </div>
+                <p class="currently-studying"><i class="fas fa-book-open"></i> Currently Deep Diving into **Generative AI Concepts**</p>
+            </div>
+        </section>
+
+        <section id="projects" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-laptop-code section-icon"></i> What I'm Working On / Side Projects</h2>
+                <div class="grid-container">
+                    <div class="project-card">
+                        <i class="fas fa-globe project-icon"></i>
+                        <h3>Personal Portfolio Redesign</h3>
+                        <p>Redesigning this very landing page to be more dynamic.</p>
+                        <div class="project-details">
+                            <span class="deadline"><i class="far fa-calendar-alt"></i> Deadline: Oct 30, 2025</span>
+                            <div class="progress-bar-container small">
+                                <div class="progress-bar" style="width: 70%;"></div>
+                            </div>
+                            <span class="progress-text">70% Complete</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <i class="fas fa-chart-line project-icon"></i>
+                        <h3>Stock Market Predictor (ML)</h3>
+                        <p>Building a machine learning model to predict stock trends.</p>
+                        <div class="project-details">
+                            <span class="deadline"><i class="far fa-calendar-alt"></i> Deadline: Dec 15, 2025</span>
+                            <div class="progress-bar-container small">
+                                <div class="progress-bar" style="width: 35%;"></div>
+                            </div>
+                            <span class="progress-text">35% Complete</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <i class="fas fa-mobile-alt project-icon"></i>
+                        <h3>Task Management App (Mobile)</h3>
+                        <p>Developing a cross-platform mobile app for task organization.</p>
+                        <div class="project-details">
+                            <span class="deadline"><i class="far fa-calendar-alt"></i> Deadline: Feb 28, 2026</span>
+                            <div class="progress-bar-container small">
+                                <div class="progress-bar" style="width: 10%;"></div>
+                            </div>
+                            <span class="progress-text">10% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="languages" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-comments section-icon"></i> Languages I Speak</h2>
+                <div class="grid-container language-grid">
+                    <div class="language-card">
+                        <img src="https://flagcdn.com/in.svg" alt="India Flag" class="flag-icon">
+                        <h3>Hindi</h3>
+                        <p class="proficiency-level">Native Speaker</p>
+                        <span class="proficiency-bar" style="width: 100%;"></span>
+                    </div>
+                    <div class="language-card">
+                        <img src="https://flagcdn.com/gb.svg" alt="UK Flag" class="flag-icon">
+                        <h3>English</h3>
+                        <p class="proficiency-level">Fluent</p>
+                        <span class="proficiency-bar" style="width: 95%;"></span>
+                    </div>
+                    <div class="language-card">
+                        <img src="https://flagcdn.com/es.svg" alt="Spain Flag" class="flag-icon">
+                        <h3>Spanish</h3>
+                        <p class="proficiency-level">Intermediate</p>
+                        <span class="proficiency-bar" style="width: 60%;"></span>
+                    </div>
+                    <div class="language-card learning">
+                        <i class="fas fa-book-reader language-icon"></i>
+                        <h3>German</h3>
+                        <p class="proficiency-level">Currently Learning (Beginner)</p>
+                        <span class="proficiency-bar" style="width: 20%;"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="current" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-thumbtack section-icon"></i> Currently What I'm Doing</h2>
+                <div class="current-activity-box">
+                    <i class="fas fa-code-branch current-activity-icon"></i>
+                    <p>I'm primarily focused on **refining my Full-Stack Development skills** with a strong emphasis on scalable architecture and robust API design. Always exploring new frameworks and tools!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="login" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-lock section-icon"></i> Login to Know More About Me</h2>
+                <div class="login-form-container">
+                    <p>For a deeper dive into my personal projects, detailed progress, and exclusive content, please log in.</p>
+                    <form action="#" method="POST" class="login-form">
+                        <div class="input-group">
+                            <label for="username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" id="username" name="username" placeholder="Your username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="password"><i class="fas fa-key"></i> Password</label>
+                            <input type="password" id="password" name="password" placeholder="Your password" required>
+                        </div>
+                        <button type="submit" class="btn-login">Log In</button>
+                        <p class="signup-link">Don't have an account? <a href="#">Sign Up</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Your Name. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
