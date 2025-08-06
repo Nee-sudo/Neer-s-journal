@@ -1,252 +1,1223 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <title>Neeraj's Journal</title>
-  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/x-icon" href="https://badaklibrary.up.railway.app/image.png">
-  <meta name="viewport" content="initial-scale=1, width=device-width" />
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="shortcut icon" href="https://www.shutterstock.com/image-vector/wolf-face-silhouette-logo-icon-600nw-2476128943.jpg" type="image/x-icon">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neer's Journey - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --primary-blue-light: #66b2ff;
+            --primary-blue-dark: #0056b3;
+            --primary-white: #ffffff;
+            --light-grey: #f0f4f8;
+            --dark-grey: #343a40;
+            --text-color: #495057;
+            --border-color: #e2e6eb;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.4s;
+            --border-radius-lg: 15px;
+            --border-radius-md: 10px;
+            --accent-purple: #6f42c1;
+            --accent-green: #28a745;
+            --accent-orange: #fd7e14;
+            --accent-pink: #e83e8c;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--text-color);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            color: var(--primary-white);
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        header nav ul li a, header nav ul li button {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.15rem;
+            padding: 10px 20px;
+            border-radius: var(--border-radius-md);
+            transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        header nav ul li a:hover, header nav ul li button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius-md);
+            padding: 5px 10px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-bar:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--primary-white);
+            font-size: 1rem;
+            padding: 8px;
+            width: 150px;
+            transition: width 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            width: 200px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            color: var(--primary-white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            color: var(--accent-orange);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            color: var(--primary-white);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Banner Slider */
+        .banner-slider {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            transition: left 0.5s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-white);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-slide.active {
+            left: 0;
+        }
+
+        /* Journal Section */
+        .journal-section {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .btn-journal {
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
+            color: var(--primary-white);
+            padding: 15px 30px;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-journal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-pink);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--accent-purple);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--dark-grey);
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .color-suggestions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+
+        .ql-container {
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+        }
+
+        .ql-editor {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Slider for Boxes */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 40px;
+        }
+
+        .box-container {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .box {
+            flex: 0 0 300px;
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius-md);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-blue-dark);
+        }
+
+        .slider-btn.left {
+            left: 10px;
+        }
+
+        .slider-btn.right {
+            right: 10px;
+        }
+
+        /* Friends Section */
+        .friends-section {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .friends-section h2 {
+            text-align: center;
+        }
+
+        .friends-section .btn-journal {
+            display: block;
+            margin: 10px auto;
+        }
+
+        .friend-card {
+            flex: 0 0 300px;
+            background: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        }
+
+        .friend-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+        }
+
+        .friend-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-grey);
+        }
+
+        .friend-card p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .friend-card .thoughts {
+            font-style: italic;
+            color: var(--accent-purple);
+        }
+
+        .friend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        /* Idols Section */
+        .idols-section {
+            padding: 40px 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--light-grey), #f8f9fa);
+        }
+
+        .idols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .idol-card {
+            background: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .idol-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        }
+
+        .idol-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+        }
+
+        .idol-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-grey);
+        }
+
+        .idol-card .quote {
+            font-size: 1rem;
+            color: var(--text-color);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .idol-card .description {
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+
+        .idol-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-green));
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        /* Life Saved Section */
+        .life-saved-section {
+            padding: 40px 0;
+            text-align: center;
+            background: linear-gradient(180deg, #fff, var(--light-grey));
+        }
+
+        .life-saved-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .life-saved-tile {
+            background: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .life-saved-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        }
+
+        .life-saved-tile img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+        }
+
+        .life-saved-tile h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-grey);
+        }
+
+        .life-saved-tile p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .life-saved-tile .date {
+            font-size: 0.9rem;
+            color: var(--accent-purple);
+            font-weight: 500;
+        }
+
+        .life-saved-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink));
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        .comment-section {
+            margin-top: 15px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+        }
+
+        .comment-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-grey);
+        }
+
+        .comment-section textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        /* About Me */
+        .about-me {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .about-me p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
+            color: var(--primary-white);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--primary-white);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--accent-orange);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header .container {
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            header nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
+                padding-top: 80px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                transition: right 0.4s ease-in-out;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header nav.active {
+                right: 0;
+            }
+
+            header nav ul {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .search-bar {
+                margin-top: 20px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            .search-bar input:focus {
+                width: 100%;
+            }
+
+            .box-container, .idols-grid, .life-saved-grid {
+                flex-direction: row;
+                overflow-x: visible;
+            }
+
+            .box, .friend-card, .idol-card, .life-saved-tile {
+                flex: 0 0 80%;
+                width: 80%;
+            }
+
+            .slider-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+
+            .friends-section .btn-journal {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .input-group input,
+            .input-group select,
+            .input-group textarea {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            .btn-journal {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+
+            .ql-container {
+                max-height: 250px;
+            }
+
+            .box, .friend-card, .idol-card, .life-saved-tile {
+                flex: 0 0 90%;
+                width: 90%;
+                padding: 15px;
+            }
+
+            .slider-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+
+            .friends-section .btn-journal {
+                width: 90%;
+            }
+
+            footer {
+                padding: 20px 0;
+            }
+
+            .social-links a {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Neer</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-      aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor02">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active" id="homeNavItem">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        
-      </ul>
-      <form class="form-inline" id="search-form">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-        <button class="btn btn-outline-light my-2 my-sm-0" type="button" id="search-button"> Search </button>
-         <button class="btn btn-danger my-2 my-sm-0 ml-2" type="button" id="logout-button">Logout</button>
-    </form>
-    </div>
-  </nav>
-
-  <!-- banner of the site  -->
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="display: block;">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="First slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, quaerat. Nihil consequuntur sunt
-            repellat, eligendi earum dolores eos deserunt perferendis aliquam fugit neque repudiandae modi ipsam,
-            explicabo unde optio tenetur.</h5>
-          <p>kooo</p>
+    <header>
+        <div class="container">
+            <h1>Neer's Journey</h1>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#idols">Idols</a></li>
+                    <li><a href="#friends">Friends</a></li>
+                    <li><a href="#life-saved">Life Saved</a></li>
+                    <li><a href="#photos">Photos</a></li>
+                    <li><button onclick="window.location.href='/logout'">Logout</button></li>
+                </ul>
+                <form action="/search" method="GET" class="search-bar">
+                    <input type="text" name="query" placeholder="Search..." required>
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </nav>
         </div>
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="Third slide">
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-  <div class="container">
-    <h1>Welcome to Neeraj's Journal</h1>
-    <p>Here you can read Neeraj's entries and share your own experiences.</p>
-    <button class="cta-btn" id="cta-btn">Start Journaling</button>
-  </div>
+    </header>
 
-<!-- Add this to your HTML file -->
-<div id="write-pad" style="display: none;">
-  <h2>Write Your Journal</h2>
-  <form id="journal-form">
-      <label for="heading">Heading:</label>
-      <input type="text" id="heading" required><br><br>
+    <div class="overlay" id="menuOverlay"></div>
 
-      <label for="heading-color">Heading Color:</label>
-      <input type="color" id="heading-color" value="#000000"><br><br>
+    <main>
+        <!-- Error Message -->
+        <% if (error) { %>
+            <div class="container">
+                <p class="error-message"><%= error %></p>
+            </div>
+        <% } %>
 
-      <label for="content">Content:</label>
-      <textarea id="content" required></textarea><br><br>
+        <!-- Banner Slider -->
+        <section class="banner-slider">
+            <div class="banner-slide active" style="background-image: url('./img/banner.jpeg');">
+                <h2>Welcome to My Journey</h2>
+            </div>
+            <div class="banner-slide" style="background-image: url('./img/banner.jpeg');">
+                <h2>Explore My Projects</h2>
+            </div>
+            <div class="banner-slide" style="background-image: url('./img/banner.jpeg');">
+                <h2>Connect with Me</h2>
+            </div>
+        </section>
 
-      <label for="content-color">Content Color:</label>
-      <input type="color" id="content-color" value="#000000"><br><br>
+        <!-- Journal Section -->
+        <section id="journal" class="journal-section section-box">
+            <div class="container">
+                <h2><i class="fas fa-book section-icon"></i> My Journal</h2>
+                <button class="btn-journal" id="openEditorBtn">Start Journaling</button>
+                <div class="slider-container" id="journalSlider">
+                    <button class="slider-btn left" onclick="slide('journalSlider', -1)">&lt;</button>
+                    <div class="box-container">
+                        <% entries.forEach(entry => { %>
+                            <div class="box" style="background-color: <%= entry.boxColor %>;">
+                                <h3 style="color: <%= entry.headingColor %>;"><%= entry.title %></h3>
+                                <div style="color: <%= entry.contentColor %>;" class="ql-editor"><%- entry.content %></div>
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="slider-btn right" onclick="slide('journalSlider', 1)">&gt;</button>
+                </div>
+            </div>
+        </section>
 
-      <label for="box-color">Box Color:</label>
-      <input type="color" id="box-color" value="#ffffff"><br><br>
+        <!-- Idols Section -->
+        <section id="idols" class="idols-section section-box">
+            <div class="container">
+                <h2><i class="fas fa-star section-icon"></i> My Idols</h2>
+                <div class="idols-grid">
+                    <div class="idol-card">
+                        <img src="https://e1.pxfuel.com/desktop-wallpaper/527/759/desktop-wallpaper-osho-osho-rajneesh-indian-thinker-indian-thinker-osho-rajneesh-osho.jpg" alt="Osho">
+                        <h3>Osho</h3>
+                        <p class="quote">"Don't be afraid of difficulties. The greater the difficulties, the more energy you will have to transform them into nourishment"</p>
+                        <p class="description">Whenever I feel depressed, I listen to him and feel calm and relaxed. He speaks the truth about life.</p>
+                    </div>
+                    <div class="idol-card">
+                        <img src="https://www.tatatrusts.org/images/Ratan_N_Tata_sm.jpg" alt="Ratan Tata">
+                        <h3>Ratan Tata</h3>
+                        <p class="quote">"None can destroy iron, but its own rust can. Likewise, none can destroy a person, but his own mindset can."</p>
+                        <p class="description">I am influenced by him because he is so kind and humble.</p>
+                    </div>
+                    <div class="idol-card">
+                        <img src="https://imageio.forbes.com/specials-images/imageserve/63a10cda05f6db21230c44d1/Bill-Gates/1960x0.jpg?format=jpg&width=1440" alt="Bill Gates">
+                        <h3>Bill Gates</h3>
+                        <p class="quote">"Your most unhappy customers are your greatest source of learning."</p>
+                        <p class="description">I like Bill Gates because he likes to serve the people on Earth who need it.</p>
+                    </div>
+                    <div class="idol-card">
+                        <img src="https://www.telegraph.co.uk/multimedia/archive/02223/zckerberg_2223405b.jpg?imwidth=960" alt="Mr Zuckerberg">
+                        <h3>Mr Zuckerberg</h3>
+                        <p class="quote">"The biggest risk is not taking any risk. In a world that's changing really quickly, the only strategy that is guaranteed to fail is not taking risks."</p>
+                        <p class="description">I like him because he has a big company but still seems to learn new things every time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <button type="submit">Submit</button>
-  </form>
-</div>
+        <!-- Friends Section -->
+        <section id="friends" class="friends-section section-box">
+            <div class="container">
+                <h2><i class="fas fa-users section-icon"></i> Neer's Friends</h2>
+                <button class="btn-journal" id="openFriendFormBtn">Add Friend</button>
+                <div class="slider-container" id="friendsSlider">
+                    <button class="slider-btn left" onclick="slide('friendsSlider', -1)">&lt;</button>
+                    <div class="box-container">
+                        <% friends.forEach(friend => { %>
+                            <div class="friend-card">
+                                <img src="<%= friend.profilePicture || 'https://via.placeholder.com/300x200?text=No+Image' %>" alt="<%= friend.name %>">
+                                <h3><%= friend.name %></h3>
+                                <p><strong>Job Category:</strong> <%= friend.jobCategory %></p>
+                                <p><strong>Country:</strong> <%= friend.country %></p>
+                                <p><strong>Personality:</strong> <%= friend.personality %></p>
+                                <p><strong>Joined:</strong> <%= friend.joinDate ? new Date(friend.joinDate).toDateString() : 'Not specified' %></p>
+                                <p class="thoughts">"<%= friend.thoughts %>"</p>
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="slider-btn right" onclick="slide('friendsSlider', 1)">&gt;</button>
+                </div>
+            </div>
+        </section>
 
-<div class="entries-container">
-  <!-- New cards will be added here -->
-</div>
+        <!-- Life Saved Section -->
+        <section id="life-saved" class="life-saved-section section-box">
+            <div class="container">
+                <h2><i class="fas fa-heart section-icon"></i> Lives I've Saved</h2>
+                <div class="life-saved-grid">
+                    <% lifeSaved.forEach(story => { %>
+                        <div class="life-saved-tile">
+                            <img src="<%= story.photo %>" alt="<%= story.title %>">
+                            <h3><%= story.title %></h3>
+                            <p><%= story.description %></p>
+                            <p class="date">Date: <%= story.date ? new Date(story.date).toDateString() : 'Not specified' %></p>
+                            <div class="comment-section">
+                                <h4>Comments</h4>
+                                <% story.comments.forEach(comment => { %>
+                                    <p><strong><%= comment.user %></strong>: <%= comment.content %></p>
+                                <% }) %>
+                                <form action="/comment/<%= story._id %>" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <textarea name="content" placeholder="Add a comment..." required></textarea>
+                                    <button type="submit" class="btn-journal">Post Comment</button>
+                                </form>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </section>
 
+        <!-- About Me -->
+        <section id="about" class="about-me section-box">
+            <div class="container">
+                <h2><i class="fas fa-user section-icon"></i> About Me</h2>
+                <p>Hi, I'm Neeraj, a passionate learner and creator. I'm dedicated to building innovative projects, connecting with inspiring people, and making a positive impact by helping those in need. My journey is fueled by curiosity and a desire to grow, whether through coding, learning new languages, or saving lives.</p>
+            </div>
+        </section>
 
+        <!-- Photos Section -->
+        <section id="photos" class="section-box">
+            <div class="container">
+                <h2><i class="fas fa-camera section-icon"></i> My Photos</h2>
+                <div class="box-container">
+                    <div class="box">
+                        <img src="./img/neer1.jpg" alt="Photo 1">
+                        <p>"Capturing the beauty of life."</p>
+                    </div>
+                    <div class="box">
+                        <img src="./img/neer2.jpg" alt="Photo 2">
+                        <p>"Moments that inspire me."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <div class="box-container">
-    <div class="boxes">
-      <!-- about me box -->
-      <div class="about-me-box" onclick="openOverlay()" id="aboutme">
-        <center>
-          <h2>About Me</h2>
-        </center>
-
-        <p>I’m passionate about exploring new challenges and fostering positive change. My curiosity drives me to
-          constantly seek growth and self-improvement. <br> Whether it's tackling a new habit, learning something new, or
-          engaging in fun and beneficial challenges,  <br> I believe in the power of perseverance and resilience.
-          <!-- Other content goes here -->
-      </div>
-      <!-- About my Friends -->
-      <div class="about-me-box" onclick="aboutfriends()" id="aboutfriends">
-        <center>
-          <h2>Friends</h2>
-        </center>
-        <p>I’m incredibly fortunate to have a group of supportive and inspiring friends who bring joy and encouragement
-          into my life. They are my biggest cheerleaders and play a significant role in my journey. Each friend adds a
-          unique perspective and energy, making every moment memorable and enriching. I have less friend to share my
-          feelings. <!-- Other content goes here -->
-      </div>
-      <!-- Check my diary -->
-      <div class="about-me-box" onclick="open_diary()" id="diary">
-        <center>
-          <h2>Diary</h2>
-        </center>
-
-        <p>Writing a diary helps me reflect on my experiences, stay mindful, and capture the essence of my daily life.
-          It’s a space for self-expression, personal growth, and preserving memories. My diary is where I document my
-          challenges, successes, and the little moments that make life special.l like to write my feelings in words coz
-          it is better way to be control thoughts. <!-- Other content goes here -->
-      </div>
-      <!-- check my current project -->
-      <div class="about-me-box" onclick="open_projects()" id="projects">
-        <center>
-          <h2>My Projects</h2>
-        </center>
-
-        <p>I love diving into various projects that push my limits and encourage continuous learning. <br> From documenting
-          my journey on YouTube to taking on 21-day challenges, my projects are a testament to my dedication to
-          self-improvement and creativity. Each project is an opportunity to explore new ideas and share my experiences
-          with others</p>
-        <!-- Other content goes here -->
-      </div>
-
-      <div class="about-me-box" onclick="open_inspiration()" id="inspiration">
-        <center>
-          <h2>My idols</h2>
-        </center>
-        <p>I draw inspiration from individuals who embody resilience, creativity, and a passion for growth. My idols are
-          those who have made significant impacts in their fields and continue to inspire others with their dedication
-          and achievements. They serve as a reminder of what’s possible when you pursue your dreams with determination
-          and an open heart.</p>
-        <!-- Other content goes here -->
-      </div>
-    </div>
-  </div>
-  <div class="premium_user">
-    <!-- premium_user box div -->
-    <div class="premium_user_box" id="restricted-info">
-      <center>
-        <h2>Authorized Place</h2>
-      </center>
-      <center>
-        <p>Not all people are allowed to open it.</p>
-      </center>
-    </div>
-
-    <!-- The Modal -->
-    <div id="loginModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h2>Login</h2>
-        <form class="login-form">
-          <input type="text" id="username" name="username" placeholder="Username" required>
-          <input type="password" id="password" name="password" placeholder="Password" required>
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="neerimage">
-    <div class="content">
-      <div class="text">
-        "I navigate life with an open heart and a curious mind, <br> growth and embracing challenges with enthusiasm. "
-      </div>
-      <div class="image">
-        <img src="img/neer1.jpg" alt="Your Image">
-      </div>
-    </div>
-    <div class="neerimage">
-      <div class="content">
-        <div class="image2">
-          <img src="img/neer2.jpg" alt="Your Image">
+    <!-- Journal Editor Modal -->
+    <div class="modal" id="editorModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeEditorBtn">&times;</button>
+            <h2>Create Journal Entry</h2>
+            <form action="/api/saveJournal" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="input-group">
+                    <label for="editor">Content</label>
+                    <div id="editor"></div>
+                    <input type="hidden" id="content" name="content">
+                </div>
+                <div class="input-group">
+                    <label for="headingColor">Heading Color</label>
+                    <input type="color" id="headingColor" name="headingColor" value="#000000">
+                </div>
+                <div class="input-group">
+                    <label for="contentColor">Content Color</label>
+                    <input type="color" id="contentColor" name="contentColor" value="#000000">
+                </div>
+                <div class="input-group">
+                    <label for="boxColor">Box Background Color</label>
+                    <input type="color" id="boxColor" name="boxColor" value="#ffffff">
+                    <div class="color-suggestions">
+                        <div class="color-option" style="background-color: #e6f3ff" onclick="setColor('#e6f3ff')"></div>
+                        <div class="color-option" style="background-color: #fff1e6" onclick="setColor('#fff1e6')"></div>
+                        <div class="color-option" style="background-color: #e6ffe6" onclick="setColor('#e6ffe6')"></div>
+                        <div class="color-option" style="background-color: #ffe6f3" onclick="setColor('#ffe6f3')"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn-journal">Save Entry</button>
+            </form>
         </div>
-        <div class="text">
-          "I approach challenges with curiosity and perseverance, <br>always striving to learn and grow."
-        </div>
-      </div>
-      <!-- Other sections of your page -->
     </div>
-  </div>
-  <div class="lower-text">
-    <p>
-      I am passionate about learning and self-improvement. <br>
-    </p>
-    <p>
-      My projects, such as the Badak Library, Prayas Sankalp, and Throw Your Text, reflect my dedication to solving
-      problems and helping others. <br>
-    </p>
-    <p>Whether it's making it easier to share documents, fighting poverty, or simplifying text file transfers, my goal
-      is always to make a positive impact.</p>
-    <p>In my spare time, I love diving into new challenges and documenting my journey on YouTube.</p>
-    <p>From 21-day challenges to learning new skills, I enjoy pushing my limits and sharing my experiences with others.
-    </p> 
-    <p> I believe that every day is an opportunity for growth and discovery.</p>
-  </div>
 
-
-  <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
+    <!-- Friend Form Modal -->
+    <div class="modal" id="friendModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeFriendFormBtn">&times;</button>
+            <h2>Add Neer's Friend</h2>
+            <form action="/neers-friends" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="jobCategory">Job Category</label>
+                    <select id="jobCategory" name="jobCategory" required>
+                        <option value="">Select Job Category</option>
+                        <option value="Engineer">Engineer</option>
+                        <option value="Designer">Designer</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" required>
+                        <option value="">Select Country</option>
+                        <option value="India">India</option>
+                        <option value="USA">USA</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="profilePicture">Profile Picture</label>
+                    <input type="text" id="profilePicture" name="profilePicture" placeholder="Enter image URL">
+                </div>
+                <div class="input-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="personality">Personality</label>
+                    <select id="personality" name="personality" required>
+                        <option value="">Select Personality</option>
+                        <option value="Creative">Creative</option>
+                        <option value="Analytical">Analytical</option>
+                        <option value="Friendly">Friendly</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="joinDate">Date Joined</label>
+                    <input type="date" id="joinDate" name="joinDate" required>
+                </div>
+                <div class="input-group">
+                    <label for="thoughts">What do you think about Neeraj?</label>
+                    <textarea id="thoughts" name="thoughts" required></textarea>
+                </div>
+                <button type="submit" class="btn-journal">Submit</button>
+            </form>
         </div>
-        <div class="col-md-6">
-          <ul class="footer-links">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="contact.ejs">Contact</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
-  </footer>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script src="index.js"></script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Neeraj Chauhan. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/neeraj-chauhan-3ba593244" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Nee-sudo" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+        // Define modal functions in global scope
+        function openEditor() {
+            document.getElementById('editorModal').classList.add('active');
+        }
+
+        function openFriendForm() {
+            document.getElementById('friendModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Color Suggestions
+        function setColor(color) {
+            document.getElementById('boxColor').value = color;
+        }
+
+        // Slider Navigation
+        function slide(sliderId, direction) {
+            const slider = document.getElementById(sliderId).querySelector('.box-container');
+            const boxes = slider.querySelectorAll('.box, .friend-card');
+            const boxWidth = boxes[0].offsetWidth + 20; // Width + gap
+            let currentTransform = parseInt(slider.style.transform.replace(/[^0-9-]/g, '') || 0);
+            const maxTransform = -(boxes.length - 1) * boxWidth;
+            currentTransform += direction * boxWidth;
+            if (currentTransform > 0) currentTransform = 0;
+            if (currentTransform < maxTransform) currentTransform = maxTransform;
+            slider.style.transform = `translateX(${currentTransform}px)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            function toggleMenu() {
+                mainNav.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Banner Slider
+            const slides = document.querySelectorAll('.banner-slide');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            setInterval(nextSlide, 5000);
+
+            // Quill Editor
+            const quill = new Quill('#editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Set hidden content field before form submission
+            const journalForm = document.querySelector('#editorModal form');
+            journalForm.addEventListener('submit', function() {
+                document.getElementById('content').value = quill.root.innerHTML;
+            });
+
+            // Modal Button Event Listeners
+            const openEditorBtn = document.getElementById('openEditorBtn');
+            const openFriendFormBtn = document.getElementById('openFriendFormBtn');
+            const closeEditorBtn = document.getElementById('closeEditorBtn');
+            const closeFriendFormBtn = document.getElementById('closeFriendFormBtn');
+
+            if (openEditorBtn) {
+                openEditorBtn.addEventListener('click', openEditor);
+            }
+
+            if (openFriendFormBtn) {
+                openFriendFormBtn.addEventListener('click', openFriendForm);
+            }
+
+            if (closeEditorBtn) {
+                closeEditorBtn.addEventListener('click', () => closeModal('editorModal'));
+            }
+
+            if (closeFriendFormBtn) {
+                closeFriendFormBtn.addEventListener('click', () => closeModal('friendModal'));
+            }
+
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
-
 </html>

@@ -3,156 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neer's Friend Form</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="https://badaklibrary.up.railway.app/image.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Add Friend - Neer's Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #007bff;
+            --primary-blue-light: #66b2ff;
+            --primary-blue-dark: #0056b3;
+            --primary-white: #ffffff;
+            --light-grey: #f0f4f8;
+            --text-color: #495057;
+            --border-color: #e2e6eb;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.4s;
+            --border-radius-lg: 15px;
+            --border-radius-md: 10px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        .section-box {
+            padding: 60px 0;
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            margin: 20px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-blue-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .friend-form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .friend-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-group label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed) ease;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
+            color: var(--primary-white);
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-
-<body style="background-color: rgb(192 132 252);">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/home.ejs">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">BHARAT</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-          </form>
+<body>
+    <section id="friends-form" class="section-box">
+        <div class="container">
+            <h2><i class="fas fa-users section-icon"></i> Add Neer's Friend</h2>
+            <div class="friend-form-container">
+                <% if (error) { %>
+                    <p class="error-message"><%= error %></p>
+                <% } %>
+                <form action="/neers-friends" method="POST" class="friend-form">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="jobCategory">Job Category</label>
+                        <select id="jobCategory" name="jobCategory" required>
+                            <option value="">Select Job Category</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Designer">Designer</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" required>
+                            <option value="">Select Country</option>
+                            <option value="India">India</option>
+                            <option value="USA">USA</option>
+                            <option value="Russia">Russia</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="profilePicture">Profile Picture</label>
+                        <input type="text" id="profilePicture" name="profilePicture" placeholder="Enter image URL">
+                    </div>
+                    <div class="input-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="personality">Personality</label>
+                        <select id="personality" name="personality" required>
+                            <option value="">Select Personality</option>
+                            <option value="Creative">Creative</option>
+                            <option value="Analytical">Analytical</option>
+                            <option value="Friendly">Friendly</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="joinDate">Date Joined</label>
+                        <input type="date" id="joinDate" name="joinDate" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="thoughts">What do you think about Neeraj?</label>
+                        <textarea id="thoughts" name="thoughts" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Submit</button>
+                </form>
+                <p><a href="/home">Back to Home</a></p>
+            </div>
         </div>
-      </nav>
-     <!-- banner of the site  -->
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="display: block;">
-    <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="First slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, quaerat. Nihil consequuntur sunt repellat, eligendi earum dolores eos deserunt perferendis aliquam fugit neque repudiandae modi ipsam, explicabo unde optio tenetur.</h5>
-          <p>kooo</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="img/banner.jpeg" alt="Third slide">
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-  </div>
-    
-    <form id="neers-friend-form" action="/neers-friends" method="POST">
-        <center>
-            <h2>Neer's Friend Form</h2>
-        </center>
-        <div>
-            <label for="name">Name</label>
-            <input type="text" id="username" name="name">
-        </div>
-        <div>
-            <label for="jobCategory">Job Category:</label>
-            <select id="jobCategory" name="jobCategory">
-                <option value="">Select Job Category</option>
-                <option value="Student">Student</option>
-                <option value="Employed">Employed</option>
-            </select>
-        </div>
-        <div>
-            <label for="country">Country:</label>
-            <select id="country" name="country">
-                <option value="">Select Country</option>
-                <option value="USA">Bharat</option>
-                <option value="Canada">Russia</option>
-                <option value="Mexico">Mexico</option>
-                <!-- Add more countries here -->
-            </select>
-        </div>
-        <div>
-            <label for="profile-picture">Profile Picture:</label>
-            <input type="file" id="profilePicture" name="profilePicture">
-        </div>
-        <div>
-            <label for="gender">Gender:</label>
-            <select id="gender" name="gender">
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-        <div>
-            <label for="personality">Personality:</label>
-            <select id="personality" name="personality">
-                <option value="">Select Personality</option>
-                <option value="extrovert">Extrovert</option>
-                <option value="introvert">Introvert</option>
-                <option value="ambivert">Ambivert</option>
-            </select>
-        </div>
-        <div>
-            <label for="joinDate">Date Joined:</label>
-            <input type="date" id="joinDate" name="joinDate">
-        </div>
-        <div>
-            <label for="thoughts">What do you think about Neeraj?</label>
-            <textarea id="thoughts" name="thoughts" rows="4"></textarea>
-        </div>
-        <div>
-            <center>
-                <button type="submit">Submit</button>
-            </center>
-        </div>
-    </form>
-
-     <!-- Footer -->
-     <footer class="footer">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-6">
-                  <p>&copy; 2024 Neeraj's Journal. All rights reserved.</p>
-              </div>
-              <div class="col-md-6">
-                  <ul class="footer-links">
-                      <li><a href="#">Privacy Policy</a></li>
-                      <li><a href="#">Terms of Service</a></li>
-                      <li><a href="#">Contact</a></li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </footer>
-
-<script src="index.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </section>
 </body>
 </html>

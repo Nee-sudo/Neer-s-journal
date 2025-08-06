@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Dynamic Journey</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your Dynamic Journey</title>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap"
+            rel="stylesheet">
 
-    <style>
+        <style>
         /* CSS Reset & Global Styles */
         :root {
             --primary-blue: #007bff;
@@ -1157,271 +1160,332 @@
             }
         }
     </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Neer's Journey</h1>
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>Neer's Journey</h1>
+                <div class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#learning">Learning</a></li>
+                        <li><a href="#working">Working On</a></li>
+                        <li><a href="#languages">Languages</a></li>
+                        <li><a href="#current-activity">Current Focus</a></li>
+                        <li><a href="#study-deadlines">Study &
+                                Deadlines</a></li>
+                        <li><a href="#login">Login</a></li>
+                    </ul>
+                </nav>
             </div>
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="#learning">Learning</a></li>
-                    <li><a href="#working">Working On</a></li>
-                    <li><a href="#languages">Languages</a></li>
-                    <li><a href="#current-activity">Current Focus</a></li>
-                    <li><a href="#study-deadlines">Study & Deadlines</a></li>
-                    <li><a href="#login">Login</a></li>
-                </ul>
-            </nav>
+        </header>
+
+        <div class="overlay" id="menuOverlay"></div>
+        <main>
+            <section id="learning" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-brain section-icon"></i> What I'm
+                        Learning</h2>
+                    <div class="grid-container">
+                        <div class="skill-card">
+                            <i class="fab fa-python skill-icon"></i>
+                            <h3>Python from GeeksforGeeks</h3>
+                            <p>Mastering the fundamentals of Python
+                                programming.</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar"
+                                    style="width: 85%;"></div>
+                            </div>
+                            <span class="progress-text">85% Proficient</span>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fas fa-video skill-icon"></i>
+                            <h3>Video Editing</h3>
+                            <p>Exploring techniques for creating compelling
+                                video content.</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar"
+                                    style="width: 70%;"></div>
+                            </div>
+                            <span class="progress-text">70% Progress</span>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fas fa-camera skill-icon"></i>
+                            <h3>Video Shooting</h3>
+                            <p>Learning the art of capturing high-quality video
+                                footage.</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar"
+                                    style="width: 60%;"></div>
+                            </div>
+                            <span class="progress-text">60% Covered</span>
+                        </div>
+                        <div class="skill-card">
+                            <i class="fas fa-book-open skill-icon"></i>
+                            <h3>[Another Skill You're Learning]</h3>
+                            <p>Brief description of the skill.</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar"
+                                    style="width: 45%;"></div>
+                            </div>
+                            <span class="progress-text">45% Explored</span>
+                        </div>
+                    </div>
+                    <p class="currently-studying"><i class="fas fa-star"></i>
+                        Currently Focusing on **All Three Skills**</p>
+                </div>
+            </section>
+                <section id="working" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-laptop-code section-icon"></i> What I'm
+                        Working On & Side Projects</h2>
+                    <div class="grid-container">
+                        <div class="project-card">
+                            <i class="fas fa-globe-americas project-icon"></i>
+                            <h3>AI based knowledge base for students</h3>
+                            <p>Developing a web application that uses AI to
+                                provide personalized learning
+                                recommendations.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i
+                                        class="far fa-calendar-alt"></i> Target:
+                                    Mar 15, 2026</span>
+                                <div class="progress-bar-container small">
+                                    <div class="progress-bar"
+                                        style="width: 30%;"></div>
+                                </div>
+                                <span class="progress-text">30%
+                                    Development</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <i class="fas fa-mobile-alt project-icon"></i>
+                            <h3>Making earth one family </h3>
+                            <p>Developing a mobile app that connects people from
+                                different parts of the world to promote cultural
+                                exchange.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i
+                                        class="far fa-calendar-alt"></i> Target:
+                                    Aug 30, 2026</span>
+                                <div class="progress-bar-container small">
+                                    <div class="progress-bar"
+                                        style="width: 20%;"></div>
+                                </div>
+                                <span class="progress-text">20% Research
+                                    Phase</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <i class="fas fa-robot project-icon"></i>
+                            <h3>Automated Conversational AI Bot</h3>
+                            <p>Building an AI-powered Conversational bot to
+                                handle social media dm.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i
+                                        class="far fa-calendar-alt"></i> Target:
+                                    Jan 31, 2026</span>
+                                <div class="progress-bar-container small">
+                                    <div class="progress-bar"
+                                        style="width: 80%;"></div>
+                                </div>
+                                <span class="progress-text">80% Core
+                                    Logic</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="languages" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-globe-americas section-icon"></i>
+                        Languages I Speak</h2>
+                    <div class="grid-container language-grid">
+                        <div class="language-card">
+                            <img src="https://flagcdn.com/in.svg"
+                                alt="India Flag" class="flag-icon">
+                            <h3>Hindi</h3>
+                            <p class="proficiency-level">Native Speaker</p>
+                            <div class="proficiency-bar-visual">
+                                <div class="proficiency-bar-fill"
+                                    style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="language-card">
+                            <img src="https://flagcdn.com/gb.svg" alt="UK Flag"
+                                class="flag-icon">
+                            <h3>English</h3>
+                            <p class="proficiency-level">Fluent (Professional
+                                Working)</p>
+                            <div class="proficiency-bar-visual">
+                                <div class="proficiency-bar-fill"
+                                    style="width: 95%;"></div>
+                            </div>
+                        </div>
+                        <div class="language-card">
+                            <img src="https://flagcdn.com/ru.svg"
+                                alt="Russia Flag" class="flag-icon">
+                            <h3>Russian</h3>
+                            <p class="proficiency-level">Intermediate
+                                (Conversational)</p>
+                            <div class="proficiency-bar-visual">
+                                <div class="proficiency-bar-fill"
+                                    style="width: 70%;"></div>
+                            </div>
+                        </div>
+                        <div class="language-card learning">
+                            <i
+                                class="fas fa-chalkboard-teacher language-icon"></i>
+                            <h3>Russian</h3>
+                            <p class="proficiency-level">Currently Learning </p>
+                            <div class="proficiency-bar-visual">
+                                <div class="proficiency-bar-fill"
+                                    style="width: 25%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="current-activity" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-cogs section-icon"></i> Currently What
+                        I'm Doing</h2>
+                    <div class="current-activity-box">
+                        <i class="fas fa-chart-line current-activity-icon"></i>
+                        <p>I'm primarily focused on **optimizing backend
+                            performance** for high-traffic applications, diving
+                            deep into database indexing, query optimization, and
+                            microservices architecture. Continuous learning is
+                            my mantra!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="study-deadlines" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-calendar-alt section-icon"></i> What
+                        I'm Studying & Deadlines</h2>
+                    <div class="data-table-container">
+                        <div class="data-table">
+                            <h3><i class="fas fa-book-reader"></i> Study Focus
+                                Areas</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Topic</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-code"></i> Advanced
+                                            Algorithms</td>
+                                        <td>In Progress</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-network-wired"></i>
+                                            Distributed Systems</td>
+                                        <td>Starting Soon</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-sitemap"></i>
+                                            Design Patterns</td>
+                                        <td>Revisiting</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-palette"></i> UI/UX
+                                            Principles</td>
+                                        <td>Ongoing Self-Study</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="data-table">
+                            <h3><i class="fas fa-hourglass-half"></i> Upcoming
+                                Deadlines</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Project/Task</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-file-code"></i>
+                                            Portfolio v2 Launch</td>
+                                        <td>Sept 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-bug"></i> Bug Fix
+                                            Sprint End</td>
+                                        <td>Aug 20, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-lightbulb"></i> New
+                                            Feature Pitch</td>
+                                        <td>Oct 5, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-chart-pie"></i>
+                                            Data Analysis Report</td>
+                                        <td>Nov 10, 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="login" class="section-box">
+    <div class="container">
+        <h2><i class="fas fa-user-secret section-icon"></i> Login to Know More About Me</h2>
+        <div class="login-form-container">
+            <p>Unlock a deeper insight into my professional journey, detailed project breakdowns, and exclusive content. Your unique access awaits!</p>
+            <% if (error) { %>
+                <p style="color: red; text-align: center;"><%= error %></p>
+            <% } %>
+            <form action="/login" method="POST" class="login-form">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-group">
+                    <label for="username"><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password"><i class="fas fa-key"></i> Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-login">Secure Login</button>
+                <p class="signup-link">New here? <a href="/signup">Register for Access</a></p>
+            </form>
         </div>
-    </header>
+    </div>
+</section>
+        </main>
 
-    <div class="overlay" id="menuOverlay"></div>
-
-    <main>
-        <section id="learning" class="section-box">
+        <footer>
             <div class="container">
-                <h2><i class="fas fa-brain section-icon"></i> What I'm Learning</h2>
-                <div class="grid-container">
-                    <div class="skill-card">
-                        <i class="fab fa-react skill-icon"></i>
-                        <h3>React.js & Next.js</h3>
-                        <p>Mastering modern frontend development frameworks.</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 85%;"></div>
-                        </div>
-                        <span class="progress-text">85% Proficient</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fab fa-python skill-icon"></i>
-                        <h3>Data Science with Python</h3>
-                        <p>Exploring Pandas, NumPy, and advanced data visualization.</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 70%;"></div>
-                        </div>
-                        <span class="progress-text">70% Progress</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-cloud skill-icon"></i>
-                        <h3>AWS Cloud Solutions</h3>
-                        <p>Learning S3, EC2, Lambda for scalable deployments.</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 60%;"></div>
-                        </div>
-                        <span class="progress-text">60% Covered</span>
-                    </div>
-                    <div class="skill-card">
-                        <i class="fas fa-shield-alt skill-icon"></i>
-                        <h3>Cybersecurity Fundamentals</h3>
-                        <p>Understanding network security and ethical hacking basics.</p>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 45%;"></div>
-                        </div>
-                        <span class="progress-text">45% Explored</span>
-                    </div>
-                </div>
-                <p class="currently-studying"><i class="fas fa-book-open"></i> Currently Deep Diving into **AI Ethics and Governance**</p>
-            </div>
-        </section>
-
-        <section id="working" class="section-box">
-            <div class="container">
-                <h2><i class="fas fa-laptop-code section-icon"></i> What I'm Working On & Side Projects</h2>
-                <div class="grid-container">
-                    <div class="project-card">
-                        <i class="fas fa-globe-americas project-icon"></i>
-                        <h3>AI based knowledge base for students</h3>
-                        <p>Developing a web application that uses AI to provide personalized learning recommendations.</p>
-                        <div class="project-details">
-                            <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Mar 15, 2026</span>
-                            <div class="progress-bar-container small">
-                                <div class="progress-bar" style="width: 30%;"></div>
-                            </div>
-                            <span class="progress-text">30% Development</span>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-mobile-alt project-icon"></i>
-                        <h3>Making earth one family </h3>
-                        <p>Developing a mobile app that connects people from different parts of the world to promote cultural exchange.</p>
-                        <div class="project-details">
-                            <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Aug 30, 2026</span>
-                            <div class="progress-bar-container small">
-                                <div class="progress-bar" style="width: 20%;"></div>
-                            </div>
-                            <span class="progress-text">20% Research Phase</span>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <i class="fas fa-robot project-icon"></i>
-                        <h3>Automated Conversational AI Bot</h3>
-                        <p>Building an AI-powered Conversational bot to handle social media dm.</p>
-                        <div class="project-details">
-                            <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Jan 31, 2026</span>
-                            <div class="progress-bar-container small">
-                                <div class="progress-bar" style="width: 80%;"></div>
-                            </div>
-                            <span class="progress-text">80% Core Logic</span>
-                        </div>
-                    </div>
+                <p>&copy; 2025 Your Name. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="www.linkedin.com/in/neeraj-chauhan-3ba593244" aria-label="LinkedIn Profile"><i
+                            class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Nee-sudo" aria-label="GitHub Profile"><i
+                            class="fab fa-github"></i></a>
+                    <!-- <a href="#" aria-label="Twitter Profile"><i
+                            class="fab fa-twitter"></i></a> -->
+                    <a href="#" aria-label="Email Me"><i
+                            class="fas fa-envelope"></i></a>
                 </div>
             </div>
-        </section>
+        </footer>
 
-        <section id="languages" class="section-box">
-            <div class="container">
-                <h2><i class="fas fa-globe-americas section-icon"></i> Languages I Speak</h2>
-                <div class="grid-container language-grid">
-                    <div class="language-card">
-                        <img src="https://flagcdn.com/in.svg" alt="India Flag" class="flag-icon">
-                        <h3>Hindi</h3>
-                        <p class="proficiency-level">Native Speaker</p>
-                        <div class="proficiency-bar-visual">
-                            <div class="proficiency-bar-fill" style="width: 100%;"></div>
-                        </div>
-                    </div>
-                    <div class="language-card">
-                        <img src="https://flagcdn.com/gb.svg" alt="UK Flag" class="flag-icon">
-                        <h3>English</h3>
-                        <p class="proficiency-level">Fluent (Professional Working)</p>
-                        <div class="proficiency-bar-visual">
-                            <div class="proficiency-bar-fill" style="width: 95%;"></div>
-                        </div>
-                    </div>
-                    <div class="language-card">
-                        <img src="https://flagcdn.com/ru.svg" alt="Russia Flag" class="flag-icon">
-                        <h3>Russian</h3>
-                        <p class="proficiency-level">Intermediate (Conversational)</p>
-                        <div class="proficiency-bar-visual">
-                            <div class="proficiency-bar-fill" style="width: 70%;"></div>
-                        </div>
-                    </div>
-                    <div class="language-card learning">
-                        <i class="fas fa-chalkboard-teacher language-icon"></i>
-                        <h3>Russian</h3>
-                        <p class="proficiency-level">Currently Learning </p>
-                        <div class="proficiency-bar-visual">
-                            <div class="proficiency-bar-fill" style="width: 25%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="current-activity" class="section-box">
-            <div class="container">
-                <h2><i class="fas fa-cogs section-icon"></i> Currently What I'm Doing</h2>
-                <div class="current-activity-box">
-                    <i class="fas fa-chart-line current-activity-icon"></i>
-                    <p>I'm primarily focused on **optimizing backend performance** for high-traffic applications, diving deep into database indexing, query optimization, and microservices architecture. Continuous learning is my mantra!</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="study-deadlines" class="section-box">
-            <div class="container">
-                <h2><i class="fas fa-calendar-alt section-icon"></i> What I'm Studying & Deadlines</h2>
-                <div class="data-table-container">
-                    <div class="data-table">
-                        <h3><i class="fas fa-book-reader"></i> Study Focus Areas</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Topic</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-code"></i> Advanced Algorithms</td>
-                                    <td>In Progress</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-network-wired"></i> Distributed Systems</td>
-                                    <td>Starting Soon</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-sitemap"></i> Design Patterns</td>
-                                    <td>Revisiting</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-palette"></i> UI/UX Principles</td>
-                                    <td>Ongoing Self-Study</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="data-table">
-                        <h3><i class="fas fa-hourglass-half"></i> Upcoming Deadlines</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Project/Task</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><i class="fas fa-file-code"></i> Portfolio v2 Launch</td>
-                                    <td>Sept 15, 2025</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-bug"></i> Bug Fix Sprint End</td>
-                                    <td>Aug 20, 2025</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-lightbulb"></i> New Feature Pitch</td>
-                                    <td>Oct 5, 2025</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-chart-pie"></i> Data Analysis Report</td>
-                                    <td>Nov 10, 2025</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="login" class="section-box">
-            <div class="container">
-                <h2><i class="fas fa-user-secret section-icon"></i> Login to Know More About Me</h2>
-                <div class="login-form-container">
-                    <p>Unlock a deeper insight into my professional journey, detailed project breakdowns, and exclusive content. Your unique access awaits!</p>
-                    <form action="/login" method="POST" class="login-form">
-                        <div class="input-group">
-                            <label for="username"><i class="fas fa-user"></i> Username</label>
-                            <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="password"><i class="fas fa-key"></i> Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        </div>
-                        <button type="submit" class="btn-login">Secure Login</button>
-                        <p class="signup-link">New here? <a href="#">Register for Access</a></p>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Your Name. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
-                <a href="#" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
-                <a href="#" aria-label="Twitter Profile"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Email Me"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', function() {
             const menuToggle = document.getElementById('menuToggle');
             const mainNav = document.getElementById('mainNav');
@@ -1447,5 +1511,60 @@
             });
         });
     </script>
-</body>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.querySelector('.login-form');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    loginForm.addEventListener('submit', function(event) {
+        let valid = true;
+        let errorMessage = '';
+
+        // Check if username is empty
+        if (!usernameInput.value.trim()) {
+            valid = false;
+            errorMessage += 'Username is required.\n';
+        }
+
+        // Check if password is empty or too short
+        if (!passwordInput.value.trim()) {
+            valid = false;
+            errorMessage += 'Password is required.\n';
+        } else if (passwordInput.value.length < 6) {
+            valid = false;
+            errorMessage += 'Password must be at least 6 characters.\n';
+        }
+
+        if (!valid) {
+            event.preventDefault(); // Prevent form submission
+            alert(errorMessage); // Replace with a better UI feedback (e.g., error div)
+        }
+    });
+
+    // Existing menu toggle code...
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const navLinks = mainNav.querySelectorAll('a');
+
+    function toggleMenu() {
+        mainNav.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (mainNav.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+});
+</script>
+    </body>
 </html>

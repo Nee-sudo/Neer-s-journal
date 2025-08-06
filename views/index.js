@@ -1,244 +1,176 @@
-const BACKEND_URL = 'https://neersjournal.up.railway.app'; // Replace with your backend URL
+const BACKEND_URL = 'https://neersjournal.up.railway.app';
 
 document.addEventListener('DOMContentLoaded', function() {
-    var quill = new Quill('#editor', {
-        theme: 'snow'
+    // Initialize Quill Editor
+    const quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Write your journal entry...'
     });
 
-    async function saveText() {
-        const text = quill.root.innerHTML;
+    // Editor Container Toggle
+    document.getElementById('cta-btn').addEventListener('click', () => {
+        const editorContainer = document.getElementById('editor-container');
+        editorContainer.style.display = editorContainer.style.display === 'none' || editorContainer.style.display === '' ? 'block' : 'none';
+    });
+
+    // Submit Journal Entry
+    document.getElementById('submit-entry').addEventListener('click', async () => {
+        const content = quill.root.innerHTML;
+        if (!content.trim()) return alert('Please write something before submitting.');
+
+        const journalEntry = { content, id: Date.now(), timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) };
 
         try {
-            await fetch(`${BACKEND_URL}/api/saveText`, {
+            await fetch(`${BACKEND_URL}/api/saveText`, { // Adjusted to match backend route
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ content: text })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: journalEntry.content })
             });
-            quill.setText('');
+            addJournalEntry(journalEntry);
+            quill.setContents([]);
+            document.getElementById('editor-container').style.display = 'none';
         } catch (error) {
-            console.error(error);
+            console.error('Error saving to backend:', error);
+            alert('Failed to save to server. Saved locally.');
+            addJournalEntry(journalEntry);
+            quill.setContents([]);
+            document.getElementById('editor-container').style.display = 'none';
         }
+    });
+
+    function addJournalEntry(entry) {
+        const entriesContainer = document.querySelector('.entries-container');
+        const card = document.createElement('div');
+        card.className = 'journal-card';
+        card.dataset.id = entry.id;
+        card.innerHTML = `
+            <h3 style="color: #333;">Entry - ${new Date(entry.timestamp).toLocaleDateString()}</h3>
+            <div style="color: #555;">${entry.content}</div>
+            <div class="card-actions">
+                <button class="delete-btn">Delete</button>
+            </div>
+        `;
+        entriesContainer.prepend(card); // Add to top
     }
 
-    async function deleteText(textId) {
+    // Load Existing Entries
+    async function loadJournalEntries() {
         try {
-            await fetch(`${BACKEND_URL}/api/deleteText/${textId}`, {
-                method: 'DELETE',
-            });
-            loadTexts();
+            const response = await fetch(`${BACKEND_URL}/api/getAllTexts`);
+            const entries = await response.json();
+            entries.forEach(entry => addJournalEntry({
+                content: entry.content,
+                id: entry._id,
+                timestamp: entry.createdAt ? new Date(entry.createdAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+            }));
         } catch (error) {
-            console.error('Error deleting text:', error);
+            console.error('Error loading entries:', error);
+            // Fallback to local storage if needed (currently not implemented in backend)
         }
     }
+    loadJournalEntries();
 
-    function open_editor() {
-        var btn = document.getElementById('cta-btn');
-        btn.innerText = "Close";
-        btn.classList.add("change-color");
-        btn.removeEventListener("click", open_editor);
-        btn.addEventListener("click", close_editor);
-        document.getElementById('editor-container').style.display = "block";
-    }
+    // Delete Journal Entry
+    document.querySelector('.entries-container').addEventListener('click', async (event) => {
+        if (event.target.classList.contains('delete-btn')) {
+            const card = event.target.closest('.journal-card');
+            if (confirm('Are you sure you want to delete this entry?')) {
+                const id = card.dataset.id;
+                try {
+                    await fetch(`${BACKEND_URL}/api/saveText/${id}`, { method: 'DELETE' }); // Adjust if backend has a delete route
+                    card.remove();
+                } catch (error) {
+                    console.error('Error deleting from backend:', error);
+                    alert('Failed to delete from server. Removed locally.');
+                    card.remove();
+                }
+            }
+        }
+    });
 
-    function close_editor() {
-        var btn = document.getElementById('cta-btn');
-        btn.innerText = "Start Journaling";
-        btn.classList.remove("change-color");
-        btn.removeEventListener("click", close_editor);
-        btn.addEventListener("click", open_editor);
-        document.getElementById('editor-container').style.display = "none";
-    }
-
+    // Overlay Handling
     function openOverlay() {
-        var overlay = document.getElementById('overlay');
-        if (overlay) {
-            overlay.style.display = 'block';
-        } else {
-            console.error('Element with id "overlay" not found.');
-        }
+        const overlay = document.getElementById('overlays');
+        if (overlay) overlay.style.display = 'block';
     }
 
     function closeOverlay() {
-        var overlay = document.getElementById('overlay');
-        if (overlay) {
-            overlay.style.display = 'none';
-        } else {
-            console.error('Element with id "overlay" not found.');
+        const overlay = document.getElementById('overlays');
+        if (overlay) overlay.style.display = 'none';
+    }
+
+    // Navigation Scroll
+    document.getElementById('idolsNav').addEventListener('click', () => scrollToSection('idols-section'));
+    document.getElementById('friendsNav').addEventListener('click', () => scrollToSection('friends-section'));
+    document.getElementById('lifeNav').addEventListener('click', () => scrollToSection('life-section'));
+
+    function scrollToSection(sectionId) {
+        document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Friend List Fetch and Display
+    async function fetchFriends() {
+        try {
+            const response = await fetch(`${BACKEND_URL}/friends`);
+            const friends = await response.json();
+            const friendsElement = document.getElementById('friends');
+            friendsElement.innerHTML = '';
+            friends.forEach(friend => {
+                const friendDiv = document.createElement('div');
+                friendDiv.className = 'about-me-box';
+                friendDiv.innerHTML = `
+                    <center><div class="profile-picture"><img src="${friend.profilePicture || 'https://via.placeholder.com/100'}" alt="${friend.name}"></div></center>
+                    <div class="details">
+                        <p><strong>Name:</strong> ${friend.name}</p>
+                        <p><strong>Country:</strong> ${friend.country}</p>
+                        <p><strong>Joined:</strong> ${new Date(friend.joinDate).toLocaleDateString()}</p>
+                    </div>
+                `;
+                friendsElement.appendChild(friendDiv);
+            });
+        } catch (error) {
+            console.error('Error fetching friends:', error);
+            document.getElementById('friends').innerHTML = '<p>Failed to load friends. Please try again later.</p>';
         }
     }
 
-    document.getElementById('diary').addEventListener('click', open_diary);
+    document.getElementById('aboutfriends').addEventListener('click', () => {
+        openOverlay();
+        fetchFriends();
+    });
 
-    function open_diary() {
-        window.location.href = "diary";
-    }
-
-    document.getElementById('projects').addEventListener('click', open_projects);
-
-    function open_projects() {
-        window.location.href = "projects";
-    }
-
-    document.getElementById('aboutfriends').addEventListener('click', aboutfriends);
-
-    function aboutfriends() {
-        window.location.href = "friendslist";
-    }
-
-    document.getElementById('inspiration').addEventListener('click', open_inspiration);
-    function open_inspiration() {
-        window.location.href = "idols";
+    // Search Functionality
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
     }
 
     function searchEntries() {
         const searchTerm = document.getElementById('search-input').value.toLowerCase();
-        const boxes = document.querySelectorAll('.about-me-box');
+        const boxes = document.querySelectorAll('.about-me-box, .journal-card');
 
         boxes.forEach(box => {
-            const title = box.querySelector('h2').innerText.toLowerCase();
-            const content = box.querySelector('p').innerText.toLowerCase();
-
-            if (title.includes(searchTerm) || content.includes(searchTerm)) {
-                box.style.display = 'block';
-            } else {
-                box.style.display = 'none';
-            }
+            const text = box.innerText.toLowerCase();
+            box.style.display = text.includes(searchTerm) ? 'block' : 'none';
         });
     }
 
-    // Attach searchEntries function to the search button
+    document.getElementById('search-input').addEventListener('input', debounce(searchEntries, 300));
     document.getElementById('search-button').addEventListener('click', searchEntries);
 
-
-
-    // Get the modal
-    var modal = document.getElementById("loginModal");
-
-    // Get the div that opens the modal
-    var restrictedDiv = document.getElementById("restricted-info");
-
-    // Get the <span> element that closes the modal
-    var closeModal = document.getElementById("closeModal");
-
-    // When the user clicks on the div, open the modal
-    restrictedDiv.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    closeModal.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    document.getElementById('cta-btn').addEventListener('click', function() {
-        var writePad = document.getElementById('write-pad');
-        if (writePad.style.display === 'none' || writePad.style.display === '') {
-            writePad.style.display = 'block';
-        } else {
-            writePad.style.display = 'none';
-        }
+    // Logout Modal
+    document.getElementById('logout-button').addEventListener('click', () => $('#logoutModal').modal('show'));
+    document.getElementById('confirm-logout').addEventListener('click', () => {
+        window.location.href = '/logout';
+        $('#logoutModal').modal('hide');
     });
+    document.getElementById('cancel-logout').addEventListener('click', () => $('#logoutModal').modal('hide'));
 
-    document.getElementById('journal-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Get the heading, content, and colors
-        var heading = document.getElementById('heading').value;
-        var content = document.getElementById('content')
-        .value;
-        var headingColor = document.getElementById('heading-color').value;
-        var contentColor = document.getElementById('content-color').value;
-        var boxColor = document.getElementById('box-color').value;
-
-        // Create the new card
-        var newCard = document.createElement('div');
-        newCard.className = 'journal-card'; // Use the correct class for styling
-        newCard.style.backgroundColor = boxColor;
-        newCard.innerHTML = `
-            <h3 style="color: ${headingColor};">${heading}</h3>
-            <p style="color: ${contentColor};">${content}</p>
-        `;
-
-        // Append the new card to the entries-container
-        document.querySelector('.entries-container').appendChild(newCard);
-
-        // Clear the form and hide the write pad
-        document.getElementById('journal-form').reset();
-        document.getElementById('write-pad').style.display = 'none';
-    });
-
-    function handleCardClick(card) {
-        // Remove the 'expanded' class from all cards
-        document.querySelectorAll('.journal-card').forEach(c => {
-            if (c !== card) {
-                c.classList.remove('expanded');
-                // Remove close button if present
-                const btn = c.querySelector('.close-btn');
-                if (btn) {
-                    btn.remove();
-                }
-            }
-        });
-
-        // Toggle 'expanded' class on the clicked card
-        if (card.classList.contains('expanded')) {
-            card.classList.remove('expanded');
-            const closeBtn = card.querySelector('.close-btn');
-            if (closeBtn) {
-                closeBtn.remove();
-            }
-        } else {
-            card.classList.add('expanded');
-            // Add close button to the expanded card
-            if (!card.querySelector('.close-btn')) {
-                var closeButton = document.createElement('button');
-                closeButton.className = 'close-btn';
-                closeButton.innerText = 'Close';
-                card.appendChild(closeButton);
-
-                // Add click event for the close button
-                closeButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevent triggering the card's click event
-                    card.classList.remove('expanded');
-                    closeButton.remove(); // Remove the close button when collapsing
-                });
-            }
-        }
-    }
-
-    // Attach click event to existing cards
-    document.querySelectorAll('.journal-card').forEach(card => {
-        card.addEventListener('click', function() {
-            handleCardClick(card);
-        });
-    });
-
-    // Attach click event to newly generated cards
-    document.querySelector('.entries-container').addEventListener('click', function(event) {
-        if (event.target.closest('.journal-card')) {
-            handleCardClick(event.target.closest('.journal-card'));
-        }
-    });
-});
-
-// Add this to index.js
-document.getElementById('logout-button').addEventListener('click', function() {
-  // Example: Clear localStorage/sessionStorage or make a logout API call
-  // localStorage.clear(); // if you use localStorage for auth
-  // sessionStorage.clear(); // if you use sessionStorage for auth
-
-  // If you have a backend logout route, use:
-  // window.location.href = '/logout';
-
-  // For demo, just redirect to login or home
-  window.location.href = '/logout'; // Change to your login route
+    // Other Navigation
+    document.getElementById('diary').addEventListener('click', () => scrollToSection('entries-container'));
+    document.getElementById('projects').addEventListener('click', () => scrollToSection('box-container'));
+    document.getElementById('inspiration').addEventListener('click', () => scrollToSection('idols-section'));
 });

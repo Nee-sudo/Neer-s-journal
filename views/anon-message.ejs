@@ -3,207 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymous Message to Neeraj</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/x-icon" href="https://badaklibrary.up.railway.app/image.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Anonymous Message - Neer's Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Add your custom styles here */
-        body {
-<<<<<<<< HEAD:views/anon-message.ejs
-            background-color: rgb(236, 234, 227);
-========
-            background-color: linear-gradient(135deg, #6dd5ed, #2193b0);
->>>>>>>> c569758e996cf7fa81632a8cf9eccf3ef02e5ce4:views/anonmessage.ejs
-            font-family: Arial, sans-serif;
-        }
-        #anonymous-form {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 50%;
-            margin: auto;
+        /* Reuse styles from login.ejs */
+        :root {
+            --primary-blue: #007bff;
+            --primary-blue-light: #66b2ff;
+            --primary-blue-dark: #0056b3;
+            --primary-white: #ffffff;
+            --light-grey: #f0f4f8;
+            --text-color: #495057;
+            --border-color: #e2e6eb;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.4s;
+            --border-radius-lg: 15px;
+            --border-radius-md: 10px;
         }
 
-        #anonymous-form h2 {
-            color: rgb(102, 16, 242);
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        .section-box {
+            padding: 60px 0;
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            margin: 20px 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-blue-dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .message-form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message-form textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            font-size: 1rem;
+            min-height: 150px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
+            color: var(--primary-white);
+            padding: 15px;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        .success-message {
+            color: green;
             text-align: center;
             margin-bottom: 20px;
         }
 
-        #anonymous-form label {
-            font-weight: bold;
-            color: rgb(80, 80, 80);
-        }
-
-        #anonymous-form input, 
-        #anonymous-form textarea {
-            border: 1px solid rgb(200, 200, 200);
-            border-radius: 5px;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-
-        #anonymous-form button {
-            background-color: rgb(36, 34, 39);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        #anonymous-form button:hover {
-            background-color: rgb(70, 10, 180);
-        }
-
-        footer {
-            background-color:#007bff;
-            color: white;
+        .error-message {
+            color: red;
             text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
-
-        footer a {
-            color: #ffd700;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-        /* Media Query for Mobile Devices */
-@media (max-width: 768px) {
-    /* Adjust the navbar */
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .navbar-brand {
-        font-size: 1.5rem;
-    }
-
-    .navbar-nav {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .carousel-inner img {
-        height: 200px; /* Reduce banner height for smaller screens */
-    }
-
-    /* Form styling for mobile */
-    form#anonymous-form {
-        width: 90%;
-        margin: auto;
-        padding: 10px;
-    }
-
-    form#anonymous-form div {
-        display: flex;
-        flex-direction: column;
-    }
-
-    form#anonymous-form label {
-        margin-bottom: 5px;
-    }
-
-    form#anonymous-form input,
-    form#anonymous-form select,
-    form#anonymous-form textarea,
-    form#anonymous-form button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    /* Footer styling for mobile */
-    .footer {
-        text-align: center;
-    }
-
-    .footer-links {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .footer-links li {
-        margin: 0;
-    }
-}
-nav {
-      background: #007bff;
-      color: white;
-      padding: 0.5rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li {
-      margin: 0 1rem;
-    }
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    nav ul li a:hover {
-      color: #4CAF50;
-    }
-    
-
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav>
-        <div class="logo">Neer's Journal</div>
-        <ul>
-          <li><a href="/" style="text-decoration: none;">Home</a></li>
-          <li><a href="/home" style="text-decoration: none;">Journal</a></li>
-          <li><a href="/home" style="text-decoration: none;">Library</a></li>
-          <li><a href="/login" style="text-decoration: none;">Login</a></li>
-        </ul>
-      </nav>
-
-    <!-- Anonymous Form -->
-    <form id="anonymous-form" action="/send-message" method="POST">
-        <h2>Send a Message to Neeraj</h2>
-        <label for="name">Your Name (Optional)</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name (optional)">
-        
-        <label for="thoughts">Your Message</label>
-        <textarea id="thoughts" name="message" rows="5" placeholder="Write your anonymous message here..." required></textarea>
-        
-        <center>
-            <button type="submit">Send Message</button>
-        </center>
-    </form>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Neeraj's Journal. All Rights Reserved. <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <section id="anon-message" class="section-box">
+        <div class="container">
+            <h2><i class="fas fa-envelope section-icon"></i> Send Anonymous Message</h2>
+            <div class="message-form-container">
+                <% if (success) { %>
+                    <p class="success-message"><%= success %></p>
+                <% } %>
+                <% if (error) { %>
+                    <p class="error-message"><%= error %></p>
+                <% } %>
+                <form action="/send-message" method="POST" class="message-form">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <textarea name="message" placeholder="Your message..." required></textarea>
+                    <button type="submit" class="btn-submit">Send</button>
+                </form>
+                <p><a href="/">Back to Home</a></p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

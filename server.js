@@ -3,51 +3,120 @@ const ejs = require('ejs');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const csurf = require('csurf');
+const rateLimit = require('express-rate-limit');
 const User = require('./models/user.js');
-const NeersFriend = require('./models/neers-friend'); // Already defined
+const NeersFriend = require('./models/neers-friend');
 const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
-const cors = require('cors'); require('dotenv').config();
+const cors = require('cors');
+const sanitizeHtml = require('sanitize-html');
+require('dotenv').config();
 
-
+// MongoDB Connection
 const mongoURI = process.env.MONGO_URI;
-// Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Error connecting to MongoDB:', err));
-  console.log('Mongo URI:', process.env.MONGO_URI);
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Error connecting to MongoDB:', err));
+console.log('Mongo URI:', process.env.MONGO_URI);
 
+// Define Models
+const journalSchema = new mongoose.Schema({
+    title: String,
+    content: String,
+    headingColor: String,
+    contentColor: String,
+    boxColor: String,
+    createdAt: { type: Date, default: Date.now }
+});
+const Journal = mongoose.model('Journal', journalSchema);
 
+const idolSchema = new mongoose.Schema({
+    name: String,
+    quote: String,
+    image: String
+});
+const Idol = mongoose.model('Idol', idolSchema);
+
+const commentSchema = new mongoose.Schema({
+    user: String,
+    content: String,
+    createdAt: { type: Date, default: Date.now }
+});
+const lifeSavedSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    photo: String,
+    date: { type: Date, required: true },
+    comments: [commentSchema]
+});
+const LifeSaved = mongoose.model('LifeSaved', lifeSavedSchema);
+
+const photoSchema = new mongoose.Schema({
+    url: String,
+    quote: String
+});
+const Photo = mongoose.model('Photo', photoSchema);
+
+const messageSchema = new mongoose.Schema({
+    content: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+const Message = mongoose.model('Message', messageSchema);
+
+// Initialize Express
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-    origin: ["http://localhost:4000","https:neersjournal.vercel.app","https://neersjournal.up.railway.app"], // Allow both localhost and deployed frontend
+    origin: ["http://localhost:4000", "https://neersjournal.vercel.app", "https://neersjournal.up.railway.app"],
     methods: ["GET", "POST"],
     credentials: true
 }));
+app.use(csurf());
 
-// Passport.js configuration
+// CSRF Error Handler
+app.use((err, req, res, next) => {
+    if (err.code === 'EBADCSRFTOKEN') {
+        console.error('CSRF Error:', err);
+        return res.status(403).render('error', { error: 'Invalid CSRF token. Please try again.', csrfToken: req.csrfToken() });
+    }
+    next(err);
+});
+
+// Rate Limiting
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5,
+    message: 'Too many login attempts, please try again later.'
+});
+const journalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10,
+    message: 'Too many journal submissions, please try again later.'
+});
+
+// Passport Configuration
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
-
-// Set the views directory
 app.set('views', path.join(__dirname, 'views'));
 
-// Serve static files from the 'views' directory
+// Serve static files
 app.use(express.static(path.join(__dirname, 'views')));
 
 // Middleware to check authentication
@@ -61,62 +130,55 @@ const isAuthenticated = (req, res, next) => {
 
 // Routes
 app.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signup', { csrfToken: req.csrfToken(), error: null });
 });
 
 app.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { error: null, csrfToken: req.csrfToken() });
 });
 
 app.post('/signup', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    User.register(new User({ username: username }), password, (err, user) => {
+    const { username, password } = req.body;
+    User.register(new User({ username }), password, (err, user) => {
         if (err) {
             console.error(err);
-            res.status(500).send('Error registering user');
+            res.status(500).render('signup', { error: 'Error registering user', csrfToken: req.csrfToken() });
         } else {
             res.redirect('/login');
         }
     });
 });
 
-app.post('/login', (req, res, next) => {
-    console.log('Login attempt:', req.body); // Log the login attempt
+app.post('/login', loginLimiter, (req, res, next) => {
+    console.log('Login attempt:', req.body);
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             return next(err);
         }
         if (!user) {
-            console.log('Login failed: Invalid username or password'); // Log the failure
-            return res.status(401).render('login', { error: 'Invalid username or password' }); // Send error message to login page
+            console.log('Login failed: Invalid username or password');
+            return res.status(401).render('login', { error: 'Invalid username or password', csrfToken: req.csrfToken() });
         }
         req.logIn(user, (err) => {
             if (err) {
                 return next(err);
             }
-            console.log('User logged in:', user); // Log the user object
-            return res.redirect('/home'); // Redirect to /home after successful login
+            console.log('User logged in:', user);
+            return res.redirect('/home');
         });
     })(req, res, next);
 });
 
-// app.get('/logout', (req, res) => {
-//     req.logout();
-//     res.redirect('/login');
-// });
-// Example using express-session
 app.get('/logout', (req, res, next) => {
-    req.logout(function(err) {
-        if (err) { 
+    req.logout(err => {
+        if (err) {
             console.error('Logout error:', err);
-            return next(err); 
+            return next(err);
         }
         req.session.destroy(err => {
             if (err) {
                 console.error('Error destroying session:', err);
-                return res.redirect('/');
+                return res.status(500).send('Error logging out');
             }
             res.clearCookie('connect.sid');
             res.redirect('/login');
@@ -124,93 +186,157 @@ app.get('/logout', (req, res, next) => {
     });
 });
 
-// Example with JWT (if you're using tokens, client-side logout might involve removing the token from localStorage)
-// For JWT, the logout link would typically just trigger client-side logic to remove the token and redirect.
-// However, you might have a backend route to invalidate tokens if you're managing them server-side.
 // Protected Routes
-app.get('/home', isAuthenticated, (req, res) => {
-    Entry.find({}).then((entries) => {
-        res.render('home', { entries: entries });
-    }).catch((err) => {
+app.get('/home', isAuthenticated, async (req, res) => {
+    try {
+        const entries = await Journal.find();
+        const idols = await Idol.find();
+        const friends = await NeersFriend.find();
+        const lifeSaved = await LifeSaved.find();
+        const photos = await Photo.find();
+        res.render('home', { entries, idols, friends, lifeSaved, photos, csrfToken: req.csrfToken(), error: null });
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error retrieving entries');
-    });
+        res.status(500).render('error', { error: 'Error retrieving data', csrfToken: req.csrfToken() });
+    }
 });
-//accessible without /home
-app.get('/', isAuthenticated, (req, res) => {
-    Entry.find({}).then((entries) => {
-        res.render('home', { entries: entries });
-    }).catch((err) => {
+
+app.get('/', isAuthenticated, async (req, res) => {
+    try {
+        const entries = await Journal.find();
+        const idols = await Idol.find();
+        const friends = await NeersFriend.find();
+        const lifeSaved = await LifeSaved.find();
+        const photos = await Photo.find();
+        res.render('home', { entries, idols, friends, lifeSaved, photos, csrfToken: req.csrfToken(), error: null });
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error retrieving entries');
-    });
+        res.status(500).render('error', { error: 'Error retrieving data', csrfToken: req.csrfToken() });
+    }
 });
 
 app.get('/diary', isAuthenticated, (req, res) => {
-    res.render('entries');
+    res.render('entries', { csrfToken: req.csrfToken(), error: null });
 });
 
 app.get('/projects', isAuthenticated, (req, res) => {
-    res.render('projects');
+    res.render('projects', { csrfToken: req.csrfToken(), error: null });
 });
 
-app.get('/friendslist', isAuthenticated, (req, res) => {
-    res.render('friends');
+app.get('/friendslist', isAuthenticated, async (req, res) => {
+    try {
+        const friends = await NeersFriend.find();
+        res.render('friends', { friends, csrfToken: req.csrfToken(), error: null });
+    } catch (err) {
+        console.error(err);
+        res.render('friends', { friends: [], error: 'Error retrieving friends', csrfToken: req.csrfToken() });
+    }
 });
 
-app.get('/idols', isAuthenticated, (req, res) => {
-    res.render('inspirations');
+app.get('/idols', isAuthenticated, async (req, res) => {
+    try {
+        const idols = await Idol.find();
+        res.render('inspirations', { idols, csrfToken: req.csrfToken(), error: null });
+    } catch (err) {
+        console.error(err);
+        res.render('inspirations', { idols: [], error: 'Error retrieving idols', csrfToken: req.csrfToken() });
+    }
 });
 
 app.get('/friends-form', isAuthenticated, (req, res) => {
-    res.render('friends-form');
+    res.render('friends-form', { csrfToken: req.csrfToken(), error: null });
 });
 
-app.get('/anonmessage' ,(req, res) => {
-    res.render('anon-message');
-} ) ;
-// Define the Friend model
-const friendSchema = new mongoose.Schema({
-    name: String,
-    jobCategory: String,
-    country: String,
-    profilePicture: String,
-    gender: String,
-    personality: String,
-    joinDate: Date,
-    thoughts: String
+app.get('/anon-message', (req, res) => {
+    res.render('anon-message', { success: null, error: null, csrfToken: req.csrfToken() });
 });
-const Friend = mongoose.model('Friend', friendSchema);
 
-// Form submission route
-app.post('/neers-friends', async (req, res) => {
+// Journal Routes
+app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) => {
+    try {
+        const { title, content, headingColor, contentColor, boxColor } = req.body;
+        // Sanitize the content to allow only safe HTML tags
+        const sanitizedContent = sanitizeHtml(content, {
+            allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span'],
+            allowedAttributes: {
+                '*': ['style']
+            },
+            allowedStyles: {
+                '*': {
+                    'color': [/^#[0-9a-fA-F]{6}$/],
+                    'text-align': [/^left$/, /^right$/, /^center$/],
+                    'background-color': [/^#[0-9a-fA-F]{6}$/]
+                }
+            }
+        });
+        const newJournal = new Journal({ title, content: sanitizedContent, headingColor, contentColor, boxColor });
+        await newJournal.save();
+        res.redirect('/home#journal');
+    } catch (err) {
+        console.error(err);
+        res.render('home', { entries: [], idols: [], friends: [], lifeSaved: [], photos: [], error: 'Error saving journal', csrfToken: req.csrfToken() });
+    }
+});
+
+// Comment Route
+app.post('/comment/:id', isAuthenticated, async (req, res) => {
+    try {
+        const { content } = req.body;
+        const story = await LifeSaved.findById(req.params.id);
+        story.comments.push({ user: req.user.username, content });
+        await story.save();
+        res.redirect('/home#life-saved');
+    } catch (err) {
+        console.error(err);
+        res.render('home', { entries: [], idols: [], friends: [], lifeSaved: [], photos: [], error: 'Error posting comment', csrfToken: req.csrfToken() });
+    }
+});
+
+// Search Route
+app.get('/search', isAuthenticated, async (req, res) => {
+    try {
+        const query = req.query.query;
+        const entries = await Journal.find({ title: new RegExp(query, 'i') });
+        const friends = await NeersFriend.find({ name: new RegExp(query, 'i') });
+        res.render('search', { entries, friends, query, csrfToken: req.csrfToken(), error: null });
+    } catch (err) {
+        console.error(err);
+        res.render('search', { entries: [], friends: [], query: '', error: 'Error performing search', csrfToken: req.csrfToken() });
+    }
+});
+
+// Friend Form Submission
+app.post('/neers-friends', isAuthenticated, async (req, res) => {
     try {
         const { name, jobCategory, country, profilePicture, gender, personality, joinDate, thoughts } = req.body;
+        
+        // Validate joinDate
+        if (!joinDate || isNaN(new Date(joinDate).getTime())) {
+            return res.render('friends-form', { error: 'Invalid join date. Please select a valid date.', csrfToken: req.csrfToken() });
+        }
 
         const newNeersFriend = new NeersFriend({
             name,
             jobCategory,
             country,
-            profilePicture,
+            profilePicture: profilePicture || 'https://via.placeholder.com/300x150?text=No+Image',
             gender,
             personality,
-            joinDate,
+            joinDate: new Date(joinDate),
             thoughts
         });
-
         await newNeersFriend.save();
-        res.status(201).json({ message: 'Form submitted successfully' });
+        res.redirect('/home#friends');
     } catch (error) {
         console.error('Error submitting form', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.render('friends-form', { error: 'Error submitting friend form', csrfToken: req.csrfToken() });
     }
 });
 
-// Fetch all friend details
+// Fetch all friend details (API)
 app.get('/friends', async (req, res) => {
     try {
-        const friends = await NeersFriend.find();  // Change 'Friend' to 'NeersFriend'
-        console.log(friends);
+        const friends = await NeersFriend.find();
         res.json(friends);
     } catch (err) {
         console.error(err);
@@ -218,19 +344,10 @@ app.get('/friends', async (req, res) => {
     }
 });
 
-
-// Define the Text model
-const textSchema = new mongoose.Schema({
-    content: String
-});
-const Text = mongoose.model('Text', textSchema);
-
-// Save text route
+// Text Routes
 app.post('/api/saveText', async (req, res) => {
-    const content = req.body.content;
-
     try {
-        const newText = new Text({ content });
+        const newText = new Text({ content: req.body.content });
         await newText.save();
         res.status(200).send('Text saved successfully.');
     } catch (error) {
@@ -239,7 +356,6 @@ app.post('/api/saveText', async (req, res) => {
     }
 });
 
-// Get all texts route
 app.get('/api/getAllTexts', async (req, res) => {
     try {
         const allTexts = await Text.find();
@@ -249,48 +365,31 @@ app.get('/api/getAllTexts', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-                                    //Anonymos message code 
-// Connect to MongoDB
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Define Message Schema
-const messageSchema = new mongoose.Schema({
-    content: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
-});
-
-const Message = mongoose.model("Message", messageSchema);
-
-// Route for rendering the EJS file
-app.get('/anon-message', (req, res) => {
-    res.render('anon-message'); // Render the EJS file
-});
-
-// Handle Form Submission
-app.post("/send-message", async (req, res) => {
+// Anonymous Message Route
+app.post('/send-message', async (req, res) => {
     try {
         const newMessage = new Message({ content: req.body.message });
-        console.log(newMessage);
         await newMessage.save();
-        res.send("<h1>Message Sent Successfully!</h1><a href='/'>Go Back</a>");
+        res.render('anon-message', { success: 'Message sent successfully!', error: null, csrfToken: req.csrfToken() });
     } catch (error) {
-        res.status(500).send("Error saving message. Please try again later.");
+        console.error('Error saving message:', error);
+        res.render('anon-message', { success: null, error: 'Error saving message. Please try again.', csrfToken: req.csrfToken() });
     }
 });
 
-//google route 
+// Static File Routes
 app.get('/google3634443e1c428dc1.html', (req, res) => {
-    const filePath = path.join(__dirname, 'google3634443e1c428dc1.html'); // Path to a local PDF
+    const filePath = path.join(__dirname, 'google3634443e1c428dc1.html');
     res.setHeader('Content-Disposition', 'inline');
     res.sendFile(filePath);
 });
-//sitemap
+
 app.get('/sitemap.xml', (req, res) => {
-    const filePath = path.join(__dirname, 'sitemap.xml'); 
+    const filePath = path.join(__dirname, 'sitemap.xml');
     res.sendFile(filePath);
-  });
+});
+
 // Start the server
 app.listen(4000, () => {
     console.log('Server started on port 4000');

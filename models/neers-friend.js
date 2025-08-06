@@ -1,17 +1,14 @@
-// Data from Neer friends form
 const mongoose = require('mongoose');
 
-const neersFriendSchema = new mongoose.Schema({
-    name:String,
-    jobCategory: String,
-    country: String,
-    profilePicture: String,
-    gender: String,
-    personality: String,
-    joinDate: Date,
-    thoughts: String
+const friendSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    jobCategory: { type: String, required: true },
+    country: { type: String, required: true },
+    profilePicture: { type: String },
+    gender: { type: String, required: true },
+    personality: { type: String, required: true },
+    joinDate: { type: Date, required: true },
+    thoughts: { type: String, required: true }
 });
 
-const NeersFriend = mongoose.model('NeersFriend', neersFriendSchema);
-
-module.exports = NeersFriend;
+module.exports = mongoose.model('NeersFriend', friendSchema);
