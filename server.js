@@ -224,7 +224,7 @@ app.get('/projects', isAuthenticated, (req, res) => {
 });
 
 app.get('/friendslist', isAuthenticated, async (req, res) => {
-    try {
+    try { 
         const friends = await NeersFriend.find();
         res.render('friends', { friends, csrfToken: req.csrfToken(), error: null });
     } catch (err) {
