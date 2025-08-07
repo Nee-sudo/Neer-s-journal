@@ -626,251 +626,6 @@
             resize: vertical;
         }
 
-        /* Learning Section */
-        .learning-section {
-            padding: 40px 0;
-            text-align: center;
-            background: linear-gradient(180deg, var(--light-grey), #f8f9fa);
-        }
-
-        .learning-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .learning-card {
-            background: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .learning-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
-        }
-
-        .learning-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--dark-grey);
-        }
-
-        .learning-card p {
-            font-size: 1rem;
-            color: var(--text-color);
-            margin-bottom: 10px;
-        }
-
-        .learning-card .progress {
-            font-size: 0.9rem;
-            color: var(--accent-green);
-            font-weight: 500;
-        }
-
-        .learning-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-purple));
-            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-        }
-
-        /* Projects Section */
-        .projects-section {
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .project-card {
-            background: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
-        }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--dark-grey);
-        }
-
-        .project-card p {
-            font-size: 1rem;
-            color: var(--text-color);
-            margin-bottom: 10px;
-        }
-
-        .project-card .target {
-            font-size: 0.9rem;
-            color: var(--accent-orange);
-            font-weight: 500;
-        }
-
-        .project-card .progress {
-            font-size: 0.9rem;
-            color: var(--accent-green);
-            font-weight: 500;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-orange));
-            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-        }
-
-        /* Languages Section */
-        .languages-section {
-            padding: 40px 0;
-            text-align: center;
-            background: linear-gradient(180deg, #fff, var(--light-grey));
-        }
-
-        .languages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .language-card {
-            background: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .language-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
-        }
-
-        .language-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--dark-grey);
-        }
-
-        .language-card .flag {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        .language-card p {
-            font-size: 1rem;
-            color: var(--text-color);
-        }
-
-        .language-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-pink));
-            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-        }
-
-        /* Current Focus Section */
-        .current-section {
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .current-section p {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-        }
-
-        /* Study Section */
-        .study-section {
-            padding: 40px 0;
-            text-align: center;
-            background: linear-gradient(180deg, var(--light-grey), #f8f9fa);
-        }
-
-        .study-tables {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .study-table {
-            background: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            padding: 20px;
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 500px;
-            text-align: left;
-        }
-
-        .study-table h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--dark-grey);
-            text-align: center;
-        }
-
-        .study-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .study-table th,
-        .study-table td {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            font-size: 1rem;
-        }
-
-        .study-table th {
-            background: var(--primary-blue-light);
-            color: var(--primary-white);
-        }
-
-        .study-table td {
-            color: var(--text-color);
-        }
-
         /* About Me */
         .about-me {
             padding: 40px 0;
@@ -981,12 +736,12 @@
                 width: 100%;
             }
 
-            .box-container, .idols-grid, .life-saved-grid, .learning-grid, .projects-grid, .languages-grid {
+            .box-container, .idols-grid, .life-saved-grid {
                 flex-direction: row;
                 overflow-x: visible;
             }
 
-            .box, .friend-card, .idol-card, .life-saved-tile, .learning-card, .project-card, .language-card {
+            .box, .friend-card, .idol-card, .life-saved-tile {
                 flex: 0 0 80%;
                 width: 80%;
             }
@@ -999,10 +754,6 @@
 
             .friends-section .btn-journal {
                 width: 80%;
-            }
-
-            .study-table {
-                width: 100%;
             }
         }
 
@@ -1032,7 +783,7 @@
                 max-height: 250px;
             }
 
-            .box, .friend-card, .idol-card, .life-saved-tile, .learning-card, .project-card, .language-card {
+            .box, .friend-card, .idol-card, .life-saved-tile {
                 flex: 0 0 90%;
                 width: 90%;
                 padding: 15px;
@@ -1055,12 +806,6 @@
             .social-links a {
                 font-size: 1.3rem;
             }
-
-            .study-table th,
-            .study-table td {
-                font-size: 0.9rem;
-                padding: 8px;
-            }
         }
     </style>
 </head>
@@ -1073,12 +818,6 @@
             </div>
             <nav id="mainNav">
                 <ul>
-                    <li><a href="#learning">Learning</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#languages">Languages</a></li>
-                    <li><a href="#current">Current</a></li>
-                    <li><a href="#study">Study</a></li>
-                    <li><a href="#journal">Journal</a></li>
                     <li><a href="#idols">Idols</a></li>
                     <li><a href="#friends">Friends</a></li>
                     <li><a href="#life-saved">Life Saved</a></li>
@@ -1113,155 +852,6 @@
             </div>
             <div class="banner-slide" style="background-image: url('./img/banner.jpeg');">
                 <h2>Connect with Me</h2>
-            </div>
-        </section>
-
-        <!-- Learning Section -->
-        <section id="learning" class="learning-section section-box">
-            <div class="container">
-                <h2><i class="fas fa-book-open section-icon"></i> What I'm Learning</h2>
-                <div class="learning-grid">
-                    <div class="learning-card">
-                        <h3>Python from GeeksforGeeks</h3>
-                        <p>Mastering the fundamentals of Python programming.</p>
-                        <p class="progress">85% Proficient</p>
-                    </div>
-                    <div class="learning-card">
-                        <h3>Video Editing</h3>
-                        <p>Exploring techniques for creating compelling video content.</p>
-                        <p class="progress">70% Progress</p>
-                    </div>
-                    <div class="learning-card">
-                        <h3>Video Shooting</h3>
-                        <p>Learning the art of capturing high-quality video footage.</p>
-                        <p class="progress">60% Covered</p>
-                    </div>
-                    <div class="learning-card">
-                        <h3>Web Development</h3>
-                        <p>Building responsive and dynamic web applications.</p>
-                        <p class="progress">45% Explored</p>
-                    </div>
-                </div>
-                <p style="margin-top: 20px;">Currently Focusing on <strong>All Three Skills</strong></p>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="projects-section section-box">
-            <div class="container">
-                <h2><i class="fas fa-project-diagram section-icon"></i> What I'm Working On & Side Projects</h2>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <h3>AI Based Knowledge Base</h3>
-                        <p>Developing a web application that uses AI to provide personalized learning recommendations.</p>
-                        <p class="target">Target: Mar 15, 2026</p>
-                        <p class="progress">30% Development</p>
-                    </div>
-                    <div class="project-card">
-                        <h3>Making Earth One Family</h3>
-                        <p>Developing a mobile app that connects people from different parts of the world to promote cultural exchange.</p>
-                        <p class="target">Target: Aug 30, 2026</p>
-                        <p class="progress">20% Research Phase</p>
-                    </div>
-                    <div class="project-card">
-                        <h3>Automated Conversational AI Bot</h3>
-                        <p>Building an AI-powered conversational bot to handle social media DMs.</p>
-                        <p class="target">Target: Jan 31, 2026</p>
-                        <p class="progress">80% Core Logic</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Languages Section -->
-        <section id="languages" class="languages-section section-box">
-            <div class="container">
-                <h2><i class="fas fa-globe section-icon"></i> Languages I Speak</h2>
-                <div class="languages-grid">
-                    <div class="language-card">
-                        <div class="flag">🇮🇳</div>
-                        <h3>Hindi</h3>
-                        <p>Native Speaker</p>
-                    </div>
-                    <div class="language-card">
-                        <div class="flag">🇬🇧</div>
-                        <h3>English</h3>
-                        <p>Fluent (Professional Working)</p>
-                    </div>
-                    <div class="language-card">
-                        <div class="flag">🇷🇺</div>
-                        <h3>Russian</h3>
-                        <p>Intermediate (Conversational)</p>
-                        <p>Currently Learning</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Current Focus Section -->
-        <section id="current" class="current-section section-box">
-            <div class="container">
-                <h2><i class="fas fa-bullseye section-icon"></i> Currently What I'm Doing</h2>
-                <p>I'm primarily focused on <strong>optimizing backend performance</strong> for high-traffic applications, diving deep into database indexing, query optimization, and microservices architecture. Continuous learning is my mantra!</p>
-            </div>
-        </section>
-
-        <!-- Study Section -->
-        <section id="study" class="study-section section-box">
-            <div class="container">
-                <h2><i class="fas fa-graduation-cap section-icon"></i> What I'm Studying & Deadlines</h2>
-                <div class="study-tables">
-                    <div class="study-table">
-                        <h3>Study Focus Areas</h3>
-                        <table>
-                            <tr>
-                                <th>Topic</th>
-                                <th>Status</th>
-                            </tr>
-                            <tr>
-                                <td>Advanced Algorithms</td>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <td>Distributed Systems</td>
-                                <td>Starting Soon</td>
-                            </tr>
-                            <tr>
-                                <td>Design Patterns</td>
-                                <td>Revisiting</td>
-                            </tr>
-                            <tr>
-                                <td>UI/UX Principles</td>
-                                <td>Ongoing Self-Study</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="study-table">
-                        <h3>Upcoming Deadlines</h3>
-                        <table>
-                            <tr>
-                                <th>Project/Task</th>
-                                <th>Date</th>
-                            </tr>
-                            <tr>
-                                <td>Portfolio v2 Launch</td>
-                                <td>Sept 15, 2025</td>
-                            </tr>
-                            <tr>
-                                <td>Bug Fix Sprint End</td>
-                                <td>Aug 20, 2025</td>
-                            </tr>
-                            <tr>
-                                <td>New Feature Pitch</td>
-                                <td>Oct 5, 2025</td>
-                            </tr>
-                            <tr>
-                                <td>Data Analysis Report</td>
-                                <td>Nov 10, 2025</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
             </div>
         </section>
 
