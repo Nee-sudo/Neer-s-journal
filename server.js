@@ -80,7 +80,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-    origin: ["http://localhost:4000", "https://neersjournal.vercel.app", "https://neersjournal.up.railway.app"],
+    origin: ["http://localhost:4000", "https://neersjournal.vercel.app", "https://neersjournal.up.railway.app","https://neer-s-journal.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true
 }));
