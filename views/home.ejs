@@ -1157,15 +1157,24 @@
 
     // Function to append a new journal entry to the DOM
     function addJournalEntry(entry) {
-        const slider = document.getElementById('journalSlider').querySelector('.box-container');
-        const newBox = document.createElement('div');
-        newBox.className = 'box';
-        newBox.style.backgroundColor = entry.boxColor || '#ffffff';
-        newBox.innerHTML = `
-            <h3 style="color: ${entry.headingColor || '#333333'}">${entry.title}</h3>
-            <div class="ql-editor" style="color: ${entry.contentColor || '#333333'}">${entry.content}</div>
-        `;
-        slider.prepend(newBox); // Add to the beginning
+        const slider = document.getElementById('journalSlider')?.querySelector('.box-container');
+        if (!slider) {
+            console.error('Journal slider or container not found');
+            return;
+        }
+        try {
+            const newBox = document.createElement('div');
+            newBox.className = 'box';
+            newBox.style.backgroundColor = entry.boxColor || '#ffffff';
+            newBox.innerHTML = `
+                <h3 style="color: ${entry.headingColor || '#333333'}">${entry.title}</h3>
+                <div class="ql-editor" style="color: ${entry.contentColor || '#333333'}">${entry.content || ''}</div>
+            `;
+            slider.prepend(newBox);
+            console.log('New journal entry added to DOM:', entry);
+        } catch (error) {
+            console.error('Error adding journal entry to DOM:', error);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1218,16 +1227,14 @@
         journalForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const content = quill.root.innerHTML;
-            console.log('Quill Content:', content); // Debug log
+            console.log('Quill Content:', content);
             document.getElementById('content').value = content;
 
             const formData = new FormData(journalForm);
-            // Log form data for debugging
             for (let [key, value] of formData.entries()) {
                 console.log(`FormData: ${key} = ${value}`);
             }
 
-            // Test with JSON payload
             const formDataObj = {
                 title: formData.get('title'),
                 content: formData.get('content'),
@@ -1259,12 +1266,24 @@
                     };
                     alert('Journal entry saved successfully!');
                     closeModal('editorModal');
-                    addJournalEntry(newEntry); // Append new entry to DOM
+                    addJournalEntry(newEntry);
                     quill.setContents([]); // Clear editor
                     try {
+                        await new Promise(resolve => setTimeout(resolve, 100)); // Delay before reload
                         location.reload(); // Attempt to refresh
                     } catch (reloadError) {
                         console.warn('Page reload failed:', reloadError);
+                        fetch(`${backendUrl}/home`, {
+                            credentials: 'include'
+                        })
+                        .then(res => res.text())
+                        .then(html => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const newContent = doc.querySelector('#journalSlider')?.outerHTML || '';
+                            document.getElementById('journalSlider').outerHTML = newContent;
+                        })
+                        .catch(err => console.error('Fallback update failed:', err));
                     }
                 } else {
                     console.error('Server response:', responseData);
@@ -1281,6 +1300,20 @@
         friendForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(friendForm);
+            // Log form data for debugging
+            console.log('Friend Form Data:');
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key} = ${value}`);
+            }
+
+            // Client-side validation
+            const name = formData.get('name');
+            const joinDate = formData.get('joinDate');
+            if (!name || !joinDate) {
+                alert('Please fill in both name and join date.');
+                return;
+            }
+
             try {
                 const response = await fetch(`${backendUrl}/neers-friends`, {
                     method: 'POST',
@@ -1290,12 +1323,14 @@
                     },
                     credentials: 'include'
                 });
+                const responseData = await response.json();
                 if (response.ok) {
                     alert('Friend added successfully!');
                     closeModal('friendModal');
                     location.reload();
                 } else {
-                    alert('Failed to add friend.');
+                    console.error('Server response for friend:', responseData);
+                    alert(`Failed to add friend: ${responseData.error || 'Unknown error'}`);
                 }
             } catch (error) {
                 console.error('Error adding friend:', error);

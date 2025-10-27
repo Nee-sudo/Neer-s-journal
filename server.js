@@ -14,6 +14,7 @@ const Entry = require('./models/entry.js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const sanitizeHtml = require('sanitize-html');
+const multer = require('multer'); // Add multer for form-data handling
 require('dotenv').config();
 
 // MongoDB Connection
@@ -128,6 +129,9 @@ const isAuthenticated = (req, res, next) => {
         res.redirect('/login');
     }
 };
+
+// Multer configuration for file uploads (optional, can be adjusted)
+const upload = multer();
 
 // Routes
 app.get('/signup', (req, res) => {
@@ -264,16 +268,14 @@ app.get('/anon-message', (req, res) => {
 // Journal Routes
 app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) => {
     try {
-        console.log('Raw req.body:', req.body); // Debug log for raw body
+        console.log('Raw req.body:', req.body);
         const { title, content, headingColor, contentColor, boxColor } = req.body;
 
-        // Validate required fields
         if (!title || !content || content.trim() === '') {
-            console.log('Validation failed - title:', title, 'content:', content); // Debug log
+            console.log('Validation failed - title:', title, 'content:', content);
             return res.status(400).json({ error: 'Title and content are required.' });
         }
 
-        // Relaxed sanitization to preserve more content
         const sanitizedContent = sanitizeHtml(content, {
             allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'ul', 'ol', 'li'],
             allowedAttributes: {
@@ -289,7 +291,7 @@ app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) =
                 }
             }
         });
-        console.log('Sanitized Content:', sanitizedContent); // Debug log for sanitized content
+        console.log('Sanitized Content:', sanitizedContent);
 
         if (!sanitizedContent || sanitizedContent.trim() === '') {
             return res.status(400).json({ error: 'Content is empty after sanitization. Please use allowed tags and styles.' });
@@ -303,11 +305,49 @@ app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) =
             boxColor: boxColor || '#ffffff'
         });
         await newJournal.save();
-        console.log('Journal entry saved:', newJournal); // Debug log
+        console.log('Journal entry saved:', newJournal);
         res.status(200).json({ message: 'Journal entry saved successfully.' });
     } catch (err) {
         console.error('Error saving journal:', err);
         res.status(500).json({ error: 'Error saving journal entry.' });
+    }
+});
+
+// Friend Form Submission
+app.post('/neers-friends', isAuthenticated, upload.none(), async (req, res) => { // Use upload.none() for form-data without files
+    try {
+        console.log('Raw req.body for friend:', req.body);
+        const { name, jobCategory, country, profilePicture, gender, personality, joinDate, thoughts } = req.body;
+
+        // Validate required fields
+        if (!name || !joinDate) {
+            console.log('Validation failed - name:', name, 'joinDate:', joinDate);
+            return res.status(400).json({ error: 'Name and join date are required.' });
+        }
+
+        // Validate joinDate
+        const date = new Date(joinDate);
+        if (isNaN(date.getTime())) {
+            console.log('Invalid joinDate format:', joinDate);
+            return res.status(400).json({ error: 'Invalid join date. Please select a valid date.' });
+        }
+
+        const newNeersFriend = new NeersFriend({
+            name,
+            jobCategory: jobCategory || '',
+            country: country || '',
+            profilePicture: profilePicture || 'https://via.placeholder.com/300x150?text=No+Image',
+            gender: gender || '',
+            personality: personality || '',
+            joinDate: date,
+            thoughts: thoughts || ''
+        });
+        await newNeersFriend.save();
+        console.log('Friend saved:', newNeersFriend);
+        res.status(200).json({ message: 'Friend added successfully.' });
+    } catch (error) {
+        console.error('Error submitting friend form:', error);
+        res.status(500).json({ error: 'Error submitting friend form.' });
     }
 });
 
@@ -341,34 +381,6 @@ app.get('/search', isAuthenticated, async (req, res) => {
     }
 });
 
-// Friend Form Submission
-app.post('/neers-friends', isAuthenticated, async (req, res) => {
-    try {
-        const { name, jobCategory, country, profilePicture, gender, personality, joinDate, thoughts } = req.body;
-        
-        // Validate joinDate
-        if (!joinDate || isNaN(new Date(joinDate).getTime())) {
-            return res.status(400).json({ error: 'Invalid join date. Please select a valid date.' });
-        }
-
-        const newNeersFriend = new NeersFriend({
-            name,
-            jobCategory,
-            country,
-            profilePicture: profilePicture || 'https://via.placeholder.com/300x150?text=No+Image',
-            gender,
-            personality,
-            joinDate: new Date(joinDate),
-            thoughts
-        });
-        await newNeersFriend.save();
-        res.status(200).json({ message: 'Friend added successfully.' });
-    } catch (error) {
-        console.error('Error submitting friend form:', error);
-        res.status(500).json({ error: 'Error submitting friend form.' });
-    }
-});
-
 // Fetch all friend details (API)
 app.get('/friends', async (req, res) => {
     try {
@@ -383,7 +395,7 @@ app.get('/friends', async (req, res) => {
 // Text Routes (likely unused, but kept for compatibility)
 app.post('/api/saveText', async (req, res) => {
     try {
-        const newText = new Journal({ content: req.body.content }); // Use Journal model for consistency
+        const newText = new Journal({ content: req.body.content });
         await newText.save();
         res.status(200).json({ message: 'Text saved successfully.' });
     } catch (error) {
@@ -394,7 +406,7 @@ app.post('/api/saveText', async (req, res) => {
 
 app.get('/api/getAllTexts', async (req, res) => {
     try {
-        const allTexts = await Journal.find(); // Use Journal model
+        const allTexts = await Journal.find();
         res.json(allTexts);
     } catch (error) {
         console.error(error);
