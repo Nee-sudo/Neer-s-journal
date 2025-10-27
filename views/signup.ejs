@@ -6,7 +6,11 @@
 </head>
 <body>
     <h1>Connect with Neeraj</h1>
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
     <form action="/signup" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Password:</label>

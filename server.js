@@ -71,6 +71,7 @@ const Message = mongoose.model('Message', messageSchema);
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Ensure JSON parsing is enabled
 app.use(session({
     secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
@@ -80,7 +81,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-    origin: ["http://localhost:4000", "https://neersjournal.vercel.app", "https://neersjournal.up.railway.app","https://neer-s-journal.onrender.com"],
+    origin: ["http://localhost:4000", "https://neersjournal.vercel.app", "https://neersjournal.up.railway.app", "https://neer-s-journal.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true
 }));
@@ -90,7 +91,7 @@ app.use(csurf());
 app.use((err, req, res, next) => {
     if (err.code === 'EBADCSRFTOKEN') {
         console.error('CSRF Error:', err);
-        return res.status(403).render('error', { error: 'Invalid CSRF token. Please try again.', csrfToken: req.csrfToken() });
+        return res.status(403).json({ error: 'Invalid CSRF token. Please refresh and try again.' });
     }
     next(err);
 });
@@ -137,16 +138,25 @@ app.get('/login', (req, res) => {
     res.render('login', { error: null, csrfToken: req.csrfToken() });
 });
 
-app.post('/signup', (req, res) => {
+app.post('/signup', async (req, res) => {
     const { username, password } = req.body;
-    User.register(new User({ username }), password, (err, user) => {
-        if (err) {
-            console.error(err);
-            res.status(500).render('signup', { error: 'Error registering user', csrfToken: req.csrfToken() });
-        } else {
-            res.redirect('/login');
+    try {
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.render('signup', { error: 'Username already exists. Please choose a different username.', csrfToken: req.csrfToken() });
         }
-    });
+        User.register(new User({ username }), password, (err, user) => {
+            if (err) {
+                console.error(err);
+                res.status(500).render('signup', { error: 'Error registering user', csrfToken: req.csrfToken() });
+            } else {
+                res.redirect('/login');
+            }
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).render('signup', { error: 'Error registering user', csrfToken: req.csrfToken() });
+    }
 });
 
 app.post('/login', loginLimiter, (req, res, next) => {
@@ -254,27 +264,50 @@ app.get('/anon-message', (req, res) => {
 // Journal Routes
 app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) => {
     try {
+        console.log('Raw req.body:', req.body); // Debug log for raw body
         const { title, content, headingColor, contentColor, boxColor } = req.body;
-        // Sanitize the content to allow only safe HTML tags
+
+        // Validate required fields
+        if (!title || !content || content.trim() === '') {
+            console.log('Validation failed - title:', title, 'content:', content); // Debug log
+            return res.status(400).json({ error: 'Title and content are required.' });
+        }
+
+        // Relaxed sanitization to preserve more content
         const sanitizedContent = sanitizeHtml(content, {
-            allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span'],
+            allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'ul', 'ol', 'li'],
             allowedAttributes: {
-                '*': ['style']
+                '*': ['style', 'class']
             },
             allowedStyles: {
                 '*': {
-                    'color': [/^#[0-9a-fA-F]{6}$/],
-                    'text-align': [/^left$/, /^right$/, /^center$/],
-                    'background-color': [/^#[0-9a-fA-F]{6}$/]
+                    'color': [/^#[0-9a-fA-F]{6}$/, /^rgb\(\d{1,3}, \d{1,3}, \d{1,3}\)$/],
+                    'text-align': [/^left$/, /^right$/, /^center$/, /^justify$/],
+                    'background-color': [/^#[0-9a-fA-F]{6}$/, /^rgb\(\d{1,3}, \d{1,3}, \d{1,3}\)$/],
+                    'font-size': [/^\d+(px|em|rem|%)$/],
+                    'font-family': [/^[a-zA-Z\s,-]+$/]
                 }
             }
         });
-        const newJournal = new Journal({ title, content: sanitizedContent, headingColor, contentColor, boxColor });
+        console.log('Sanitized Content:', sanitizedContent); // Debug log for sanitized content
+
+        if (!sanitizedContent || sanitizedContent.trim() === '') {
+            return res.status(400).json({ error: 'Content is empty after sanitization. Please use allowed tags and styles.' });
+        }
+
+        const newJournal = new Journal({
+            title,
+            content: sanitizedContent,
+            headingColor: headingColor || '#333333',
+            contentColor: contentColor || '#333333',
+            boxColor: boxColor || '#ffffff'
+        });
         await newJournal.save();
-        res.redirect('/home#journal');
+        console.log('Journal entry saved:', newJournal); // Debug log
+        res.status(200).json({ message: 'Journal entry saved successfully.' });
     } catch (err) {
-        console.error(err);
-        res.render('home', { entries: [], idols: [], friends: [], lifeSaved: [], photos: [], error: 'Error saving journal', csrfToken: req.csrfToken() });
+        console.error('Error saving journal:', err);
+        res.status(500).json({ error: 'Error saving journal entry.' });
     }
 });
 
@@ -283,12 +316,15 @@ app.post('/comment/:id', isAuthenticated, async (req, res) => {
     try {
         const { content } = req.body;
         const story = await LifeSaved.findById(req.params.id);
+        if (!story) {
+            return res.status(404).json({ error: 'Story not found.' });
+        }
         story.comments.push({ user: req.user.username, content });
         await story.save();
-        res.redirect('/home#life-saved');
+        res.status(200).json({ message: 'Comment posted successfully.' });
     } catch (err) {
-        console.error(err);
-        res.render('home', { entries: [], idols: [], friends: [], lifeSaved: [], photos: [], error: 'Error posting comment', csrfToken: req.csrfToken() });
+        console.error('Error posting comment:', err);
+        res.status(500).json({ error: 'Error posting comment.' });
     }
 });
 
@@ -312,7 +348,7 @@ app.post('/neers-friends', isAuthenticated, async (req, res) => {
         
         // Validate joinDate
         if (!joinDate || isNaN(new Date(joinDate).getTime())) {
-            return res.render('friends-form', { error: 'Invalid join date. Please select a valid date.', csrfToken: req.csrfToken() });
+            return res.status(400).json({ error: 'Invalid join date. Please select a valid date.' });
         }
 
         const newNeersFriend = new NeersFriend({
@@ -326,10 +362,10 @@ app.post('/neers-friends', isAuthenticated, async (req, res) => {
             thoughts
         });
         await newNeersFriend.save();
-        res.redirect('/home#friends');
+        res.status(200).json({ message: 'Friend added successfully.' });
     } catch (error) {
-        console.error('Error submitting form', error);
-        res.render('friends-form', { error: 'Error submitting friend form', csrfToken: req.csrfToken() });
+        console.error('Error submitting friend form:', error);
+        res.status(500).json({ error: 'Error submitting friend form.' });
     }
 });
 
@@ -344,25 +380,25 @@ app.get('/friends', async (req, res) => {
     }
 });
 
-// Text Routes
+// Text Routes (likely unused, but kept for compatibility)
 app.post('/api/saveText', async (req, res) => {
     try {
-        const newText = new Text({ content: req.body.content });
+        const newText = new Journal({ content: req.body.content }); // Use Journal model for consistency
         await newText.save();
-        res.status(200).send('Text saved successfully.');
+        res.status(200).json({ message: 'Text saved successfully.' });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
 app.get('/api/getAllTexts', async (req, res) => {
     try {
-        const allTexts = await Text.find();
+        const allTexts = await Journal.find(); // Use Journal model
         res.json(allTexts);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
