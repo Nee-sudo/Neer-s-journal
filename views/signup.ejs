@@ -1,21 +1,603 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Connect with Neeraj</title>
-    <link rel="icon" type="image/x-icon" href="https://badaklibrary.up.railway.app/image.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg">
+    <title>Sign Up - Neer's Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Connect with Neeraj</h1>
-    <% if (error) { %>
-        <p style="color: red;"><%= error %></p>
-    <% } %>
-    <form action="/signup" method="post">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        <button type="submit">Connect</button>
-    </form>
+    <header>
+        <div class="container">
+            <h1>Neer's Journey</h1>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ====================== SIGNUP SECTION ====================== -->
+    <section id="signup" class="section-box">
+        <div class="container">
+            <div class="signup-wrapper">
+                <div class="signup-intro">
+                    <h2><i class="fas fa-lock section-icon"></i> Join My Private Journal</h2>
+                    <p>
+                        This is my personal space — for life updates, hobbies, and stories shared only with people I trust.
+                        <strong>Your access is private, encrypted, and by invitation only.</strong>
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure & Private</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-users"></i>
+                            <span>Trusted Community</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Personal Stories</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="signup-form-container">
+                    <form class="signup-form" action="/signup" method="POST" novalidate>
+                        <div class="input-group">
+                            <label for="username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" id="username" name="username" placeholder="Choose a friendly name" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="password"><i class="fas fa-key"></i> Password</label>
+                            <input type="password" id="password" name="password" placeholder="Strong & private" required minlength="8">
+                            <small class="form-hint">
+                                Minimum 8 characters. Stored securely with encryption.
+                            </small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="confirm-password"><i class="fas fa-check-circle"></i> Confirm Password</label>
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Type again to confirm" required>
+                            <small class="form-hint error-text" id="password-error" style="display:none;">
+                                Passwords do not match.
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn-signup">
+                            <i class="fas fa-sign-in-alt"></i> Request Access
+                        </button>
+                    </form>
+
+                    <div class="login-link">
+                        Already have access? <a href="/login">Log in here</a>
+                    </div>
+
+                    <p class="privacy-note">
+                        <i class="fas fa-shield-alt"></i>
+                        Only approved users can read or comment. Your data stays between us.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Neeraj Chauhan. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/neeraj-chauhan-3ba593244" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Nee-sudo" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
+
+<style>
+    :root {
+        --primary-blue: #007bff;
+        --primary-blue-light: #66b2ff;
+        --primary-blue-dark: #0056b3;
+        --primary-white: #ffffff;
+        --light-grey: #f0f4f8;
+        --dark-grey: #343a40;
+        --text-color: #495057;
+        --border-color: #e2e6eb;
+        --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --transition-speed: 0.4s;
+        --border-radius-lg: 15px;
+        --border-radius-md: 10px;
+        --accent-purple: #6f42c1;
+        --accent-green: #28a745;
+        --accent-orange: #fd7e14;
+        --accent-pink: #e83e8c;
+    }
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, var(--light-grey), #e9ecef);
+        color: var(--text-color);
+        line-height: 1.7;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 25px;
+    }
+
+    /* Header Styles */
+    header {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+        color: var(--primary-white);
+        padding: 1rem 0;
+        box-shadow: var(--box-shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    header h1 {
+        font-family: 'Dancing Script', cursive;
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        flex-grow: 1;
+        text-align: left;
+    }
+
+    header nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    header nav ul li a {
+        color: var(--primary-white);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.15rem;
+        padding: 10px 20px;
+        border-radius: var(--border-radius-md);
+        transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    header nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+    }
+
+    .menu-toggle {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--primary-white);
+        margin-left: auto;
+        transition: color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+        color: var(--accent-orange);
+    }
+
+    /* Signup Section */
+    #signup {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 0;
+    }
+
+    .signup-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        max-width: 1000px;
+        width: 100%;
+    }
+
+    .signup-intro {
+        text-align: center;
+    }
+
+    .signup-intro h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--dark-grey);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .signup-intro p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .features {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background: var(--primary-white);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--box-shadow);
+        transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature i {
+        font-size: 2rem;
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+    }
+
+    .feature span {
+        font-weight: 600;
+        color: var(--dark-grey);
+    }
+
+    .signup-form-container {
+        background: var(--primary-white);
+        border-radius: var(--border-radius-lg);
+        padding: 40px;
+        box-shadow: var(--box-shadow);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .signup-form-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .signup-form .input-group {
+        margin-bottom: 25px;
+    }
+
+    .signup-form label {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--dark-grey);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .signup-form label i {
+        margin-right: 10px;
+        color: var(--primary-blue);
+    }
+
+    .signup-form input[type="text"],
+    .signup-form input[type="email"],
+    .signup-form input[type="password"] {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--border-radius-md);
+        font-size: 1.05rem;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        background-color: var(--light-grey);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .signup-form input:focus {
+        outline: none;
+        border-color: var(--primary-blue-light);
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+        background-color: var(--primary-white);
+    }
+
+    .form-hint {
+        color: #666;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: block;
+        font-style: italic;
+    }
+
+    .error-text {
+        color: #e74c3c !important;
+        font-weight: 500;
+    }
+
+    .btn-signup {
+        background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
+        color: var(--primary-white);
+        padding: 15px 30px;
+        border: none;
+        border-radius: var(--border-radius-md);
+        font-size: 1.2rem;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-signup:hover {
+        background: linear-gradient(90deg, var(--primary-blue-dark), var(--primary-blue));
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+    }
+
+    .btn-signup i {
+        font-size: 1.1rem;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 1rem;
+    }
+
+    .login-link a {
+        color: var(--primary-blue-dark);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .login-link a:hover {
+        color: var(--primary-blue);
+        text-decoration: underline;
+    }
+
+    .privacy-note {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #777;
+        line-height: 1.5;
+    }
+
+    .privacy-note i {
+        color: var(--primary-blue);
+        margin-right: 6px;
+    }
+
+    /* Footer */
+    footer {
+        background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
+        color: var(--primary-white);
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    footer .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    footer p {
+        margin: 0;
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-links a {
+        color: var(--primary-white);
+        font-size: 1.5rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        transform: scale(1.2);
+        color: var(--accent-orange);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .signup-wrapper {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .signup-intro h2 {
+            font-size: 2rem;
+        }
+
+        .signup-intro p {
+            font-size: 1.1rem;
+        }
+
+        .features {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .signup-form-container {
+            padding: 25px;
+        }
+
+        .signup-form label {
+            font-size: 1rem;
+        }
+
+        .signup-form input {
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .btn-signup {
+            font-size: 1rem;
+            padding: 12px 20px;
+        }
+
+        .privacy-note {
+            font-size: 0.95rem;
+        }
+
+        .menu-toggle {
+            display: block;
+        }
+
+        #mainNav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            padding: 20px 0;
+        }
+
+        #mainNav.active {
+            display: flex;
+        }
+
+        #mainNav ul {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        #mainNav ul li a {
+            padding: 15px 30px;
+            width: 100%;
+            display: block;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header h1 {
+            font-size: 1.5rem;
+        }
+
+        .signup-intro h2 {
+            font-size: 1.8rem;
+        }
+
+        .signup-intro p {
+            font-size: 1rem;
+        }
+
+        .signup-form-container {
+            padding: 20px;
+        }
+
+        .signup-form input {
+            padding: 10px;
+        }
+
+        .btn-signup {
+            font-size: 0.95rem;
+            padding: 10px 15px;
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+        }
+
+        footer {
+            padding: 20px 0;
+        }
+
+        .social-links a {
+            font-size: 1.3rem;
+        }
+    }
+</style>
+
+<!-- Optional: Password Match Validation -->
+<script>
+    const form = document.querySelector('.signup-form');
+    const password = document.getElementById('password');
+    const confirm = document.getElementById('confirm-password');
+    const error = document.getElementById('password-error');
+
+    form.addEventListener('submit', function(e) {
+        if (password.value !== confirm.value) {
+            e.preventDefault();
+            error.style.display = 'block';
+            confirm.focus();
+        } else {
+            error.style.display = 'none';
+        }
+    });
+
+    // Live feedback (optional)
+    confirm.addEventListener('input', () => {
+        if (password.value && confirm.value && password.value !== confirm.value) {
+            confirm.style.borderColor = '#e74c3c';
+        } else {
+            confirm.style.borderColor = '';
+        }
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+
+    menuToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('active');
+    });
+</script>
