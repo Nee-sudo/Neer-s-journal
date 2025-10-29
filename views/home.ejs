@@ -29,6 +29,18 @@
             --accent-pink: #e83e8c;
         }
 
+        body.dark {
+            --primary-blue: #0056b3;
+            --primary-blue-light: #003d82;
+            --primary-blue-dark: #00264d;
+            --primary-white: #1a1a1a;
+            --light-grey: #2c2c2c;
+            --dark-grey: #f0f4f8;
+            --text-color: #e0e0e0;
+            --border-color: #444444;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -93,7 +105,7 @@
             margin: 0;
         }
 
-        header nav ul li a, header nav ul li button {
+        header nav ul li a {
             color: var(--primary-white);
             text-decoration: none;
             font-weight: 500;
@@ -104,7 +116,22 @@
             position: relative;
             overflow: hidden;
             display: inline-block;
-            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        header nav ul li button {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.15rem;
+            padding: 10px 20px;
+            border-radius: var(--border-radius-md);
+            transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: var(--accent-pink);
             border: none;
             cursor: pointer;
         }
@@ -835,6 +862,7 @@
                     <li><a href="#friends">Friends</a></li>
                     <li><a href="#life-saved">Life Saved</a></li>
                     <li><a href="#photos">Photos</a></li>
+                    <li><button id="themeToggle" class="theme-toggle-btn"><i class="fas fa-moon"></i></button></li>
                     <li><button onclick="window.location.href='/logout'">Logout</button></li>
                 </ul>
                 <form action="/search" method="GET" class="search-bar">
@@ -995,9 +1023,9 @@
                         <img src="./img/neer2.jpg" alt="Photo 2">
                         <p>"Moments that inspire me."</p>
                     </div>
-                        <div class="box">
-                        <img src="./img/icon.jpg" alt="Photo 2">
-                        <p>"Moments that inspire me."</p>
+                    <div class="box">
+                        <img src="./img/icon.jpg" alt="Icon">
+                        <p>"My Icon."</p>
                     </div>
                 </div>
             </div>
@@ -1401,7 +1429,33 @@
                 }
             });
         });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+                themeIcon.className = 'fas fa-sun';
+            } else {
+                document.body.classList.remove('dark');
+                themeIcon.className = 'fas fa-moon';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
     });
 </script>
 </body>
 </html>
+
