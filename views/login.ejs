@@ -70,7 +70,7 @@
         header h1 {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
-            font-size: 1rem;
+            font-size: ;
             font-weight: 700;
             letter-spacing: 1px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
@@ -437,6 +437,39 @@
         .project-details .progress-bar-container.small {
             height: 10px;
             margin-top: 10px;
+        }
+
+        .project-details .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .project-details .tech-tag {
+            background-color: var(--primary-blue-light);
+            color: var(--primary-white);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-details .project-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .project-details .project-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .project-details .project-link:hover {
+            color: var(--primary-blue-dark);
         }
 
         /* --- Language Section Specifics --- */
@@ -1177,6 +1210,7 @@
                         <li><a href="#current-activity">Current Focus</a></li>
                         <li><a href="#study-deadlines">Study &
                                 Deadlines</a></li>
+                        <li><a href="#projects">Projects</a></li>
                         <li><a href="#login">Login</a></li>
                     </ul>
                 </nav>
@@ -1444,6 +1478,84 @@
                 </div>
             </section>
 
+            <section id="projects" class="section-box">
+                <div class="container">
+                    <h2><i class="fas fa-folder-open section-icon"></i> My Projects</h2>
+                    <div class="grid-container">
+                        <div class="project-card">
+                            <i class="fas fa-code project-icon"></i>
+                            <h3>Personal Portfolio Website</h3>
+                            <p>A responsive portfolio website showcasing my skills, projects, and journey. Built with HTML, CSS, JavaScript, and Node.js.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Dec 2024</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">HTML</span>
+                                    <span class="tech-tag">CSS</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                    <span class="tech-tag">Node.js</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nee-sudo/portfolio" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <i class="fas fa-robot project-icon"></i>
+                            <h3>AI Chatbot Assistant</h3>
+                            <p>An intelligent chatbot for handling customer queries, built with Python and machine learning libraries.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Nov 2024</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">TensorFlow</span>
+                                    <span class="tech-tag">NLP</span>
+                                    <span class="tech-tag">Flask</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nee-sudo/ai-chatbot" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <i class="fas fa-mobile-alt project-icon"></i>
+                            <h3>Mobile Task Manager App</h3>
+                            <p>A cross-platform mobile app for task management with real-time synchronization and collaborative features.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Oct 2024</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">React Native</span>
+                                    <span class="tech-tag">Firebase</span>
+                                    <span class="tech-tag">Redux</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nee-sudo/task-manager" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> App Store</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <i class="fas fa-chart-line project-icon"></i>
+                            <h3>Data Visualization Dashboard</h3>
+                            <p>An interactive dashboard for data analysis and visualization, featuring real-time charts and customizable widgets.</p>
+                            <div class="project-details">
+                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Sep 2024</span>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">D3.js</span>
+                                    <span class="tech-tag">React</span>
+                                    <span class="tech-tag">Node.js</span>
+                                    <span class="tech-tag">MongoDB</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nee-sudo/data-dashboard" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 <section id="login" class="section-box">
     <div class="container">
         <h2><i class="fas fa-user-secret section-icon"></i> Login to Know More About Me</h2>
@@ -1463,7 +1575,7 @@
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
                 <button type="submit" class="btn-login">Secure Login</button>
-                <p class="signup-link">New here? <a href="/signup">Register for Access</a></p>
+                <p class="signup-link">New here? <a href="/signup">Request invite</a></p>
             </form>
         </div>
     </div>
