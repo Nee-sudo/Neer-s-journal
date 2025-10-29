@@ -20,6 +20,7 @@
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="/login">Login</a></li>
+                    <li><button id="themeToggle" class="theme-toggle-btn"><i class="fas fa-moon"></i></button></li>
                 </ul>
             </nav>
         </div>
@@ -145,6 +146,18 @@
         flex-direction: column;
     }
 
+    body.dark {
+        --primary-blue: #0056b3;
+        --primary-blue-light: #003d82;
+        --primary-blue-dark: #00264d;
+        --primary-white: #1a1a1a;
+        --light-grey: #2c2c2c;
+        --dark-grey: #f0f4f8;
+        --text-color: #e0e0e0;
+        --border-color: #444444;
+        --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -202,7 +215,23 @@
         cursor: pointer;
     }
 
-    header nav ul li a:hover {
+    header nav ul li button {
+        color: var(--primary-white);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1.15rem;
+        padding: 10px 20px;
+        border-radius: var(--border-radius-md);
+        transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        background: var(--accent-pink);
+        border: none;
+        cursor: pointer;
+    }
+
+    header nav ul li a:hover, header nav ul li button:hover {
         background-color: rgba(255, 255, 255, 0.2);
         transform: translateY(-3px);
     }
@@ -599,5 +628,25 @@
 
     menuToggle.addEventListener('click', () => {
         mainNav.classList.toggle('active');
+    });
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        const isDark = body.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
 </script>

@@ -3,40 +3,583 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg">
+    <title>Search Results - Neer's Journal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Reuse styles from login.ejs and home.ejs */
-        body { font-family: 'Poppins', sans-serif; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        h2 { font-family: 'Montserrat', sans-serif; color: #0056b3; }
-        .box-container { display: flex; gap: 20px; overflow-x: auto; }
-        .box { flex: 0 0 300px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); }
-        @media (max-width: 768px) { .box-container { flex-direction: column; } .box { flex: 0 0 auto; width: 100%; } }
+        :root {
+            --primary-blue: #007bff;
+            --primary-blue-light: #66b2ff;
+            --primary-blue-dark: #0056b3;
+            --primary-white: #ffffff;
+            --light-grey: #f0f4f8;
+            --dark-grey: #343a40;
+            --text-color: #495057;
+            --border-color: #e2e6eb;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition-speed: 0.4s;
+            --border-radius-lg: 15px;
+            --border-radius-md: 10px;
+            --accent-purple: #6f42c1;
+            --accent-green: #28a745;
+            --accent-orange: #fd7e14;
+            --accent-pink: #e83e8c;
+        }
+
+        body.dark {
+            --primary-blue: #0056b3;
+            --primary-blue-light: #003d82;
+            --primary-blue-dark: #00264d;
+            --primary-white: #1a1a1a;
+            --light-grey: #2c2c2c;
+            --dark-grey: #f0f4f8;
+            --text-color: #e0e0e0;
+            --border-color: #444444;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-grey);
+            color: var(--text-color);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 25px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            color: var(--primary-white);
+            padding: 1rem 0;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            font-family: 'Dancing Script', cursive;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        header nav ul li a {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.15rem;
+            padding: 10px 20px;
+            border-radius: var(--border-radius-md);
+            transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        header nav ul li button {
+            color: var(--primary-white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.15rem;
+            padding: 10px 20px;
+            border-radius: var(--border-radius-md);
+            transition: background-color var(--transition-speed) ease, transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            background: var(--accent-pink);
+            border: none;
+            cursor: pointer;
+        }
+
+        header nav ul li a:hover, header nav ul li button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            color: var(--primary-white);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+
+        .search-results-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .search-results-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-blue-dark);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .search-results-section p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+        }
+
+        /* Slider for Boxes */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 40px;
+        }
+
+        .box-container {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .box {
+            flex: 0 0 300px;
+            background-color: var(--primary-white);
+            border-radius: var(--border-radius-md);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .box h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-grey);
+            margin-bottom: 15px;
+        }
+
+        .box p {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .box .ql-editor {
+            color: inherit;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-blue);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-blue-dark);
+        }
+
+        .slider-btn.left {
+            left: 10px;
+        }
+
+        .slider-btn.right {
+            right: 10px;
+        }
+
+        /* Friends Section */
+        .friends-section h3 {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-blue-dark);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .friend-card {
+            flex: 0 0 300px;
+            background: var(--primary-white);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.2);
+        }
+
+        .friend-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 15px;
+        }
+
+        .friend-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark-grey);
+        }
+
+        .friend-card p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .friend-card .thoughts {
+            font-style: italic;
+            color: var(--accent-purple);
+        }
+
+        .friend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
+            color: var(--primary-white);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--primary-white);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--accent-orange);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header .container {
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            header nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100%;
+                background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
+                padding-top: 80px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                transition: right 0.4s ease-in-out;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header nav.active {
+                right: 0;
+            }
+
+            header nav ul {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .box-container, .friends-section .box-container {
+                flex-direction: row;
+                overflow-x: visible;
+            }
+
+            .box, .friend-card {
+                flex: 0 0 80%;
+                width: 80%;
+            }
+
+            .slider-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+
+            .search-results-section h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .search-results-section h2 {
+                font-size: 1.7rem;
+            }
+
+            .box, .friend-card {
+                flex: 0 0 90%;
+                width: 90%;
+                padding: 15px;
+            }
+
+            .slider-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+
+            footer {
+                padding: 20px 0;
+            }
+
+            .social-links a {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Search Results for "<%= query %>"</h2>
-        <h3>Journals</h3>
-        <div class="box-container">
-            <% entries.forEach(entry => { %>
-                <div class="box">
-                    <h3><%= entry.title %></h3>
-                    <div><%= entry.content %></div>
-                </div>
-            <% }) %>
+    <header>
+        <div class="container">
+            <h1>Neer's Journey</h1>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><button id="themeToggle" class="theme-toggle-btn"><i class="fas fa-moon"></i></button></li>
+                    <li><button onclick="window.location.href='/logout'">Logout</button></li>
+                </ul>
+            </nav>
         </div>
-        <h3>Friends</h3>
-        <div class="box-container">
-            <% friends.forEach(friend => { %>
-                <div class="box">
-                    <h3><%= friend.name %></h3>
-                    <p><%= friend.jobCategory %>, <%= friend.country %></p>
+    </header>
+
+    <div class="overlay" id="menuOverlay"></div>
+
+    <main>
+        <section class="search-results-section">
+            <div class="container">
+                <h2><i class="fas fa-search section-icon"></i> Search Results</h2>
+                <p>Showing results for "<%= query %>"</p>
+            </div>
+        </section>
+
+        <% if (entries && entries.length > 0) { %>
+        <section class="journal-section">
+            <div class="container">
+                <h3><i class="fas fa-book section-icon"></i> Journals</h3>
+                <div class="slider-container" id="journalSlider">
+                    <button class="slider-btn left" onclick="slide('journalSlider', -1)"><</button>
+                    <div class="box-container">
+                        <% entries.forEach(entry => { %>
+                            <div class="box" style="background-color: <%= entry.boxColor || '#ffffff' %>;">
+                                <h3 style="color: <%= entry.headingColor || '#333333' %>;"><%= entry.title %></h3>
+                                <div class="ql-editor" style="color: <%= entry.contentColor || '#333333' %>;"><%- entry.content %></div>
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="slider-btn right" onclick="slide('journalSlider', 1)">></button>
                 </div>
-            <% }) %>
+            </div>
+        </section>
+        <% } %>
+
+        <% if (friends && friends.length > 0) { %>
+        <section class="friends-section">
+            <div class="container">
+                <h3><i class="fas fa-users section-icon"></i> Friends</h3>
+                <div class="slider-container" id="friendsSlider">
+                    <button class="slider-btn left" onclick="slide('friendsSlider', -1)"><</button>
+                    <div class="box-container">
+                        <% friends.forEach(friend => { %>
+                            <div class="friend-card">
+                                <img src="<%= friend.profilePicture || 'https://via.placeholder.com/300x200?text=No+Image' %>" alt="<%= friend.name %>">
+                                <h3><%= friend.name %></h3>
+                                <p><strong>Job Category:</strong> <%= friend.jobCategory %></p>
+                                <p><strong>Country:</strong> <%= friend.country %></p>
+                                <p><strong>Personality:</strong> <%= friend.personality %></p>
+                                <p><strong>Joined:</strong> <%= friend.joinDate ? new Date(friend.joinDate).toDateString() : 'Not specified' %></p>
+                                <p class="thoughts">"<%= friend.thoughts %>"</p>
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="slider-btn right" onclick="slide('friendsSlider', 1)">></button>
+                </div>
+            </div>
+        </section>
+        <% } %>
+
+        <% if ((!entries || entries.length === 0) && (!friends || friends.length === 0)) { %>
+        <section class="no-results-section">
+            <div class="container">
+                <h3>No results found for "<%= query %>"</h3>
+                <p>Try searching with different keywords.</p>
+                <a href="/home" class="btn-back">Back to Home</a>
+            </div>
+        </section>
+        <% } %>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Neeraj Chauhan. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/neeraj-chauhan-3ba593244" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Nee-sudo" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+            </div>
         </div>
-        <a href="/home">Back to Home</a>
-    </div>
+    </footer>
+
+    <script>
+        // Slider Navigation
+        function slide(sliderId, direction) {
+            const slider = document.getElementById(sliderId).querySelector('.box-container');
+            const boxes = slider.querySelectorAll('.box, .friend-card');
+            const boxWidth = boxes[0].offsetWidth + 20; // Width + gap
+            let currentTransform = parseInt(slider.style.transform.replace(/[^0-9-]/g, '') || 0);
+            const maxTransform = -(boxes.length - 1) * boxWidth;
+            currentTransform += direction * boxWidth;
+            if (currentTransform > 0) currentTransform = 0;
+            if (currentTransform < maxTransform) currentTransform = maxTransform;
+            slider.style.transform = `translateX(${currentTransform}px)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navbar Menu Toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            function toggleMenu() {
+                mainNav.classList.toggle('active');
+                menuOverlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark');
+                    themeIcon.className = 'fas fa-sun';
+                } else {
+                    document.body.classList.remove('dark');
+                    themeIcon.className = 'fas fa-moon';
+                }
+                localStorage.setItem('theme', theme);
+            }
+
+            // Load saved theme or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            });
+        });
+    </script>
 </body>
 </html>
