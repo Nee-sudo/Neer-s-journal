@@ -282,6 +282,13 @@
             margin: 20px 0;
         }
 
+        /* Read More Modal Styles (non-fullscreen) */
+        .read-more-modal .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
         .close-btn {
             position: absolute;
             top: 15px;
@@ -387,6 +394,26 @@
 .ql-editor {
     font-size: 1rem;
     line-height: 1.5;
+}
+
+.box .ql-editor {
+    max-height: 150px;
+    overflow: hidden;
+}
+
+.read-more-btn {
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    border: none;
+    padding: 5px 10px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.read-more-btn:hover {
+    background: var(--primary-blue-dark);
 }
 
 .mood-selector {
@@ -1341,6 +1368,15 @@
                 <div id="adminError" class="error-message" style="display: none;"></div>
                 <button type="submit" class="btn-journal">Login</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Read More Modal -->
+    <div class="modal read-more-modal" id="readMoreModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeReadMoreBtn">&times;</button>
+            <h2>Full Journal Entry</h2>
+            <div id="readMoreContent"></div>
         </div>
     </div>
 
