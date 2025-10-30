@@ -900,7 +900,7 @@
         <section id="journal" class="journal-section section-box">
             <div class="container">
                 <h2><i class="fas fa-book section-icon"></i> My Journal</h2>
-                <button class="btn-journal" id="openEditorBtn">Start Journaling</button>
+                <button class="btn-journal" id="openAdminLoginBtn">Start Journaling</button>
                 <div class="slider-container" id="journalSlider">
                     <button class="slider-btn left" onclick="slide('journalSlider', -1)">&lt;</button>
                     <div class="box-container">
@@ -1138,6 +1138,26 @@
         </div>
     </div>
 
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeAdminLoginBtn">&times;</button>
+            <h2>Admin Login</h2>
+            <form id="adminLoginForm">
+                <div class="input-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="password" required>
+                </div>
+                <div id="adminError" class="error-message" style="display: none;"></div>
+                <button type="submit" class="btn-journal">Login</button>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Neeraj Chauhan. All rights reserved.</p>
@@ -1164,6 +1184,10 @@
 
     function openFriendForm() {
         document.getElementById('friendModal').classList.add('active');
+    }
+
+    function openAdminLogin() {
+        document.getElementById('adminLoginModal').classList.add('active');
     }
 
     function closeModal(modalId) {
@@ -1399,11 +1423,31 @@
             });
         });
 
+        // Handle Admin Login Form Submission
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        adminLoginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const errorDiv = document.getElementById('adminError');
+
+            if (username === 'nilufarim' && password === 'neer_7007') {
+                closeModal('adminLoginModal');
+                openEditor();
+                errorDiv.style.display = 'none';
+            } else {
+                errorDiv.textContent = 'Wrong credentials';
+                errorDiv.style.display = 'block';
+            }
+        });
+
         // Modal Button Event Listeners
         const openEditorBtn = document.getElementById('openEditorBtn');
         const openFriendFormBtn = document.getElementById('openFriendFormBtn');
+        const openAdminLoginBtn = document.getElementById('openAdminLoginBtn');
         const closeEditorBtn = document.getElementById('closeEditorBtn');
         const closeFriendFormBtn = document.getElementById('closeFriendFormBtn');
+        const closeAdminLoginBtn = document.getElementById('closeAdminLoginBtn');
 
         if (openEditorBtn) {
             openEditorBtn.addEventListener('click', openEditor);
@@ -1413,12 +1457,20 @@
             openFriendFormBtn.addEventListener('click', openFriendForm);
         }
 
+        if (openAdminLoginBtn) {
+            openAdminLoginBtn.addEventListener('click', openAdminLogin);
+        }
+
         if (closeEditorBtn) {
             closeEditorBtn.addEventListener('click', () => closeModal('editorModal'));
         }
 
         if (closeFriendFormBtn) {
             closeFriendFormBtn.addEventListener('click', () => closeModal('friendModal'));
+        }
+
+        if (closeAdminLoginBtn) {
+            closeAdminLoginBtn.addEventListener('click', () => closeModal('adminLoginModal'));
         }
 
         // Close modals when clicking outside

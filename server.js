@@ -11,13 +11,13 @@ const rateLimit = require('express-rate-limit');
 const User = require('./models/user.js');
 const NeersFriend = require('./models/neers-friend');
 const Entry = require('./models/entry.js');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const sanitizeHtml = require('sanitize-html');
 const multer = require('multer'); // Add multer for form-data handling
 require('dotenv').config();
 
-// MongoDB Connection
+// MongoDB Connectionpr
+
 const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
@@ -70,7 +70,6 @@ const Message = mongoose.model('Message', messageSchema);
 
 // Initialize Express
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Ensure JSON parsing is enabled
 app.use(session({

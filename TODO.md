@@ -1,21 +1,10 @@
-# TODO: Add Dark Mode Toggle to Entire Site
+# TODO for Admin Login Overlay on Start Journaling
 
-## Steps to Complete
-- [x] Create TODO.md file with steps
-- [x] Edit views/login.ejs: Add toggle button to header nav, add CSS, add JS
-- [x] Edit views/home.ejs: Add toggle button to header nav, add CSS, add JS
-- [x] Edit views/signup.ejs: Add toggle button to header nav, add CSS, add JS
-- [x] Edit views/entries.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/error.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/friends.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/friends-form.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/inspirations.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/projects.ejs: Add toggle button to header nav, add CSS, add JS
-- [x] Edit views/search.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/anon-message.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/anonmessage.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/hustle.ejs: Add toggle button to header nav, add CSS, add JS
-- [ ] Edit views/contact.ejs: Add toggle button to header nav, add CSS, add JS (if applicable)
-- [ ] Edit views/chat archive.html: Add toggle button to header nav, add CSS, add JS (if applicable)
-- [ ] Edit views/test.html: Add toggle button to header nav, add CSS, add JS (if applicable)
-- [ ] Test: Launch browser, navigate to pages, verify toggle switches dark mode
+## Tasks
+- [ ] Modify home.ejs to change "Start Journaling" button click from openEditor() to openAdminLogin()
+- [ ] Add new admin login modal HTML in home.ejs
+- [ ] Add JavaScript function openAdminLogin() to show the admin modal
+- [ ] Add form submit handler in JS to check credentials (username: nilufarim, password: neer_7007)
+- [ ] If credentials correct, close admin modal and open journal editor modal
+- [ ] If wrong, display "Wrong credentials" error message
+- [ ] Test the overlay modal functionality
