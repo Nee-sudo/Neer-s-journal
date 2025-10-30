@@ -925,6 +925,7 @@
                         <% entries.forEach(entry => { %>
                             <div class="box" style="background-color: <%= entry.boxColor || '#ffffff' %>;">
                                 <h3 style="color: <%= entry.headingColor || '#333333' %>;"><%= entry.title %></h3>
+                                <p class="date">Date: <%= entry.createdAt ? new Date(entry.createdAt).toDateString() : 'Not specified' %></p>
                                 <div class="ql-editor" style="color: <%= entry.contentColor || '#333333' %>;"><%- entry.content %></div>
                             </div>
                         <% }) %>
@@ -1034,19 +1035,67 @@
                 <h2><i class="fas fa-camera section-icon"></i> My Photos</h2>
                 <div class="box-container">
                     <div class="box">
-                        <img src="./img/neer1.jpg" alt="Photo 1">
+                        <img class="photo-thumb" src="./img/neer1.jpg" alt="Photo 1" data-full="./img/neer1.jpg" style="cursor:pointer;" onclick="openPhotoModal(this.dataset.full || this.src)">
                         <p>"Capturing the beauty of life."</p>
                     </div>
                     <div class="box">
-                        <img src="./img/neer2.jpg" alt="Photo 2">
+                        <img class="photo-thumb" src="./img/neer2.jpg" alt="Photo 2" data-full="./img/neer2.jpg" style="cursor:pointer;" onclick="openPhotoModal(this.dataset.full || this.src)">
                         <p>"Moments that inspire me."</p>
                     </div>
                     <div class="box">
-                        <img src="./img/icon.jpg" alt="Icon">
+                        <img class="photo-thumb" src="./img/icon.jpg" alt="Icon" data-full="./img/icon.jpg" style="cursor:pointer;" onclick="openPhotoModal(this.dataset.full || this.src)">
                         <p>"My Icon."</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Photo viewer modal (reuses .modal/.modal-content styles from page) -->
+            <div id="photoModal" class="modal" aria-hidden="true" onclick="if(event.target === this) closePhotoModal()">
+                <div class="modal-content" style="background: transparent; box-shadow: none; max-width: 900px; width: 95%; padding: 10px; display:flex; align-items:center; justify-content:center;">
+                    <button class="close-btn" aria-label="Close" onclick="closePhotoModal()" style="position:absolute; right:12px; top:12px; z-index:12;">&times;</button>
+                    <img id="photoModalImg" src="" alt="Full photo" style="max-height:80vh; width:auto; max-width:100%; border-radius:12px; display:block;">
+                </div>
+            </div>
+
+            <script>
+                // Expose simple global functions so clicks on thumbnails work inline
+                function openPhotoModal(src) {
+                    try {
+                        const modal = document.getElementById('photoModal');
+                        const img = document.getElementById('photoModalImg');
+                        if (!modal || !img) return;
+                        img.src = src;
+                        modal.classList.add('active');
+                        modal.setAttribute('aria-hidden', 'false');
+                        // Prevent page scroll while open
+                        document.body.style.overflow = 'hidden';
+                    } catch (e) {
+                        console.error('openPhotoModal error', e);
+                    }
+                }
+
+                function closePhotoModal() {
+                    try {
+                        const modal = document.getElementById('photoModal');
+                        const img = document.getElementById('photoModalImg');
+                        if (!modal || !img) return;
+                        modal.classList.remove('active');
+                        modal.setAttribute('aria-hidden', 'true');
+                        img.src = '';
+                        document.body.style.overflow = '';
+                    } catch (e) {
+                        console.error('closePhotoModal error', e);
+                    }
+                }
+
+                // keyboard support: Esc closes viewer
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        const modal = document.getElementById('photoModal');
+                        if (modal && modal.classList.contains('active')) closePhotoModal();
+                    }
+                });
+            </script>
         </section>
     </main>
 
