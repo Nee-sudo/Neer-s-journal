@@ -25,15 +25,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 console.log('Mongo URI:', process.env.MONGO_URI);
 
 // Define Models
-const journalSchema = new mongoose.Schema({
-    title: String,
-    content: String,
-    headingColor: String,
-    contentColor: String,
-    boxColor: String,
-    createdAt: { type: Date, default: Date.now }
-});
-const Journal = mongoose.model('Journal', journalSchema);
+const Journal = require('./models/journal');
 
 const idolSchema = new mongoose.Schema({
     name: String,
@@ -268,7 +260,7 @@ app.get('/anon-message', (req, res) => {
 app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) => {
     try {
         console.log('Raw req.body:', req.body);
-        const { title, content, headingColor, contentColor, boxColor } = req.body;
+        const { title, content, headingColor, contentColor, boxColor, mood, tags } = req.body;
 
         if (!title || !content || content.trim() === '') {
             console.log('Validation failed - title:', title, 'content:', content);
@@ -276,9 +268,9 @@ app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) =
         }
 
         const sanitizedContent = sanitizeHtml(content, {
-            allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'ul', 'ol', 'li'],
+            allowedTags: ['p', 'strong', 'em', 'u', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'ul', 'ol', 'li', 'a', 'img'],
             allowedAttributes: {
-                '*': ['style', 'class']
+                '*': ['style', 'class', 'href', 'src', 'alt']
             },
             allowedStyles: {
                 '*': {
@@ -301,14 +293,31 @@ app.post('/api/saveJournal', isAuthenticated, journalLimiter, async (req, res) =
             content: sanitizedContent,
             headingColor: headingColor || '#333333',
             contentColor: contentColor || '#333333',
-            boxColor: boxColor || '#ffffff'
+            boxColor: boxColor || '#ffffff',
+            mood: mood || 'Okay',
+            tags: tags || []
         });
         await newJournal.save();
         console.log('Journal entry saved:', newJournal);
-        res.status(200).json({ message: 'Journal entry saved successfully.' });
+        res.status(200).json({ message: 'Journal entry saved successfully.', id: newJournal._id });
     } catch (err) {
         console.error('Error saving journal:', err);
         res.status(500).json({ error: 'Error saving journal entry.' });
+    }
+});
+
+// Delete Journal Entry
+app.delete('/api/deleteJournal/:id', isAuthenticated, async (req, res) => {
+    try {
+        const entry = await Journal.findById(req.params.id);
+        if (!entry) {
+            return res.status(404).json({ error: 'Journal entry not found.' });
+        }
+        await Journal.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: 'Journal entry deleted successfully.' });
+    } catch (err) {
+        console.error('Error deleting journal:', err);
+        res.status(500).json({ error: 'Error deleting journal entry.' });
     }
 });
 
