@@ -399,6 +399,16 @@
 .box .ql-editor {
     max-height: 150px;
     overflow: hidden;
+    position: relative;
+}
+
+.box .ql-editor.truncated::after {
+    content: '...';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--primary-white);
+    padding-left: 5px;
 }
 
 .read-more-btn {
@@ -1434,6 +1444,38 @@
         slider.style.transform = `translateX(${currentTransform}px)`;
     }
 
+    // Function to truncate long journal entries and add Read More button
+    function truncateEntries() {
+        const editors = document.querySelectorAll('.box .ql-editor');
+        editors.forEach(editor => {
+            // Remove existing read more button if present
+            const existingBtn = editor.nextElementSibling;
+            if (existingBtn && existingBtn.classList.contains('read-more-btn')) {
+                existingBtn.remove();
+            }
+            // Check if content is longer than max height
+            if (editor.scrollHeight > 150) {
+                editor.classList.add('truncated');
+                // Add Read More button
+                const btn = document.createElement('button');
+                btn.className = 'read-more-btn';
+                btn.textContent = 'Read More';
+                btn.onclick = () => openReadMoreModal(editor.innerHTML);
+                editor.parentNode.insertBefore(btn, editor.nextSibling);
+            } else {
+                editor.classList.remove('truncated');
+            }
+        });
+    }
+
+    // Function to open Read More modal
+    function openReadMoreModal(content) {
+        const modal = document.getElementById('readMoreModal');
+        const contentDiv = document.getElementById('readMoreContent');
+        contentDiv.innerHTML = content;
+        modal.classList.add('active');
+    }
+
     // Function to append a new journal entry to the DOM
     function addJournalEntry(entry) {
         const slider = document.getElementById('journalSlider')?.querySelector('.box-container');
@@ -1458,6 +1500,8 @@
                 <div class="ql-editor" style="color: ${entry.contentColor || '#333333'}">${entry.content || ''}</div>
             `;
             slider.prepend(newBox);
+            // Apply truncation to the new entry
+            truncateEntries();
             console.log('New journal entry added to DOM:', entry);
         } catch (error) {
             console.error('Error adding journal entry to DOM:', error);
@@ -1696,6 +1740,9 @@
             }
         });
 
+        // Apply truncation to existing entries on page load
+        truncateEntries();
+
         // Modal Button Event Listeners
         const openEditorBtn = document.getElementById('openEditorBtn');
         const openFriendFormBtn = document.getElementById('openFriendFormBtn');
@@ -1703,6 +1750,7 @@
         const closeEditorBtn = document.getElementById('closeEditorBtn');
         const closeFriendFormBtn = document.getElementById('closeFriendFormBtn');
         const closeAdminLoginBtn = document.getElementById('closeAdminLoginBtn');
+        const closeReadMoreBtn = document.getElementById('closeReadMoreBtn');
 
         if (openEditorBtn) {
             openEditorBtn.addEventListener('click', openEditor);
@@ -1726,6 +1774,10 @@
 
         if (closeAdminLoginBtn) {
             closeAdminLoginBtn.addEventListener('click', () => closeModal('adminLoginModal'));
+        }
+
+        if (closeReadMoreBtn) {
+            closeReadMoreBtn.addEventListener('click', () => closeModal('readMoreModal'));
         }
 
         // Close modals when clicking outside

@@ -10,6 +10,7 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap"
             rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
         <style>
         /* CSS Reset & Global Styles */
@@ -1250,6 +1251,84 @@
             .social-links a {
                 font-size: 1.4rem;
             }
+.productivity-hero {
+  margin: 60px auto 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: var(--primary-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  padding: 30px 20px;
+}
+
+@media (min-width: 1200px) {
+  .productivity-hero {
+    width: 100%;
+    left: auto;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+  }
+}
+
+.hero-header {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--primary-blue-dark);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.hero-header i {
+  font-size: 2rem;
+  color: var(--primary-blue);
+}
+
+.hero-header h3 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 600px; /* Critical */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-legend i {
+  font-size: 0.8rem;
+}
+
+/* Dark Mode */
+body.dark .productivity-hero { background: #1a1a1a; }
+body.dark .hero-header { color: #4da6ff; }
+body.dark .chart-legend { color: #e0e0e0; }
         }
     </style>
     </head>
@@ -1333,67 +1412,67 @@
                         Currently Focusing on **All Three Skills**</p>
                 </div>
             </section>
-                <section id="working" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-laptop-code section-icon"></i> What I'm
-                        Working On & Side Projects</h2>
-                    <div class="grid-container">
-                        <div class="project-card">
-                            <i class="fas fa-globe-americas project-icon"></i>
-                            <h3>AI based knowledge base for students</h3>
-                            <p>Developing a web application that uses AI to
-                                provide personalized learning
-                                recommendations.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i
-                                        class="far fa-calendar-alt"></i> Target:
-                                    Mar 15, 2026</span>
-                                <div class="progress-bar-container small">
-                                    <div class="progress-bar"
-                                        style="width: 30%;"></div>
-                                </div>
-                                <span class="progress-text">30%
-                                    Development</span>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <i class="fas fa-mobile-alt project-icon"></i>
-                            <h3>Making earth one family </h3>
-                            <p>Developing a mobile app that connects people from
-                                different parts of the world to promote cultural
-                                exchange.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i
-                                        class="far fa-calendar-alt"></i> Target:
-                                    Aug 30, 2026</span>
-                                <div class="progress-bar-container small">
-                                    <div class="progress-bar"
-                                        style="width: 20%;"></div>
-                                </div>
-                                <span class="progress-text">20% Research
-                                    Phase</span>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <i class="fas fa-robot project-icon"></i>
-                            <h3>Automated Conversational AI Bot</h3>
-                            <p>Building an AI-powered Conversational bot to
-                                handle social media dm.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i
-                                        class="far fa-calendar-alt"></i> Target:
-                                    Jan 31, 2026</span>
-                                <div class="progress-bar-container small">
-                                    <div class="progress-bar"
-                                        style="width: 80%;"></div>
-                                </div>
-                                <span class="progress-text">80% Core
-                                    Logic</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<section id="working" class="section-box">
+  <div class="container">
+    <h2><i class="fas fa-laptop-code section-icon"></i> What I'm Working On & Side Projects</h2>
+
+    <!-- Project Cards Grid -->
+    <div class="grid-container">
+      <div class="project-card">
+        <i class="fas fa-globe-americas project-icon"></i>
+        <h3>AI based knowledge base for students</h3>
+        <p>Developing a web application that uses AI to provide personalized learning recommendations.</p>
+        <div class="project-details">
+          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Mar 15, 2026</span>
+          <div class="progress-bar-container small">
+            <div class="progress-bar" style="width: 30%;"></div>
+          </div>
+          <span class="progress-text">30% Development</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <i class="fas fa-mobile-alt project-icon"></i>
+        <h3>Making earth one family</h3>
+        <p>Developing a mobile app that connects people from different parts of the world to promote cultural exchange.</p>
+        <div class="project-details">
+          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Aug 30, 2026</span>
+          <div class="progress-bar-container small">
+            <div class="progress-bar" style="width: 20%;"></div>
+          </div>
+          <span class="progress-text">20% Research Phase</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <i class="fas fa-robot project-icon"></i>
+        <h3>Automated Conversational AI Bot</h3>
+        <p>Building an AI-powered Conversational bot to handle social media dm.</p>
+        <div class="project-details">
+          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Jan 31, 2026</span>
+          <div class="progress-bar-container small">
+            <div class="progress-bar" style="width: 80%;"></div>
+          </div>
+          <span class="progress-text">80% Core Logic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL-WIDTH HERO CHART -->
+    <div class="productivity-hero">
+      <div class="hero-header">
+        <i class="fas fa-chart-line"></i>
+        <h3>90-Day Productivity Challenge (Sep 2025)</h3>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="productivityChart" aria-label="90-Day Productivity Line Chart - Animated Loop" role="img"></canvas>
+      </div>
+      <div class="chart-legend">
+        <span><i class="fas fa-circle" style="color:#FF5733;"></i> Work</span>
+        <span><i class="fas fa-circle" style="color:#33FF57;"></i> Completed</span>
+        <span><i class="fas fa-circle" style="color:#3357FF;"></i> Pending</span>
+      </div>
+    </div>
+  </div>
+</section>
 
             <section id="languages" class="section-box">
                 <div class="container">
@@ -1763,6 +1842,89 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const canvas = document.getElementById('productivityChart');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const isDark = document.body.classList.contains('dark');
+  const textColor = isDark ? '#e0e0e0' : '#333';
+  const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+
+  const labels = Array.from({length: 28}, (_, i) => {
+    const d = new Date(2025, 8, 1 + i);
+    return `${d.getDate()}/${d.getMonth() + 1}`;
+  });
+
+  const data = {
+    labels,
+    datasets: [
+      { label: 'Work', data: [4,0,0,0,0,0,0,0,3,3,5,0,4,0,0,1,0,0,0,0,2,3,3,3,3,3,3,3], borderColor: '#FF5733', backgroundColor: '#FF5733', tension: 0.3, pointRadius: 6 },
+      { label: 'Completed', data: [2,0,0,0,0,0,0,0,1,1,4,0,2,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0], borderColor: '#33FF57', backgroundColor: '#33FF57', tension: 0.3, pointRadius: 6 },
+      { label: 'Pending', data: [2,0,0,0,0,0,0,0,2,2,1,0,2,0,0,0,0,0,0,0,1,3,3,3,3,3,3,3], borderColor: '#3357FF', backgroundColor: '#3357FF', tension: 0.3, pointRadius: 6 }
+    ].map(ds => ({ ...ds, fill: false, pointHoverRadius: 8 }))
+  };
+
+  const revealLoopPlugin = {
+    id: 'revealLoop',
+    afterInit(chart) {
+      chart._progress = 0;
+      chart._direction = 1;
+      chart._speed = 0.004;
+
+      const animate = () => {
+        let p = chart._progress + (chart._direction * chart._speed);
+        if (p >= 1) { p = 1; chart._direction = -1; }
+        if (p <= 0) { p = 0; chart._direction = 1; }
+        chart._progress = p;
+        chart.update('none');
+        requestAnimationFrame(animate);
+      };
+      animate();
+    },
+    beforeDatasetDraw(chart, args) {
+      if (args.meta.type !== 'line') return;
+      const { ctx, chartArea } = chart;
+      const progress = chart._progress || 0;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(chartArea.left, chartArea.top, (chartArea.right - chartArea.left) * progress, chartArea.bottom - chartArea.top);
+      ctx.clip();
+    },
+    afterDatasetDraw(chart) {
+      if (chart.ctx?.restore) chart.ctx.restore();
+    }
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 0 },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)',
+          titleColor: textColor,
+          bodyColor: textColor,
+          borderColor: '#007bff',
+          borderWidth: 1
+        }
+      },
+      scales: {
+        x: { ticks: { color: textColor, font: { size: 12 } }, grid: { color: gridColor } },
+        y: { ticks: { color: textColor, stepSize: 1, font: { size: 12 } }, grid: { color: gridColor }, beginAtZero: true, suggestedMax: 6 }
+      }
+    },
+    plugins: [revealLoopPlugin]
+  });
 });
 </script>
     </body>
