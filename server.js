@@ -32,7 +32,7 @@ const idolSchema = new mongoose.Schema({
     quote: String,
     image: String
 });
-const Idol = mongoose.models.Idol || mongoose.model('Idol', IdolSchema);
+const Idol = mongoose.models.Idol || mongoose.model('Idol', idolSchema);
 
 const commentSchema = new mongoose.Schema({
     user: String,
