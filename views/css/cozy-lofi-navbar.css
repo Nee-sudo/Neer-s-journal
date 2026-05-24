@@ -1,0 +1,40 @@
+/* Header/Navbar styling to match the Cozy Lofi palette */
+
+header {
+  background: var(--primary-accent) !important; /* light terracotta */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: none;
+  box-shadow: 0 12px 40px var(--shadow-cozy);
+}
+
+body.dark header {
+  background: var(--primary-accent) !important; /* dark amber */
+  box-shadow: 0 12px 40px var(--shadow-strong);
+}
+
+header nav ul li a {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+header nav ul li a:hover {
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 10px 30px var(--shadow-cozy);
+}
+
+/* Section header vibe gradient overlay */
+.section-box::before {
+  background: radial-gradient(circle at top left, rgba(224, 122, 95, 0.08), transparent);
+}
+
+body.dark .section-box::before {
+  background: radial-gradient(circle at top left, rgba(217, 119, 6, 0.12), transparent);
+}
+
+/* Full-width section gradients (if a full hero class exists) */
+.productivity-hero {
+  background: linear-gradient(145deg, var(--bg-card-1) 0%, var(--bg-card-2) 100%);
+}
+

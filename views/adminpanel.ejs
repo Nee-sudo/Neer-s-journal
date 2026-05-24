@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="csrf-token" content="<%= csrfToken %>"/>
+  <title>Admin Panel - Update Content</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary-blue: #007bff;
+      --primary-blue-light: #66b2ff;
+      --primary-blue-dark: #0056b3;
+      --primary-white: #ffffff;
+      --light-grey: #f0f4f8;
+      --dark-grey: #343a40;
+      --text-color: #495057;
+      --border-color: #e2e6eb;
+      --box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --border-radius-lg: 15px;
+      --border-radius-md: 10px;
+      --transition: all 0.4s ease;
+    }
+    body.dark {
+      --primary-blue: #4da6ff;
+      --primary-blue-light: #80c1ff;
+      --primary-blue-dark: #0066cc;
+      --primary-white: #1a1a1a;
+      --light-grey: #2a2a2a;
+      --dark-grey: #f0f0f0;
+      --text-color: #e0e0e0;
+      --border-color: #444;
+      --box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-grey);
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+    header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+      color: var(--primary-white);
+      padding: 1.5rem 0;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      position: sticky; top:0; z-index:1000;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      margin:0;
+      letter-spacing: 1px;
+    }
+    .admin-section {
+      background: var(--primary-white);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--box-shadow);
+      padding: 40px;
+      margin: 40px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .admin-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary-blue-dark);
+      font-size: 2rem;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-section h2 i { font-size: 2.2rem; color: var(--primary-blue); }
+    .form-group {
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark-grey);
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      font-size: 1rem;
+      background: var(--light-grey);
+      transition: var(--transition);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-blue-light);
+      box-shadow: 0 0 0 4px rgba(0,123,255,0.2);
+      background: var(--primary-white);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+    .icon-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background: var(--light-grey);
+    }
+    .icon-option {
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    .icon-option:hover, .icon-option.selected {
+      background: var(--primary-blue-light);
+      color: white;
+      transform: scale(1.1);
+    }
+    .add-item, .remove-item {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: var(--border-radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: var(--transition);
+    }
+    .add-item:hover { background: var(--primary-blue-dark); transform: translateY(-2px); }
+    .remove-item {
+      background: #dc3545;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+    }
+    .remove-item:hover { background: #c82333; }
+    .item-group {
+      background: rgba(0,123,255,0.05);
+      padding: 20px;
+      border-radius: var(--border-radius-md);
+      margin-bottom: 20px;
+      border: 1px dashed var(--primary-blue);
+    }
+    .btn-save {
+      background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: var(--border-radius-md);
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 30px;
+      box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+      transition: var(--transition);
+    }
+    .btn-save:hover {
+      background: linear-gradient(90deg, var(--primary-blue-dark), var(--primary-blue));
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,123,255,0.4);
+    }
+    .success-msg, .error-msg {
+      padding: 15px;
+      border-radius: var(--border-radius-md);
+      margin: 20px 0;
+      text-align: center;
+      font-weight: 600;
+    }
+    .success-msg { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error-msg { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    @media (max-width: 768px) {
+      .admin-section { padding: 25px; }
+      header h1 { font-size: 1.8rem; }
+      .icon-selector { grid-template-columns: repeat(6, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-cogs"></i> Admin Panel</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <% if (success) { %>
+      <div class="success-msg"><%= success %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="error-msg"><%= error %></div>
+    <% } %>
+
+    <!-- ==================== LEARNING SECTION ==================== -->
+    <section class="admin-section">
+      <h2><i class="fas fa-brain"></i> Update Learning Skills</h2>
+      <form id="learningForm">
+        <div id="skillsContainer">
+          <!-- Skills will be injected dynamically via JS -->
+        </div>
+        <button type="button" class="add-item" onclick="addSkill()">+ Add Skill</button>
+        <button type="submit" class="btn-save">Save Learning Section</button>
+      </form>
+    </section>
+
+    <!-- ==================== WORKING ON SECTION ==================== -->
+    <section class="admin-section">
+      <h2><i class="fas fa-laptop-code"></i> Update Working On / Side Projects</h2>
+      <form id="workingForm">
+        <div id="projectsContainer"></div>
+        <button type="button" class="add-item" onclick="addProject()">+ Add Project</button>
+        <button type="submit" class="btn-save">Save Working On Section</button>
+      </form>
+    </section>
+
+    <!-- ==================== DEADLINES & STUDY FOCUS ==================== -->
+    <section class="admin-section">
+      <h2><i class="fas fa-calendar-alt"></i> Update Study Focus & Deadlines</h2>
+      <div style="display:flex; gap:30px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:300px;">
+          <h3 style="margin-bottom:15px; color:var(--primary-blue-dark);">Study Focus Areas</h3>
+          <form id="studyForm">
+            <div id="studyContainer"></div>
+            <button type="button" class="add-item" onclick="addStudy()">+ Add Topic</button>
+            <button type="submit" class="btn-save" style="margin-top:15px;">Save Study Focus</button>
+          </form>
+        </div>
+        <div style="flex:1; min-width:300px;">
+          <h3 style="margin-bottom:15px; color:var(--primary-blue-dark);">Upcoming Deadlines</h3>
+          <form id="deadlineForm">
+            <div id="deadlineContainer"></div>
+            <button type="button" class="add-item" onclick="addDeadline()">+ Add Deadline</button>
+            <button type="submit" class="btn-save" style="margin-top:15px;">Save Deadlines</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CURRENT ACTIVITY ==================== -->
+    <section class="admin-section">
+      <h2><i class="fas fa-cogs"></i> Update Current Activity</h2>
+      <form id="activityForm">
+        <div class="form-group">
+          <label for="activityText">Current Focus Description</label>
+          <textarea id="activityText" name="text" placeholder="e.g., Optimizing backend performance..." required></textarea>
+        </div>
+        <button type="submit" class="btn-save">Update Current Activity</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    // Font Awesome Icons List (Commonly Used)
+    const icons = [
+      'fa-brain','fa-laptop-code','fa-globe-americas','fa-cogs','fa-calendar-alt','fa-folder-open',
+      'fa-python','fa-video','fa-camera','fa-book-open','fa-robot','fa-mobile-alt','fa-chart-line',
+      'fa-code','fa-bug','fa-lightbulb','fa-sitemap','fa-network-wired','fa-palette','fa-star',
+      'fa-chalkboard-teacher','fa-user-secret','fa-home','fa-user','fa-lock','fa-envelope'
+    ];
+
+    // Load data from localStorage or fetch from backend
+    const loadData = async (key, containerId, templateFn) => {
+      try {
+        const res = await fetch(`/api/admin/${key}`);
+        const data = await res.json();
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        (data || []).forEach((item, i) => {
+          container.appendChild(templateFn(item, i));
+        });
+      } catch (err) { console.error(err); }
+    };
+
+    // Generic save function
+    const saveData = async (formId, endpoint, successMsg) => {
+      const form = document.getElementById(formId);
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        // Handle arrays
+        if (formId === 'learningForm') data.skills = collectItems('skill');
+        if (formId === 'workingForm') data.projects = collectItems('project');
+        if (formId === 'studyForm') data.study = collectItems('study');
+        if (formId === 'deadlineForm') data.deadlines = collectItems('deadline');
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        try {
+          const res = await fetch(`/api/admin/${endpoint}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          alert(result.success || result.error);
+          if (res.ok) location.reload();
+        } catch (err) { alert('Error saving data'); }
+      });
+    };
+
+    // Collect dynamic items
+    const collectItems = (prefix) => {
+      const items = [];
+      document.querySelectorAll(`.item-group[data-type="${prefix}"]`).forEach(el => {
+        const obj = {};
+        el.querySelectorAll('input, textarea, select').forEach(input => {
+          obj[input.name.split('_')[2] || input.name] = input.value;
+        });
+        items.push(obj);
+      });
+      return items;
+    };
+
+    // Icon Selector Component
+    const createIconSelector = (name, selected = '') => {
+      const div = document.createElement('div');
+      div.className = 'icon-selector';
+      icons.forEach(icon => {
+        const span = document.createElement('span');
+        span.className = `icon-option ${icon === selected ? 'selected' : ''}`;
+        span.innerHTML = `<i class="fas ${icon}"></i>`;
+        span.onclick = () => {
+          div.querySelectorAll('.icon-option').forEach(s => s.classList.remove('selected'));
+          span.classList.add('selected');
+          div.previousElementSibling.value = icon;
+        };
+        div.appendChild(span);
+      });
+      return div;
+    };
+
+    // === LEARNING SKILL TEMPLATE ===
+    const skillTemplate = (skill = {}, index) => {
+      const div = document.createElement('div');
+      div.className = 'item-group';
+      div.dataset.type = 'skill';
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Skill Name</label>
+          <input type="text" name="skill_${index}_name" value="${skill.name || ''}" placeholder="e.g., Python" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="skill_${index}_desc" placeholder="Brief description..." required>${skill.desc || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Progress (%)</label>
+          <input type="number" name="skill_${index}_progress" min="0" max="100" value="${skill.progress || 0}" required />
+        </div>
+        <div class="form-group">
+          <label>Icon</label>
+          <input type="text" name="skill_${index}_icon" value="${skill.icon || 'fa-brain'}" readonly />
+        </div>
+        <button type="button" class="remove-item" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      div.querySelector('input[readonly]').after(createIconSelector(`skill_${index}_icon`, skill.icon));
+      return div;
+    };
+
+    const addSkill = () => {
+      const container = document.getElementById('skillsContainer');
+      const index = container.children.length;
+      container.appendChild(skillTemplate({}, index));
+    };
+
+    // === WORKING PROJECT TEMPLATE ===
+    const projectTemplate = (proj = {}, index) => {
+      const div = document.createElement('div');
+      div.className = 'item-group';
+      div.dataset.type = 'project';
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Project Title</label>
+          <input type="text" name="project_${index}_title" value="${proj.title || ''}" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="project_${index}_desc" required>${proj.desc || ''}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Progress (%)</label>
+          <input type="number" name="project_${index}_progress" min="0" max="100" value="${proj.progress || 0}" required />
+        </div>
+        <div class="form-group">
+          <label>Target Date</label>
+          <input type="date" name="project_${index}_date" value="${proj.date || ''}" required />
+        </div>
+        <div class="form-group">
+          <label>Icon</label>
+          <input type="text" name="project_${index}_icon" value="${proj.icon || 'fa-laptop-code'}" readonly />
+        </div>
+        <button type="button" class="remove-item" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      div.querySelector('input[readonly]').after(createIconSelector(`project_${index}_icon`, proj.icon));
+      return div;
+    };
+
+    const addProject = () => {
+      const container = document.getElementById('projectsContainer');
+      const index = container.children.length;
+      container.appendChild(projectTemplate({}, index));
+    };
+
+    // === STUDY & DEADLINE TEMPLATES ===
+    const studyTemplate = (item = {}, index) => {
+      const div = document.createElement('div');
+      div.className = 'item-group';
+      div.dataset.type = 'study';
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Topic</label>
+          <input type="text" name="study_${index}_topic" value="${item.topic || ''}" required />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select name="study_${index}_status">
+            <option ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+            <option ${item.status === 'Starting Soon' ? 'selected' : ''}>Starting Soon</option>
+            <option ${item.status === 'Revisiting' ? 'selected' : ''}>Revisiting</option>
+            <option ${item.status === 'Ongoing Self-Study' ? 'selected' : ''}>Ongoing Self-Study</option>
+          </select>
+        </div>
+        <button type="button" class="remove-item" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      return div;
+    };
+
+    const deadlineTemplate = (item = {}, index) => {
+      const div = document.createElement('div');
+      div.className = 'item-group';
+      div.dataset.type = 'deadline';
+      div.innerHTML = `
+        <div class="form-group">
+          <label>Task</label>
+          <input type="text" name="deadline_${index}_task" value="${item.task || ''}" required />
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" name="deadline_${index}_date" value="${item.date || ''}" required />
+        </div>
+        <button type="button" class="remove-item" onclick="this.parentElement.remove()">Remove</button>
+      `;
+      return div;
+    };
+
+    const addStudy = () => {
+      const container = document.getElementById('studyContainer');
+      const index = container.children.length;
+      container.appendChild(studyTemplate({}, index));
+    };
+
+    const addDeadline = () => {
+      const container = document.getElementById('deadlineContainer');
+      const index = container.children.length;
+      container.appendChild(deadlineTemplate({}, index));
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load existing data
+      loadData('skills', 'skillsContainer', skillTemplate);
+      loadData('projects', 'projectsContainer', projectTemplate);
+      loadData('study', 'studyContainer', studyTemplate);
+      loadData('deadlines', 'deadlineContainer', deadlineTemplate);
+
+      // Load current activity
+      fetch('/api/admin/activity').then(r => r.json()).then(data => {
+        document.getElementById('activityText').value = data.text || '';
+      });
+
+      // Save handlers
+      saveData('learningForm', 'skills', 'Skills updated!');
+      saveData('workingForm', 'projects', 'Projects updated!');
+      saveData('studyForm', 'study', 'Study focus updated!');
+      saveData('deadlineForm', 'deadlines', 'Deadlines updated!');
+      saveData('activityForm', 'activity', 'Current activity updated!');
+    });
+  </script>
+</body>
+</html>

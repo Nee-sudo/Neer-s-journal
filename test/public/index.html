@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dev Progress Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #121212; color: white; text-align: center; }
+        .container { width: 80%; margin: auto; padding-top: 50px; }
+        .stat-card { background: #1e1e1e; padding: 20px; border-radius: 10px; display: inline-block; margin: 10px; min-width: 200px; }
+        .highlight { color: #00ff88; font-size: 2em; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Project Activity Tracker</h1>
+        
+        <div class="stat-card">
+            <span id="diff" class="highlight">+0%</span>
+            <p>Activity vs Yesterday</p>
+        </div>
+
+        <div style="max-width: 600px; margin: auto;">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        async function updateDashboard() {
+            const res = await fetch('/api/stats');
+            const data = await res.json();
+
+            document.getElementById('diff').innerText = `${data.percentChange}%`;
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Yesterday', 'Today'],
+                    datasets: [{
+                        label: 'Commits',
+                        data: [data.yesterday.commits, data.today.commits],
+                        backgroundColor: ['#444', '#00ff88']
+                    }]
+                },
+                options: { scales: { y: { beginAtZero: true } } }
+            });
+        }
+        updateDashboard();
+    </script>
+</body>
+</html>

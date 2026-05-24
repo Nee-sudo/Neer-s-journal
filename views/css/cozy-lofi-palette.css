@@ -1,0 +1,174 @@
+:root {
+  /* Cozy Lofi Study Palette (Light Mode) */
+  --bg-primary: #f8f1e7; /* warm cream paper */
+  --bg-card-1: #fdfbf7; /* off-white */
+  --bg-card-2: #fefaf5; /* off-white */
+
+  --primary-accent: #e07a5f; /* terracotta/coral */
+  --primary-accent-light: #f4a896; /* peach glow */
+  --primary-accent-dark: #c94c3a; /* burnt orange */
+
+  --secondary-accent: #a8b5a2; /* muted sage green */
+  --secondary-accent-light: #c7d2c4; /* pale mint */
+
+  --text-primary: #6b5e4a; /* warm brown */
+  --text-secondary: #8a7a62; /* dusty taupe */
+
+  --border-color: #e6d9c6; /* linen */
+
+  --shadow-cozy: rgba(224, 122, 95, 0.12);
+  --shadow-strong: rgba(224, 122, 95, 0.20);
+
+  --transition-speed: 0.4s;
+  --radius-bubble: 25px;
+  --radius-md: 20px;
+
+  --focus-ring: rgba(224, 122, 95, 0.25);
+}
+
+body.dark {
+  /* Cozy Lofi Study Palette (Dark Mode) */
+  --bg-primary: #1e1a17; /* deep espresso */
+  --bg-card-1: #2d2823; /* charcoal cream */
+  --bg-card-2: #3f3a35; /* charcoal cream */
+
+  --primary-accent: #d97706; /* rich amber glow */
+  --primary-accent-light: #f59e0b; /* golden hour */
+  --primary-accent-dark: #b45309; /* burnt amber */
+
+  --secondary-accent: #4b5563; /* midnight sage */
+
+  --text-primary: #e5e7eb; /* warm off-white */
+  --text-secondary: #cbd5e1;
+
+  --border-color: #4b5563; /* charcoal */
+
+  --shadow-cozy: rgba(217, 119, 6, 0.3);
+  --shadow-strong: rgba(217, 119, 6, 0.45);
+
+  --focus-ring: rgba(217, 119, 6, 0.35);
+}
+
+/* Global theming hooks */
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+a {
+  color: var(--primary-accent-dark);
+  text-decoration: none;
+}
+
+body.dark a {
+  color: var(--primary-accent-light);
+}
+
+/* Bubble-like rounded elements */
+.bubble,
+.card,
+.section-box,
+.login-form-container,
+.skill-card,
+.project-card,
+.language-card,
+.data-table,
+.diary-post,
+.friend-details,
+.modal-content {
+  border-radius: var(--radius-bubble) !important;
+}
+
+/* Buttons */
+button,
+.btn,
+.btn-login,
+.like-btn,
+.comment-btn,
+.post-btn {
+  border-radius: var(--radius-md);
+  transition: transform 0.2s ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
+}
+
+.btn-primary,
+.btn-login {
+  background: var(--primary-accent);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-primary:hover,
+.btn-login:hover {
+  background: var(--primary-accent-dark);
+  box-shadow: 0 12px 35px var(--shadow-cozy);
+  transform: translateY(-3px);
+}
+
+/* Cards / sections */
+.section-box,
+.skill-card,
+.project-card,
+.language-card,
+.data-table,
+.login-form-container {
+  background: linear-gradient(145deg, var(--bg-card-1), var(--bg-card-2));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 40px var(--shadow-cozy);
+  transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed)
+    ease;
+}
+
+/* Glassmorphism buttons */
+.glass-btn,
+#theme-toggle {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+body.dark #theme-toggle,
+body.dark .glass-btn {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Sepia(0.3) filter on images/flags */
+img,
+.flag-icon {
+  filter: sepia(0.3) saturate(1.02) contrast(1.08);
+}
+
+body.dark img,
+body.dark .flag-icon {
+  filter: sepia(0.22) saturate(0.95) contrast(1.12) hue-rotate(12deg);
+}
+
+/* Progress bars */
+.progress-bar {
+  background: var(--primary-accent);
+}
+
+.progress-bar::after {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* Table header accents */
+.data-table th {
+  background-color: rgba(168, 181, 162, 0.35);
+  color: var(--text-primary);
+}
+
+body.dark .data-table th {
+  background-color: rgba(75, 85, 99, 0.55);
+}
+
