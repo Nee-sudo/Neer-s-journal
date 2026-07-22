@@ -1,87 +1,126 @@
-<!doctype html>
-<html>
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Contact Us - Responsive Page Design</title>
-    <link rel="icon" type="image/x-icon" href="https://badaklibrary.up.railway.app/image.png">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
-    </style>
-    <link rel="stylesheet" href="css/contact.css">
-    </head>
-    <body>
-        <section>
-            <div class="container">
-                <div class="contactInfo"> 
-                    <div>
-                        <h2>Contact Info</h2>
-                        <ul class="info">
-                            <li>
-                                <span><img src="/images/location.png"></span>
-                                <span>184 Ippokratous Street<br>
-                                    Athens, Gr<br>
-                                    11472</span>
-                                </span>
-                            </li>
-                            <li>
-                                <span><img src="/images/mail.png"></span>
-                                <!-- <span>nassosanagn@gmail.com</span> -->
-                                <span><a href = "mailto: nassosanagn@gmail.com">nassosanagn@gmail.com</a></span>
-                            </li>
-                            <li>
-                                <span><img src="/images/call.png"></span>
-                                <span>702-279-3488</span>
-                            </li>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Contact Neeraj - Chronicle Reach" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-blue-500/30 selection:text-journalText page-fade-in min-h-screen flex flex-col justify-between">
 
-                        </ul>
-                    </div>
-                    <ul class="sci">
-                        <li><a href="https://www.facebook.com/nassosanagn/"><img src="/images/1.png"></a></li>
-                        <li><a href="https://www.instagram.com/nassosanagn_/?hl=el"><img src="/images/3.png"></a></li>
-                        <li><a href="https://twitter.com/nassosanagn"><img src="/images/2.png"></a></li>
-                        <li><a href="https://www.linkedin.com/in/nassos-anagnostopoulos-2b9631196/"><img src="/images/5.png"></a></li>
-                        
+    <%- include('partials/nav') %>
+
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-12 flex-1 w-full">
+
+        <!-- Page Header -->
+        <div class="border-b border-journalBorder pb-6 space-y-2 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-mono">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                COMMUNICATION & INQUIRIES
+            </div>
+            <h1 class="font-display text-3xl md:text-4xl font-extrabold text-journalText flex items-center justify-center gap-3">
+                <i class="fas fa-paper-plane text-blue-500"></i> Contact Me
+            </h1>
+            <p class="text-xs font-mono text-journalMuted uppercase tracking-wider">REACH OUT FOR COLLABORATIONS, INQUIRIES, OR THOUGHTFUL EXCHANGES</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+            
+            <!-- Contact Info Sidebar -->
+            <div class="md:col-span-2 space-y-6">
+                <div class="deckled-card space-y-6 shadow-xl">
+                    <h2 class="font-display text-xl font-bold text-journalText m-0">Contact Info</h2>
+                    
+                    <ul class="space-y-4 text-sm font-reading text-journalMuted">
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-map-marker-alt text-sm"></i>
+                            </div>
+                            <div>
+                                <strong class="text-journalText block font-sans text-xs uppercase tracking-wider">Primary Hub</strong>
+                                <span class="text-journalMuted">Athens, Greece</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-envelope text-sm"></i>
+                            </div>
+                            <div>
+                                <strong class="text-journalText block font-sans text-xs uppercase tracking-wider">Electronic Mail</strong>
+                                <a href="mailto:nassosanagn@gmail.com" class="text-blue-500 hover:underline font-mono text-xs">nassosanagn@gmail.com</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fas fa-phone-alt text-sm"></i>
+                            </div>
+                            <div>
+                                <strong class="text-journalText block font-sans text-xs uppercase tracking-wider">Direct Telephone</strong>
+                                <span class="font-mono text-xs text-journalMuted">702-279-3488</span>
+                            </div>
+                        </li>
                     </ul>
-                </div>
-                    <div class="contactForm">
-                        <h2>Send a Message</h2>
-                        <div class="formBox">
-                        <div class="inputBox w50">
-                            <input type="text" name="" required>
-                            <span>First Name</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="text" required>
-                            <span>Last Name</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="email" required>
-                            <span>Email Address</span>
-                        </div>
-                        <div class="inputBox w50">
-                            <input type="text" required>
-                            <span>Mobile Number</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <textarea required></textarea>
-                            <span>Write your message here...</span>
-                        </div>
-                        <div class="inputBox w100">
-                            <input type="submit" value="Send">
+
+                    <div class="pt-4 border-t border-journalBorder">
+                        <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-journalText mb-3">Public Anchors</h3>
+                        <div class="flex items-center gap-3">
+                            <a href="https://www.linkedin.com/in/neeraj-chauhan-3ba593244" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all flex items-center justify-center border border-blue-500/20">
+                                <i class="fab fa-linkedin-in text-sm"></i>
+                            </a>
+                            <a href="https://github.com/Nee-sudo" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all flex items-center justify-center border border-blue-500/20">
+                                <i class="fab fa-github text-sm"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Contact Input Form -->
+            <div class="md:col-span-3">
+                <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-6 shadow-xl">
+                    <h2 class="font-display text-xl font-bold text-journalText m-0">Send a Message</h2>
                     
-                    
-             
-        </section>
-    </body>
+                    <form onsubmit="event.preventDefault(); alert('Message noted! This static form is currently offline.');" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">First Name</label>
+                                <input type="text" required placeholder="John"
+                                       class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Last Name</label>
+                                <input type="text" required placeholder="Doe"
+                                       class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Email Address</label>
+                                <input type="email" required placeholder="john@example.com"
+                                       class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Mobile Number</label>
+                                <input type="tel" required placeholder="+30 690..."
+                                       class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Your Message</label>
+                            <textarea required placeholder="Write your thoughts or message details here..."
+                                      class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner h-32"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-primary py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
 </html>
+

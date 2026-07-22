@@ -1,30 +1,120 @@
-<!-- views/hustle.ejs -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Hustle Life</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="hustle-container">
-        <h1>Welcome to My Hustle Life</h1>
-        <p>Follow me on my journey through social media and beyond!</p>
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Creative Hustle - Neer's Chronicle" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-journalAccent/25 selection:text-journalText page-fade-in">
 
-        <div class="social-links">
-            <h3>Connect with me:</h3>
-            <ul>
-                <li><a href="https://www.youtube.com/yourchannel" target="_blank">YouTube</a></li>
-                <li><a href="https://www.instagram.com/yourinstagram" target="_blank">Instagram</a></li>
-                <li><a href="https://t.me/yourtelegram" target="_blank">Telegram</a></li>
-            </ul>
+    <%- include('partials/nav') %>
+
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+
+        <!-- Page Header -->
+        <div class="border-b border-journalBorder pb-6 space-y-2 text-center md:text-left">
+            <h1 class="font-display text-3xl md:text-4xl font-bold flex items-center justify-center md:justify-start gap-3">
+                <i class="fas fa-fire text-journalAccent"></i> My Hustle Life
+            </h1>
+            <p class="text-xs font-mono text-journalMuted uppercase tracking-wider">CREATIVE ENDEAVORS, COMMUNITY ENGAGEMENTS & DIGITAL LOGS</p>
         </div>
 
-        <div class="about-hustle">
-            <h3>About My Hustle:</h3>
-            <p>I'm passionate about creating content and engaging with my community. Whether it's through YouTube videos, Instagram posts, or connecting via Telegram, my goal is to inspire and entertain.</p>
+        <!-- Banner Accent -->
+        <section class="relative h-[220px] md:h-[280px] w-full rounded-3xl overflow-hidden shadow-sm">
+            <div class="absolute inset-0 bg-cover bg-center" 
+                 style="background-image: linear-gradient(rgba(44,42,41,0.5), rgba(44,42,41,0.5)), url('/img/banner.jpeg');"></div>
+            <div class="absolute inset-0 flex flex-col justify-center p-8 md:p-10 space-y-2.5 max-w-2xl text-left">
+                <span class="text-xs font-mono uppercase tracking-widest text-journalAccent-light">CREATIVE OUTLETS</span>
+                <h2 class="font-display text-2xl md:text-3xl font-black text-white leading-tight">Inspiring, teaching, and sharing our development paths</h2>
+                <p class="text-xs md:text-sm font-reading text-white/80">Connecting through real-world lessons, community-led tutorials, and open dialogues.</p>
+            </div>
+        </section>
+
+        <!-- Main Content Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Connection Cards -->
+            <div class="md:col-span-2 space-y-8">
+                <h3 class="font-display text-lg font-bold uppercase tracking-wider text-journalText border-b border-journalBorder/30 pb-2">
+                    <i class="fas fa-link text-journalAccent"></i> Channels & Communities
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/yourchannel" target="_blank" rel="noopener noreferrer" 
+                       class="deckled-card flex flex-col items-center text-center p-6 hover-lift group">
+                        <span class="w-12 h-12 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-xl mb-4 group-hover:bg-red-500 group-hover:text-white transition-all duration-300">
+                            <i class="fab fa-youtube"></i>
+                        </span>
+                        <h4 class="font-display font-bold text-base text-journalText">YouTube</h4>
+                        <p class="text-[10px] font-mono text-journalMuted mt-1 uppercase tracking-wider">Video Tutorials</p>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/yourinstagram" target="_blank" rel="noopener noreferrer" 
+                       class="deckled-card flex flex-col items-center text-center p-6 hover-lift group">
+                        <span class="w-12 h-12 rounded-full bg-pink-500/10 text-pink-500 flex items-center justify-center text-xl mb-4 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </span>
+                        <h4 class="font-display font-bold text-base text-journalText">Instagram</h4>
+                        <p class="text-[10px] font-mono text-journalMuted mt-1 uppercase tracking-wider">Lifestyle Logs</p>
+                    </a>
+
+                    <!-- Telegram -->
+                    <a href="https://t.me/yourtelegram" target="_blank" rel="noopener noreferrer" 
+                       class="deckled-card flex flex-col items-center text-center p-6 hover-lift group">
+                        <span class="w-12 h-12 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                            <i class="fab fa-telegram-plane"></i>
+                        </span>
+                        <h4 class="font-display font-bold text-base text-journalText">Telegram</h4>
+                        <p class="text-[10px] font-mono text-journalMuted mt-1 uppercase tracking-wider">Direct Access</p>
+                    </a>
+                </div>
+
+                <!-- Deep Focus Description -->
+                <article class="deckled-card space-y-4">
+                    <h4 class="font-display text-lg font-bold">The Nature of My Hustle</h4>
+                    <div class="font-reading text-sm text-journalMuted leading-relaxed space-y-4">
+                        <p>
+                            I'm deeply passionate about producing comprehensive, high-quality, and accessible content while engaging authentically with our engineering community. Whether it's through deep-dive YouTube guides, reflective Instagram micro-logs, or direct interaction in our private Telegram circle, my goal remains consistent: to spark curiosity and simplify complex development barriers.
+                        </p>
+                        <p>
+                            Every single asset created here is crafted with visual precision, slow-thought logic, and deep attention to technical credibility.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Activity Logs / Timeline -->
+            <div class="space-y-6">
+                <h3 class="font-display text-lg font-bold uppercase tracking-wider text-journalText border-b border-journalBorder/30 pb-2">
+                    <i class="fas fa-history text-journalAccent"></i> Milestones
+                </h3>
+
+                <div class="space-y-4">
+                    <!-- Event 1 -->
+                    <div class="bg-journalSurface border border-journalBorder rounded-xl p-4 space-y-2 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] font-mono text-journalAccent bg-journalAccent/10 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Active</span>
+                            <time class="text-[10px] font-mono text-journalMuted">July 2026</time>
+                        </div>
+                        <h5 class="font-display font-bold text-sm text-journalText">Full-Stack Refactor Release</h5>
+                        <p class="text-xs font-reading text-journalMuted">Refactoring custom EJS templates to clean, premium design tokens, removing development CDNs and deploying statically compiled CSS.</p>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="bg-journalSurface border border-journalBorder rounded-xl p-4 space-y-2 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[9px] font-mono text-journalMuted bg-journalSurface-soft border border-journalBorder/30 px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold">Completed</span>
+                            <time class="text-[10px] font-mono text-journalMuted">February 2024</time>
+                        </div>
+                        <h5 class="font-display font-bold text-sm text-journalText">Stable Token Infrastructure</h5>
+                        <p class="text-xs font-reading text-journalMuted">Established foundational Merriweather and Plus Jakarta Sans typographic pairings with durable light/dark theme switches.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
 </body>
 </html>

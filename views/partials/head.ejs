@@ -1,0 +1,88 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+    <meta name="description" content="Neeraj Chauhan's personal journal and portfolio showcasing projects, learning journey, languages, and life experiences.">
+    <meta name="keywords" content="Neeraj Chauhan, portfolio, journal, projects, learning, languages, web development">
+    <meta name="author" content="Neeraj Chauhan">
+    <meta property="og:title" content="Neer's Journal - Portfolio and Personal Journey">
+    <meta property="og:description" content="Explore Neeraj Chauhan's projects, learning progress, and personal stories.">
+    <meta property="og:image" content="/img/banner.jpeg">
+    <meta property="og:url" content="https://neer-s-journal.onrender.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Neer's Journal",
+      "url": "https://neer-s-journal.onrender.com",
+      "description": "Neeraj Chauhan's personal journal and portfolio showcasing projects, learning journey, languages, and life experiences.",
+      "author": {
+        "@type": "Person",
+        "name": "Neeraj Chauhan",
+        "url": "https://neer-s-journal.onrender.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/neeraj-chauhan-3ba593244",
+          "https://github.com/Nee-sudo"
+        ]
+      }
+    }
+    </script>
+    <link rel="icon" type="image/x-icon" href="/img/icon.jpg">
+    <title><%= typeof title !== 'undefined' ? title : "Neer's Journal - Portfolio and Personal Journey" %></title>
+    
+    <!-- Icons & Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Quill & Styles -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill-emoji@0.2.0/dist/quill-emoji.css">
+    
+    <!-- Core Design Tokens Sheet -->
+    <link rel="stylesheet" href="/css/tokens.css">
+    
+    <!-- Compiled Static Tailwind CSS -->
+    <link rel="stylesheet" href="/css/tailwind-compiled.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Inline Early Theme Initialization to Prevent Flash of Unstyled Content -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <style>
+      /* Tailored Tailwind custom configuration for our editorial look */
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              journalBg: 'var(--color-bg)',
+              journalSurface: 'var(--color-surface)',
+              journalSurfaceSoft: 'var(--color-surface-soft)',
+              journalText: 'var(--color-text)',
+              journalMuted: 'var(--color-text-muted)',
+              journalAccent: 'var(--color-accent)',
+              journalAccent2: 'var(--color-accent-2)',
+              journalBorder: 'var(--color-border)',
+            },
+            fontFamily: {
+              display: ['Merriweather', 'Georgia', 'serif'],
+              body: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+              reading: ['Lora', 'Georgia', 'serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            }
+          }
+        }
+      }
+    </style>
+</head>

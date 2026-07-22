@@ -1,64 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error - Neer's Journey</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-blue: #007bff;
-            --primary-white: #ffffff;
-            --light-grey: #f0f4f8;
-            --text-color: #495057;
-            --border-radius-lg: 15px;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        }
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Error - Neer's Chronicle" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-red-500/30 selection:text-journalText page-fade-in flex flex-col min-h-screen">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-grey);
-            color: var(--text-color);
-            line-height: 1.7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    <%- include('partials/nav') %>
 
-        .container {
-            max-width: 600px;
-            text-align: center;
-            background-color: var(--primary-white);
-            padding: 40px;
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--box-shadow);
-        }
+    <main class="flex-1 flex items-center justify-center max-w-xl mx-auto px-6 py-16 w-full">
+        <!-- Error Content Box -->
+        <article class="glass-panel rounded-3xl p-8 space-y-6 text-center w-full shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-500/10 rounded-full blur-2xl"></div>
+            <div class="space-y-3 relative z-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 mb-2">
+                    <i class="fas fa-exclamation-triangle text-2xl animate-pulse"></i>
+                </div>
+                <h2 class="font-display text-2xl md:text-3xl font-extrabold text-journalText m-0">Something Went Amiss</h2>
+                <div class="inline-block px-3 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-400 text-[10px] font-mono tracking-wider">
+                    CHRONICLE BOUNDARY DISRUPTION
+                </div>
+            </div>
 
-        h2 {
-            font-family: 'Montserrat', sans-serif;
-            color: #ff0000;
-            margin-bottom: 20px;
-        }
+            <p class="font-reading text-sm text-journalMuted italic bg-journalSurfaceSoft/80 p-5 rounded-2xl border border-journalBorder shadow-inner relative z-10">
+                "<%= typeof error !== 'undefined' ? error : 'An unexpected error occurred while processing your request.' %>"
+            </p>
 
-        a {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-weight: 500;
-        }
+            <div class="pt-4 border-t border-journalBorder flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+                <a href="/home" class="btn-primary py-2.5 px-6 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold shadow-md flex items-center gap-2">
+                    <i class="fas fa-home text-xs"></i> Return Home
+                </a>
+                <a href="/login" class="bg-journalSurface border border-journalBorder hover:border-indigo-500 hover:text-indigo-500 text-journalText py-2.5 px-6 rounded-xl text-xs font-mono uppercase tracking-wider font-semibold transition-all hover-lift flex items-center gap-2">
+                    <i class="fas fa-sign-in-alt text-xs"></i> Log In
+                </a>
+            </div>
+        </article>
+    </main>
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Error</h2>
-        <p><%= error %></p>
-        <p><a href="/home">Back to Home</a> | <a href="/login">Login</a></p>
-    </div>
+    <%- include('partials/footer') %>
+
 </body>
 </html>
+

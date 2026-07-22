@@ -1,0 +1,6 @@
+{
+  "name": "Neer's Journal",
+  "description": "Modern personal and social journaling platform with goals, inspirations, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

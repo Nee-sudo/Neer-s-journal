@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/user.js');
+const { ROLES, ALL_PERMISSIONS } = require('./config/permissions');
 
 const mongoURI = process.env.MONGO_URI;
 
@@ -8,24 +9,27 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(async () => {
     console.log('Connected to MongoDB');
     try {
-      // Check if user exists
       const existingUser = await User.findOne({ username: 'neer_7007' });
       if (existingUser) {
-        console.log('User already exists, removing...');
+        console.log('User already exists, removing old record...');
         await User.findByIdAndDelete(existingUser._id);
         console.log('Existing user removed.');
       }
-      // Register new user
+      
       await new Promise((resolve, reject) => {
-        User.register(new User({ username: 'neer_7007' }), 'neer_7007', (err, user) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(user);
-          }
+        User.register(new User({
+          username: 'neer_7007',
+          email: 'neer_7007@neersjournal.local',
+          isAdmin: true,
+          role: ROLES.SUPER_ADMIN,
+          status: 'Active',
+          permissions: ALL_PERMISSIONS
+        }), 'neer_7007', (err, user) => {
+          if (err) reject(err);
+          else resolve(user);
         });
       });
-      console.log('Admin user registered successfully');
+      console.log('SuperAdmin user registered successfully');
       mongoose.connection.close();
       process.exit(0);
     } catch (err) {

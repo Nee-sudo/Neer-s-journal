@@ -1,0 +1,267 @@
+/* views/css/portfolio.css */
+
+.section-box {
+    padding: var(--spacing-3xl) 0;
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-bubble) !important;
+}
+
+.section-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    transition: var(--transition-normal);
+}
+
+.section-box h2 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--primary-accent-dark);
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.section-icon {
+    font-size: 2.25rem;
+    color: var(--primary-accent);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+}
+
+/* Cards (Skill, Project, Language) */
+.skill-card, .project-card, .language-card {
+    background: var(--bg-card-1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 40px var(--shadow-cozy);
+    border-radius: var(--radius-bubble) !important;
+    padding: var(--spacing-xl);
+    text-align: center;
+    transition: var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card:hover, .project-card:hover, .language-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px var(--shadow-strong);
+    border-color: var(--primary-accent-light);
+}
+
+.skill-icon, .project-icon, .language-icon {
+    font-size: 3.5rem;
+    color: var(--primary-accent);
+    margin-bottom: var(--spacing-md);
+    transition: var(--transition-fast);
+}
+
+.skill-card:hover .skill-icon,
+.project-card:hover .project-icon,
+.language-card:hover .language-icon {
+    transform: scale(1.1);
+    color: var(--primary-accent-dark);
+}
+
+.skill-card h3, .project-card h3, .language-card h3 {
+    font-family: var(--font-sans);
+    font-size: 1.4rem;
+    font-weight: var(--weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.skill-card p, .project-card p, .language-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Progress Bars */
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-xs);
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-accent);
+    border-radius: 10px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+    display: block;
+    text-align: right;
+}
+
+/* Currently Focusing Block */
+.currently-studying {
+    background: rgba(224, 122, 95, 0.08);
+    border: 1px dashed var(--primary-accent);
+    border-radius: var(--radius-md) !important;
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+body.dark .currently-studying {
+    background: rgba(217, 119, 6, 0.12);
+    border-color: var(--primary-accent);
+}
+
+/* Current Activity Card */
+.current-activity-box {
+    background: var(--bg-card-1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 40px var(--shadow-cozy);
+    border-radius: var(--radius-bubble) !important;
+    padding: var(--spacing-2xl);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    transition: var(--transition-normal);
+}
+
+.current-activity-icon {
+    font-size: 4.5rem;
+    color: var(--primary-accent-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.current-activity-box p {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    font-style: italic;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* Study Deadlines Data Tables */
+.data-table-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+    .data-table-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--bg-card-1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 40px var(--shadow-cozy);
+    border-radius: var(--radius-bubble) !important;
+    overflow: hidden;
+}
+
+.data-table h3 {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    color: var(--primary-white);
+    background: var(--primary-accent);
+    padding: var(--spacing-md);
+    margin: 0;
+    text-align: center;
+}
+
+.data-table th, .data-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table th {
+    font-weight: var(--weight-bold);
+    background-color: rgba(168, 181, 162, 0.25);
+    color: var(--text-primary);
+}
+
+body.dark .data-table th {
+    background-color: rgba(75, 85, 99, 0.4);
+}
+
+.status-badge {
+    padding: var(--spacing-xxs) var(--spacing-xs);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: var(--weight-semibold);
+    display: inline-block;
+}
+
+.status-badge.in-progress {
+    background-color: #ffeeba;
+    color: #856404;
+}
+
+.status-badge.starting-soon {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-badge.ongoing {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Dynamic Hero Section */
+.hero-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--primary-accent-dark);
+}
+
+/* Empty states */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 1.1rem;
+}

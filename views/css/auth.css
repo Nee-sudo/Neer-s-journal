@@ -1,0 +1,183 @@
+/* views/css/auth.css */
+
+.signup-wrapper, .login-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    max-width: 1000px;
+    margin: var(--spacing-2xl) auto;
+}
+
+@media (max-width: 768px) {
+    .signup-wrapper, .login-wrapper {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+}
+
+.signup-intro, .login-intro {
+    padding: var(--spacing-lg);
+    text-align: left;
+}
+
+.signup-intro h2, .login-intro h2 {
+    font-size: 2.25rem;
+    color: var(--primary-accent-dark);
+    margin-bottom: var(--spacing-md);
+    font-family: var(--font-serif);
+}
+
+.signup-intro p, .login-intro p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.signup-intro .features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.signup-intro .feature {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.signup-intro .feature i {
+    font-size: 1.25rem;
+    color: var(--primary-accent);
+}
+
+.signup-form-container, .login-form-container {
+    background: var(--bg-card-1);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 40px var(--shadow-cozy);
+    border-radius: var(--radius-bubble) !important;
+    padding: var(--spacing-xl);
+    transition: var(--transition-normal);
+}
+
+body.dark .signup-form-container, body.dark .login-form-container {
+    box-shadow: 0 12px 40px var(--shadow-strong);
+}
+
+.signup-form-container:hover, .login-form-container:hover {
+    box-shadow: 0 16px 48px var(--shadow-strong);
+}
+
+.signup-form, .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    text-align: left;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.input-group label {
+    font-weight: var(--weight-medium);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.input-group label i {
+    color: var(--primary-accent-dark);
+}
+
+.input-group input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.input-group input:focus {
+    border-color: var(--primary-accent);
+    outline: none;
+    box-shadow: 0 0 0 var(--focus-outline-width) var(--focus-ring);
+    background: var(--bg-card-1);
+}
+
+.form-hint {
+    font-size: 0.825rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.form-hint.error-text {
+    color: #dc3545;
+}
+
+.btn-signup, .btn-login {
+    background: var(--primary-accent);
+    color: var(--primary-white) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md) !important;
+    font-size: 1.1rem;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    box-shadow: 0 4px 12px var(--shadow-cozy);
+    transition: var(--transition-normal);
+}
+
+.btn-signup:hover, .btn-login:hover {
+    background: var(--primary-accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-strong);
+}
+
+.login-link, .signup-link {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.login-link a, .signup-link a {
+    color: var(--primary-accent-dark);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.login-link a:hover, .signup-link a:hover {
+    text-decoration: underline;
+    color: var(--primary-accent);
+}
+
+.privacy-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-md);
+}
+
+.privacy-note i {
+    color: var(--secondary-accent);
+}

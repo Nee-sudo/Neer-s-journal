@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Admin Portal Login - Neer's Journal" }) %>
+<body class="bg-slate-950 text-slate-100 font-body antialiased selection:bg-rose-500/30 selection:text-white page-fade-in min-h-screen flex flex-col justify-between">
+
+    <main class="max-w-md mx-auto px-6 py-16 flex-1 w-full flex items-center justify-center">
+        
+        <div class="w-full space-y-6">
+            
+            <!-- Header Badge -->
+            <div class="text-center space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono">
+                    <i class="fas fa-user-shield text-xs"></i> RESTRICTED SYSTEM PORTAL
+                </div>
+                <h1 class="font-display text-2xl md:text-3xl font-extrabold tracking-tight text-white m-0">
+                    Chronicle Administration Portal
+                </h1>
+                <p class="text-xs font-mono text-slate-400 uppercase tracking-widest">
+                    Authorized Personnel Only
+                </p>
+            </div>
+
+            <!-- Card Box -->
+            <div class="bg-slate-900/80 border border-rose-500/30 rounded-2xl p-8 backdrop-blur-xl shadow-2xl space-y-6">
+                
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl p-3 text-xs flex items-center gap-2">
+                        <i class="fas fa-exclamation-triangle text-sm shrink-0"></i>
+                        <span class="font-semibold"><%= error %></span>
+                    </div>
+                <% } %>
+
+                <form action="/admin/login" method="POST" class="space-y-4">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                    <div class="space-y-1.5">
+                        <label for="admin-username" class="text-xs font-mono font-bold text-slate-300 flex items-center gap-1.5 uppercase tracking-wider">
+                            <i class="fas fa-user-check text-rose-400"></i> Admin Identifier
+                        </label>
+                        <input type="text" id="admin-username" name="username" placeholder="Enter administrative username" required autofocus
+                               class="w-full text-sm font-mono bg-slate-950/80 border border-slate-700/80 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-500 text-white placeholder:text-slate-500 transition-colors shadow-inner">
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="admin-password" class="text-xs font-mono font-bold text-slate-300 flex items-center gap-1.5 uppercase tracking-wider">
+                            <i class="fas fa-key text-rose-400"></i> Master Key / Password
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="admin-password" name="password" placeholder="••••••••••••" required
+                                   class="w-full text-sm font-mono bg-slate-950/80 border border-slate-700/80 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:border-rose-500 text-white placeholder:text-slate-500 transition-colors shadow-inner">
+                            <button type="button" onclick="toggleAdminPassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1">
+                                <i class="fas fa-eye" id="adminPassEye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-rose-600 hover:bg-rose-500 text-white py-3.5 px-6 rounded-xl font-bold text-sm transition-all shadow-lg shadow-rose-900/30 flex items-center justify-center gap-2 mt-2">
+                        <i class="fas fa-lock text-xs"></i> Authenticate Admin Session
+                    </button>
+                </form>
+
+                <div class="border-t border-slate-800 pt-4 text-center space-y-2">
+                    <a href="/login" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center justify-center gap-1.5">
+                        <i class="fas fa-arrow-left text-[10px]"></i> Return to Secure Chronicle Entrance
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="text-center text-[11px] font-mono text-slate-600">
+                Audit Logging & E2E Security Active
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+    function toggleAdminPassword() {
+        const pass = document.getElementById('admin-password');
+        const eye = document.getElementById('adminPassEye');
+        if (pass.type === 'password') {
+            pass.type = 'text';
+            eye.className = 'fas fa-eye-slash';
+        } else {
+            pass.type = 'password';
+            eye.className = 'fas fa-eye';
+        }
+    }
+    </script>
+
+</body>
+</html>

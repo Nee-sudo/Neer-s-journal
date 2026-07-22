@@ -1,0 +1,101 @@
+<footer class="bg-journalSurface/80 border-t border-journalBorder mt-20 py-12 backdrop-blur-md transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex flex-col items-center md:items-start gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg gradient-bg-primary flex items-center justify-center text-white text-xs shadow-sm">
+                    <i class="fas fa-feather-alt"></i>
+                </div>
+                <span class="font-display font-bold text-base text-journalText">Neer’s Chronicle</span>
+            </div>
+            <p class="text-xs text-journalMuted text-center md:text-left max-w-sm">
+                &copy; 2026 Neeraj Chauhan. Built for deep writing, deliberate thinking, and genuine craftsmanship.
+            </p>
+        </div>
+
+        <!-- Social Connections -->
+        <div class="flex items-center gap-3">
+            <a href="https://github.com/Nee-sudo" target="_blank" rel="noopener noreferrer" 
+               class="w-9 h-9 flex items-center justify-center rounded-xl border border-journalBorder hover:border-journalAccent text-journalMuted hover:text-journalAccent transition-all shadow-sm bg-journalSurface"
+               aria-label="GitHub Profile">
+                <i class="fab fa-github text-sm"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/neeraj-chauhan-3ba593244" target="_blank" rel="noopener noreferrer" 
+               class="w-9 h-9 flex items-center justify-center rounded-xl border border-journalBorder hover:border-journalAccent text-journalMuted hover:text-journalAccent transition-all shadow-sm bg-journalSurface"
+               aria-label="LinkedIn Profile">
+                <i class="fab fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="/anon-message" 
+               class="w-9 h-9 flex items-center justify-center rounded-xl border border-journalBorder hover:border-journalAccent text-journalMuted hover:text-journalAccent transition-all shadow-sm bg-journalSurface"
+               aria-label="Send Anonymous Message">
+                <i class="fas fa-paper-plane text-xs"></i>
+            </a>
+            <a href="/contact" 
+               class="w-9 h-9 flex items-center justify-center rounded-xl border border-journalBorder hover:border-journalAccent text-journalMuted hover:text-journalAccent transition-all shadow-sm bg-journalSurface"
+               aria-label="Contact">
+                <i class="fas fa-envelope text-xs"></i>
+            </a>
+        </div>
+
+        <div class="flex gap-4 text-xs font-mono text-journalMuted items-center">
+            <a href="#" class="hover:text-journalAccent transition-colors">Back to top ↑</a>
+            <span class="text-journalBorder">•</span>
+            <a href="/login" class="hover:text-journalAccent transition-colors">Admin Portal</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Shared JavaScripts (Theme toggling, Lucide icons, smooth scroll anchors) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Theme Mode Synchronization Script
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const legacyBtn = document.getElementById('themeToggle') || document.getElementById('themeToggleBtnMobile');
+
+    function updateIcons(isDark) {
+        const icons = document.querySelectorAll('#themeToggleBtn i, #themeToggle i, #themeToggleBtnMobile i');
+        icons.forEach(icon => {
+            if (isDark) {
+                icon.className = 'fas fa-sun text-amber-400';
+            } else {
+                icon.className = 'fas fa-moon text-indigo-500';
+            }
+        });
+    }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const body = document.body;
+        const currentTheme = html.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        html.setAttribute('data-theme', newTheme);
+        if (newTheme === 'dark') {
+            html.classList.add('dark');
+            body.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+            body.classList.remove('dark');
+        }
+
+        localStorage.setItem('theme', newTheme);
+        updateIcons(newTheme === 'dark');
+
+        // Dispatch theme-changed event for charts/scripts
+        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: newTheme } }));
+    }
+
+    // Attach listeners
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+    if (legacyBtn) legacyBtn.addEventListener('click', toggleTheme);
+
+    // Initial icon state
+    const initDark = document.documentElement.classList.contains('dark');
+    updateIcons(initDark);
+
+    // Initialize Lucide Icons if available
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
+

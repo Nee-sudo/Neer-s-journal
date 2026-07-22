@@ -1,147 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Friend - Neer's Journey</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-blue: #007bff;
-            --primary-blue-light: #66b2ff;
-            --primary-blue-dark: #0056b3;
-            --primary-white: #ffffff;
-            --light-grey: #f0f4f8;
-            --text-color: #495057;
-            --border-color: #e2e6eb;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --transition-speed: 0.4s;
-            --border-radius-lg: 15px;
-            --border-radius-md: 10px;
-        }
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Introduce Friend - Trusted Circle" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-teal-500/30 selection:text-journalText page-fade-in min-h-screen flex flex-col justify-between">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-grey);
-            color: var(--text-color);
-            line-height: 1.7;
-        }
+    <%- include('partials/nav') %>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 25px;
-        }
+    <main class="max-w-2xl mx-auto px-6 py-12 space-y-8 flex-1 w-full">
 
-        .section-box {
-            padding: 60px 0;
-            background-color: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            margin: 20px 0;
-            box-shadow: var(--box-shadow);
-        }
+        <!-- Header -->
+        <div class="border-b border-journalBorder pb-6 space-y-2 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-mono">
+                <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                TRUSTED CIRCLE REGISTRATION
+            </div>
+            <h1 class="font-display text-3xl md:text-4xl font-extrabold text-journalText flex items-center justify-center gap-3">
+                <i class="fas fa-user-plus text-teal-500"></i> Be Neer's Friend
+            </h1>
+            <p class="text-xs font-mono text-journalMuted uppercase tracking-wider">REGISTER YOUR PROFILE & SHARED WORDS ON THE JOURNAL</p>
+        </div>
 
-        h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            color: var(--primary-blue-dark);
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        <!-- Form Box -->
+        <div class="glass-panel p-6 md:p-8 space-y-6 rounded-3xl shadow-xl">
+            <% if (error) { %>
+                <div class="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl p-4 text-xs font-mono flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span><%= error %></span>
+                </div>
+            <% } %>
 
-        .friend-form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: center;
-        }
+            <form action="/neers-friends" method="POST" class="space-y-4">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-        .friend-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .input-group label {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .input-group input, .input-group select, .input-group textarea {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-size: 1rem;
-            transition: border-color var(--transition-speed) ease;
-        }
-
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
-            border-color: var(--primary-blue);
-            outline: none;
-        }
-
-        .btn-submit {
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
-            color: var(--primary-white);
-            padding: 15px;
-            border: none;
-            border-radius: var(--border-radius-md);
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <section id="friends-form" class="section-box">
-        <div class="container">
-            <h2><i class="fas fa-users section-icon"></i> Add Neer's Friend</h2>
-            <div class="friend-form-container">
-                <% if (error) { %>
-                    <p class="error-message"><%= error %></p>
-                <% } %>
-                <form action="/neers-friends" method="POST" class="friend-form">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <div class="input-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label for="name" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g. Liam Sterling"
+                               class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-teal-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
                     </div>
-                    <div class="input-group">
-                        <label for="jobCategory">Job Category</label>
-                        <select id="jobCategory" name="jobCategory" required>
-                            <option value="">Select Job Category</option>
+                    <div class="space-y-1.5">
+                        <label for="joinDate" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Joined Date</label>
+                        <input type="date" id="joinDate" name="joinDate" required
+                               class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-teal-500 text-journalText transition-colors shadow-inner">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label for="jobCategory" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Job Field</label>
+                        <select id="jobCategory" name="jobCategory" required
+                                class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-3 py-2.5 focus:outline-none focus:border-teal-500 text-journalText transition-colors shadow-inner">
+                            <option value="">Select Job Field</option>
                             <option value="Engineer">Engineer</option>
                             <option value="Designer">Designer</option>
                             <option value="Teacher">Teacher</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="country">Country</label>
-                        <select id="country" name="country" required>
+                    <div class="space-y-1.5">
+                        <label for="country" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Country</label>
+                        <select id="country" name="country" required
+                                class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-3 py-2.5 focus:outline-none focus:border-teal-500 text-journalText transition-colors shadow-inner">
                             <option value="">Select Country</option>
                             <option value="India">India</option>
                             <option value="USA">USA</option>
@@ -149,22 +67,23 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="profilePicture">Profile Picture</label>
-                        <input type="text" id="profilePicture" name="profilePicture" placeholder="Enter image URL">
-                    </div>
-                    <div class="input-group">
-                        <label for="gender">Gender</label>
-                        <select id="gender" name="gender" required>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                        <label for="gender" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Gender</label>
+                        <select id="gender" name="gender" required
+                                class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-3 py-2.5 focus:outline-none focus:border-teal-500 text-journalText transition-colors shadow-inner">
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="personality">Personality</label>
-                        <select id="personality" name="personality" required>
+                    <div class="space-y-1.5">
+                        <label for="personality" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Personality Mindset</label>
+                        <select id="personality" name="personality" required
+                                class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-3 py-2.5 focus:outline-none focus:border-teal-500 text-journalText transition-colors shadow-inner">
                             <option value="">Select Personality</option>
                             <option value="Creative">Creative</option>
                             <option value="Analytical">Analytical</option>
@@ -172,19 +91,36 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div class="input-group">
-                        <label for="joinDate">Date Joined</label>
-                        <input type="date" id="joinDate" name="joinDate" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="thoughts">What do you think about Neeraj?</label>
-                        <textarea id="thoughts" name="thoughts" required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Submit</button>
-                </form>
-                <p><a href="/home">Back to Home</a></p>
+                </div>
+
+                <div class="space-y-1.5">
+                    <label for="profilePicture" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText flex items-center gap-1"><i class="fas fa-link text-[10px]"></i> Avatar Image URL</label>
+                    <input type="text" id="profilePicture" name="profilePicture" placeholder="/img/friend-placeholder.jpg"
+                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-teal-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                </div>
+
+                <div class="space-y-1.5">
+                    <label for="thoughts" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Thoughts on Neeraj</label>
+                    <textarea id="thoughts" name="thoughts" required placeholder="What are your thoughts or shared memories with Neeraj?"
+                              class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-2.5 focus:outline-none focus:border-teal-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner h-28"></textarea>
+                </div>
+
+                <button type="submit" class="w-full btn-primary py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Submit Friendship Node
+                </button>
+            </form>
+
+            <div class="text-center pt-2">
+                <a href="/home" class="text-xs font-mono text-journalAccent font-bold hover:underline inline-flex items-center gap-1.5">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
             </div>
         </div>
-    </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
 </body>
 </html>
+

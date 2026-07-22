@@ -1,0 +1,131 @@
+<% 
+  const isDashboard = (typeof entries !== 'undefined'); 
+%>
+<header class="sticky top-0 z-[1000] border-b border-journalBorder transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 py-3.5 flex flex-wrap justify-between items-center gap-4">
+        <!-- Brand / Logo -->
+        <a href="<%= isDashboard ? '/home' : '/login' %>" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-xl gradient-bg-primary flex items-center justify-center text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                <i class="fas fa-feather-alt text-base"></i>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display font-extrabold text-lg md:text-xl tracking-tight text-journalText group-hover:text-journalAccent transition-colors">
+                    Neer’s Chronicle
+                </span>
+                <span class="text-[10px] font-mono text-journalMuted uppercase tracking-widest -mt-1">
+                    <%= isDashboard ? 'Private Journal' : 'Portfolio & Labs' %>
+                </span>
+            </div>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="menuToggle" class="md:hidden text-journalText hover:text-journalAccent text-xl transition-colors focus:outline-none p-2 rounded-xl bg-journalSurface border border-journalBorder" aria-label="Toggle Navigation Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Main Desktop Navigation -->
+        <nav id="mainNav" class="hidden md:flex flex-row items-center gap-4 lg:gap-6">
+            <ul class="flex flex-row items-center gap-1 lg:gap-2 list-none p-0 m-0">
+                <% if (isDashboard) { %>
+                    <!-- Private Dashboard Navigation -->
+                    <li><a href="#journal" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Journal</a></li>
+                    <li><a href="#idols" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Mentors</a></li>
+                    <li><a href="#friends" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Circle</a></li>
+                    <li><a href="#life-saved" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Logbook</a></li>
+                    <li><a href="#photos" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Gallery</a></li>
+                <% } else { %>
+                    <!-- Public Portfolio Navigation -->
+                    <li><a href="#learning" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Skills</a></li>
+                    <li><a href="#working" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Labs</a></li>
+                    <li><a href="#languages" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Languages</a></li>
+                    <li><a href="#projects" class="text-xs font-semibold text-journalText hover:text-journalAccent transition-colors py-2 px-3.5 rounded-full hover:bg-journalSurfaceSoft">Projects</a></li>
+                    <li>
+                        <a href="#login" class="text-xs font-semibold text-white gradient-bg-primary py-2 px-4 rounded-full shadow-sm hover:opacity-90 transition-all flex items-center gap-1.5">
+                            <i class="fas fa-lock text-[10px]"></i> Sign In
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+
+            <div class="h-4 w-px bg-journalBorder mx-1 hidden lg:block"></div>
+
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" class="w-9 h-9 flex items-center justify-center rounded-xl text-journalText bg-journalSurface border border-journalBorder hover:border-journalAccent hover:text-journalAccent transition-all shadow-sm" aria-label="Toggle Color Mode">
+                    <i class="fas fa-moon text-sm"></i>
+                </button>
+
+                <% if (isDashboard) { %>
+                    <!-- Persistent Search Bar -->
+                    <form action="/search" method="GET" class="relative flex items-center w-40 lg:w-52">
+                        <input type="text" name="query" placeholder="Search entries..." required
+                               class="w-full text-xs font-body bg-journalSurface border border-journalBorder rounded-xl py-2 pl-3.5 pr-8 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-all shadow-inner">
+                        <button type="submit" class="absolute right-3 text-journalMuted hover:text-journalAccent transition-colors" aria-label="Search">
+                            <i class="fas fa-search text-xs"></i>
+                        </button>
+                    </form>
+
+                    <!-- Logout Button -->
+                    <a href="/logout" class="text-xs font-mono font-semibold bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 py-2 px-3.5 rounded-xl border border-red-500/20 transition-all flex items-center gap-1.5">
+                        <i class="fas fa-sign-out-alt text-xs"></i>
+                        <span class="hidden lg:inline">Sign Out</span>
+                    </a>
+                <% } %>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- Mobile Drawer Overlay Menu -->
+<div id="mobileDrawer" class="fixed inset-0 z-[999] bg-journalBg/95 backdrop-blur-xl flex flex-col items-center justify-center gap-6 p-8 transition-all duration-300 transform translate-x-full md:hidden">
+    <button id="drawerClose" class="absolute top-6 right-6 text-journalText hover:text-journalAccent text-2xl p-2 rounded-xl border border-journalBorder bg-journalSurface transition-colors" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <ul class="flex flex-col items-center gap-5 list-none p-0 m-0 w-full text-center">
+        <% if (isDashboard) { %>
+            <li><a href="#journal" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Journal</a></li>
+            <li><a href="#idols" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Mentors</a></li>
+            <li><a href="#friends" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Circle</a></li>
+            <li><a href="#life-saved" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Logbook</a></li>
+            <li><a href="#photos" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Gallery</a></li>
+        <% } else { %>
+            <li><a href="#learning" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Skills</a></li>
+            <li><a href="#working" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Labs</a></li>
+            <li><a href="#languages" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Languages</a></li>
+            <li><a href="#projects" class="drawer-link text-xl font-display font-bold text-journalText hover:text-journalAccent transition-colors">Projects</a></li>
+            <li><a href="#login" class="drawer-link text-xl font-display font-bold text-journalAccent transition-colors">Sign In</a></li>
+        <% } %>
+        
+        <% if (isDashboard) { %>
+            <li class="mt-4 w-full">
+                <a href="/logout" class="block font-semibold bg-red-500/10 text-red-600 dark:text-red-400 py-3 px-6 rounded-2xl border border-red-500/20 w-full text-center transition-all">
+                    Sign Out
+                </a>
+            </li>
+        <% } %>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerClose = document.getElementById('drawerClose');
+    const drawerLinks = document.querySelectorAll('.drawer-link');
+
+    if (menuToggle && mobileDrawer && drawerClose) {
+        menuToggle.addEventListener('click', function() {
+            mobileDrawer.classList.remove('translate-x-full');
+        });
+        drawerClose.addEventListener('click', function() {
+            mobileDrawer.classList.add('translate-x-full');
+        });
+        drawerLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileDrawer.classList.add('translate-x-full');
+            });
+        });
+    }
+});
+</script>
+

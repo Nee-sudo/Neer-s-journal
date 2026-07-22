@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-journalBg: var(--color-bg);
+  --color-journalSurface: var(--color-surface);
+  --color-journalSurfaceSoft: var(--color-surface-soft);
+  --color-journalSurface-soft: var(--color-surface-soft);
+  --color-journalText: var(--color-text);
+  --color-journalMuted: var(--color-text-muted);
+  --color-journalAccent: var(--color-accent);
+  --color-journalAccent-hover: var(--color-accent-hover);
+  --color-journalAccent-light: var(--color-accent-light);
+  --color-journalAccent2: var(--color-accent-2);
+  --color-journalAccent2-hover: var(--color-accent-2-hover);
+  --color-journalAccentEmerald: var(--color-accent-emerald);
+  --color-journalAccentCyan: var(--color-accent-cyan);
+  --color-journalBorder: var(--color-border);
+
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-reading: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@source "../**/*.ejs";
+

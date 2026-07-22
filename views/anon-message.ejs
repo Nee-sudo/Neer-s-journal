@@ -1,126 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anonymous Message - Neer's Journey</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Reuse styles from login.ejs */
-        :root {
-            --primary-blue: #007bff;
-            --primary-blue-light: #66b2ff;
-            --primary-blue-dark: #0056b3;
-            --primary-white: #ffffff;
-            --light-grey: #f0f4f8;
-            --text-color: #495057;
-            --border-color: #e2e6eb;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --transition-speed: 0.4s;
-            --border-radius-lg: 15px;
-            --border-radius-md: 10px;
-        }
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Anonymous Message - Neer's Journey" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-cyan-500/30 selection:text-journalText page-fade-in min-h-screen flex flex-col justify-between">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-grey);
-            color: var(--text-color);
-            line-height: 1.7;
-        }
+    <%- include('partials/nav') %>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 25px;
-        }
+    <main class="max-w-2xl mx-auto px-6 py-12 space-y-8 flex-1 w-full">
 
-        .section-box {
-            padding: 60px 0;
-            background-color: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            margin: 20px 0;
-            box-shadow: var(--box-shadow);
-        }
+        <!-- Header -->
+        <div class="border-b border-journalBorder pb-6 space-y-2 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-mono">
+                <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
+                ANONYMOUS FEEDBACK & SCRATCHPAD
+            </div>
+            <h1 class="font-display text-3xl md:text-4xl font-extrabold text-journalText flex items-center justify-center gap-3">
+                <i class="fas fa-paper-plane text-cyan-500"></i> Send Anonymous Message
+            </h1>
+            <p class="text-xs font-mono text-journalMuted uppercase tracking-wider">SHARE YOUR HONEST THOUGHTS, ENCOURAGEMENT, OR PRIVATE CRITIQUES</p>
+        </div>
 
-        h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            color: var(--primary-blue-dark);
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        <!-- Card Container -->
+        <div class="glass-panel p-6 md:p-8 space-y-6 rounded-3xl shadow-xl">
+            
+            <% if (success) { %>
+                <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl p-4 text-sm font-semibold flex items-center gap-2.5">
+                    <i class="fas fa-check-circle text-lg text-emerald-500"></i>
+                    <span><%= success %></span>
+                </div>
+            <% } %>
 
-        .message-form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            text-align: center;
-        }
+            <% if (error) { %>
+                <div class="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl p-4 text-sm font-semibold flex items-center gap-2.5">
+                    <i class="fas fa-exclamation-circle text-lg text-red-500"></i>
+                    <span><%= error %></span>
+                </div>
+            <% } %>
 
-        .message-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+            <form action="/send-message" method="POST" class="space-y-4">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-        .message-form textarea {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-size: 1rem;
-            min-height: 150px;
-        }
+                <div class="space-y-1.5">
+                    <label for="name" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Your Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. Fellow Traveler (Leave empty for complete anonymity)"
+                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                </div>
 
-        .btn-submit {
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
-            color: var(--primary-white);
-            padding: 15px;
-            border: none;
-            border-radius: var(--border-radius-md);
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: var(--box-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+                <div class="space-y-1.5">
+                    <label for="message" class="text-xs font-mono font-bold uppercase tracking-wider text-journalText">Your Message</label>
+                    <textarea id="message" name="message" required placeholder="Write your words here. Neeraj reads all messages with deep humility..."
+                              class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500 text-journalText placeholder:text-journalMuted transition-colors shadow-inner h-36"></textarea>
+                </div>
 
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-        }
+                <button type="submit" class="w-full btn-primary py-3.5 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2">
+                    <i class="fas fa-envelope"></i> Send Message
+                </button>
+            </form>
 
-        .success-message {
-            color: green;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <section id="anon-message" class="section-box">
-        <div class="container">
-            <h2><i class="fas fa-envelope section-icon"></i> Send Anonymous Message</h2>
-            <div class="message-form-container">
-                <% if (success) { %>
-                    <p class="success-message"><%= success %></p>
-                <% } %>
-                <% if (error) { %>
-                    <p class="error-message"><%= error %></p>
-                <% } %>
-                <form action="/send-message" method="POST" class="message-form">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <textarea name="message" placeholder="Your message..." required></textarea>
-                    <button type="submit" class="btn-submit">Send</button>
-                </form>
-                <p><a href="/">Back to Home</a></p>
+            <div class="text-center pt-2">
+                <a href="/home" class="text-xs font-mono text-journalAccent font-bold hover:underline inline-flex items-center gap-1.5">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
             </div>
         </div>
-    </section>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
 </body>
 </html>
+

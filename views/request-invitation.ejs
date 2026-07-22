@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Request Chronicle Invitation - Neer's Journal" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-journalAccent/25 selection:text-journalText page-fade-in min-h-screen flex flex-col justify-between">
+
+    <%- include('partials/nav') %>
+
+    <main class="max-w-4xl mx-auto px-6 py-16 flex-1 w-full">
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            <!-- Left Info Column -->
+            <div class="md:col-span-5 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-journalAccent/10 border border-journalAccent/20 text-journalAccent text-xs font-mono">
+                    <span class="w-2 h-2 rounded-full bg-journalAccent animate-pulse"></span>
+                    PRIVATE READERSHIP
+                </div>
+                
+                <h1 class="font-display text-3xl md:text-4xl font-extrabold text-journalText leading-tight">
+                    Request Chronicle Invitation
+                </h1>
+                
+                <p class="text-sm font-reading text-journalMuted leading-relaxed">
+                    Neer's Journal is a private digital chronicle for personal reflections, engineering logs, and deep thought writing. Access is granted exclusively by invitation.
+                </p>
+
+                <div class="space-y-3 pt-2 text-xs font-mono text-journalMuted">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-6 h-6 rounded-lg bg-journalAccent/10 text-journalAccent flex items-center justify-center shrink-0">
+                            <i class="fas fa-lock text-xs"></i>
+                        </div>
+                        <span>Authorized reader access only</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-6 h-6 rounded-lg bg-journalAccent/10 text-journalAccent flex items-center justify-center shrink-0">
+                            <i class="fas fa-user-shield text-xs"></i>
+                        </div>
+                        <span>Manual admin review for all requests</span>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-6 h-6 rounded-lg bg-journalAccent/10 text-journalAccent flex items-center justify-center shrink-0">
+                            <i class="fas fa-envelope-open-text text-xs"></i>
+                        </div>
+                        <span>Credentials dispatched directly to your email</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Form Column -->
+            <div class="md:col-span-7">
+                <div class="deckled-card space-y-6 border border-journalAccent/30 shadow-2xl relative">
+                    
+                    <div class="border-b border-journalBorder pb-4 space-y-1">
+                        <h2 class="font-display text-xl font-bold m-0 text-journalText">Invitation Application</h2>
+                        <p class="text-xs text-journalMuted font-mono">ALL FIELDS ARE VERIFIED SERVER-SIDE</p>
+                    </div>
+
+                    <% if (typeof success !== 'undefined' && success) { %>
+                        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-xl p-5 text-sm space-y-3">
+                            <div class="flex items-center gap-2 font-bold text-base">
+                                <i class="fas fa-check-circle text-emerald-500"></i> Invitation Request Submitted
+                            </div>
+                            <p class="font-reading text-xs leading-relaxed text-journalMuted">
+                                <%= success %>
+                            </p>
+                            <a href="/login" class="inline-block text-xs font-mono text-journalAccent hover:underline font-bold pt-1">
+                                &larr; Return to Secure Entrance
+                            </a>
+                        </div>
+                    <% } else { %>
+
+                        <% if (typeof error !== 'undefined' && error) { %>
+                            <div class="bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl p-3 text-xs flex items-center gap-2">
+                                <i class="fas fa-exclamation-circle text-sm"></i>
+                                <span class="font-semibold"><%= error %></span>
+                            </div>
+                        <% } %>
+
+                        <form action="/request-invitation" method="POST" class="space-y-4">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label for="name" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                                        <i class="fas fa-id-card text-journalAccent"></i> Full Name *
+                                    </label>
+                                    <input type="text" id="name" name="name" placeholder="e.g. Eleanor Vance" required
+                                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label for="preferredDisplayName" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                                        <i class="fas fa-user-tag text-journalAccent"></i> Display Name
+                                    </label>
+                                    <input type="text" id="preferredDisplayName" name="preferredDisplayName" placeholder="e.g. Eleanor"
+                                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label for="email" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                                        <i class="fas fa-envelope text-journalAccent"></i> Email Address *
+                                    </label>
+                                    <input type="email" id="email" name="email" placeholder="eleanor@example.com" required
+                                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                                </div>
+
+                                <div class="space-y-1">
+                                    <label for="country" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                                        <i class="fas fa-globe text-journalAccent"></i> Country (Optional)
+                                    </label>
+                                    <input type="text" id="country" name="country" placeholder="e.g. United States"
+                                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg px-3.5 py-2.5 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label for="reason" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                                    <i class="fas fa-comment-alt text-journalAccent"></i> Why do you want access? *
+                                </label>
+                                <textarea id="reason" name="reason" rows="4" required placeholder="Tell us briefly about your interest in reading Neer's Journal..."
+                                          class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg p-3.5 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-journalAccent hover:bg-journalAccent-hover text-white py-3 px-6 rounded-lg font-bold text-sm transition-all hover-lift shadow-md flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i> Request Invitation
+                            </button>
+                        </form>
+
+                    <% } %>
+
+                    <div class="border-t border-journalBorder pt-4 text-center">
+                        <p class="text-xs text-journalMuted">Already possess reader credentials? <a href="/login" class="text-journalAccent hover:underline font-semibold">Enter Chronicle</a></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <%- include('partials/footer') %>
+
+</body>
+</html>

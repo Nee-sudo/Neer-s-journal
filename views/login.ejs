@@ -1,1931 +1,725 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="/img/icon.jpg">
-        <title>Your Dynamic Journey</title>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link
-            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;700&display=swap"
-            rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-
-        <style>
-        /* CSS Reset & Global Styles */
-        :root {
-            --primary-blue: #007bff;
-            --primary-blue-light: #66b2ff; /* Lighter shade for gradients */
-            --primary-blue-dark: #0056b3; /* Darker shade for hover/accents */
-            --primary-white: #ffffff;
-            --light-grey: #f0f4f8; /* Softer light grey */
-            --dark-grey: #343a40;
-            --text-color: #495057; /* Slightly softer text color */
-            --border-color: #e2e6eb;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --transition-speed: 0.4s;
-            --border-radius-lg: 15px;
-            --border-radius-md: 10px;
-        }
-
-        body.dark {
-            --primary-blue: #4da6ff;
-            --primary-blue-light: #80c1ff;
-            --primary-blue-dark: #0066cc;
-            --primary-white: #1a1a1a;
-            --light-grey: #2a2a2a;
-            --dark-grey: #f0f0f0;
-            --text-color: #e0e0e0;
-            --border-color: #444;
-            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-grey);
-            color: var(--text-color);
-            line-height: 1.7;
-            scroll-behavior: smooth;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 25px;
-        }
-
-        /* --- Header Styles --- */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
-            color: var(--primary-white);
-            padding: 0rem 0;
-            text-align: center;
-            box-shadow: var(--box-shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* Allows title and nav to wrap */
-        }
-
-        header h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            flex-grow: 1; /* Allows title to take available space */
-            text-align: left; /* Align title to left on desktop */
-        }
-
-        /* Theme Toggle Button */
-        #theme-toggle {
-            background: none;
-            border: none;
-            color: var(--primary-white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: var(--border-radius-md);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin-left: 10px;
-        }
-
-        #theme-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        #theme-toggle i {
-            transition: transform 0.3s ease;
-        }
-
-        header nav ul {
-            list-style: none;
-            margin-top: 0; /* Reset margin for flex container */
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 25px;
-            padding-left: 0; /* Remove default ul padding */
-        }
-
-        header nav ul li a {
-            color: var(--primary-white);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.15rem;
-            padding: 10px 20px;
-            border-radius: var(--border-radius-md);
-            transition: background-color var(--transition-speed) ease, transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        header nav ul li a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left var(--transition-speed) ease;
-        }
-
-        header nav ul li a:hover::before {
-            left: 0;
-        }
-
-        header nav ul li a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Hamburger Menu Icon */
-        .menu-toggle {
-            display: none; /* Hidden by default, shown on mobile */
-            font-size: 2rem;
-            color: var(--primary-white);
-            cursor: pointer;
-            z-index: 1001; /* Above navigation */
-        }
-
-        /* Mobile Navigation Styles */
-        @media (max-width: 768px) {
-            header .container {
-                flex-wrap: nowrap;
-                justify-content: space-between;
-            }
-
-            header h1 {
-                font-size: 1.8rem;
-                text-align: left;
-                flex-grow: 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            header nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100%;
-                background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
-                padding-top: 80px;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-                transition: right 0.4s ease-in-out;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                z-index: 1000;
-            }
-
-            header nav.active {
-                right: 0;
-            }
-
-            header nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            header nav ul li {
-                width: 90%;
-                text-align: center;
-            }
-
-            header nav ul li a {
-                display: block;
-                padding: 15px 20px;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: var(--border-radius-md);
-            }
-
-            header nav ul li a:hover {
-                background-color: rgba(255, 255, 255, 0.25);
-            }
-
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 999;
-                transition: opacity 0.4s ease;
-            }
-
-            .overlay.active {
-                display: block;
-                opacity: 1;
-            }
-
-            body.menu-open {
-                overflow: hidden;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* --- Main Content Sections --- */
-        main {
-            padding: 0px 0;
-        }
-
-        .section-box {
-            background-color: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--box-shadow);
-            padding: 50px 0;
-            margin-bottom: 50px;
-            text-align: center;
-            transition: all var(--transition-speed) ease;
-            position: relative; /* For background animations */
-            overflow: hidden;
-        }
-
-        .section-box::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: radial-gradient(circle at top left, rgba(0, 123, 255, 0.05), transparent 70%);
-            z-index: 0;
-            transition: transform var(--transition-speed) ease;
-        }
-
-        .section-box:hover::before {
-            transform: scale(1.02);
-        }
-
-        .section-box h2 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--primary-blue-dark);
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .section-icon {
-            margin-right: 18px;
-            font-size: 3rem;
-            color: var(--primary-blue);
-            transition: transform 0.4s ease;
-        }
-
-        .section-box:hover .section-icon {
-            transform: rotateY(360deg);
-        }
-
-        /* --- Grid for Cards --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
-            margin-top: 30px;
-            padding: 0 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* --- Card Styles (General) --- */
-        .skill-card, .project-card, .language-card {
-            background-color: var(--primary-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::before, .project-card::before, .language-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px; /* Top border accent */
-            background: linear-gradient(90deg, var(--primary-blue-light), var(--primary-blue));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
-
-        .skill-card:hover, .project-card:hover, .language-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .skill-card:hover::before, .project-card:hover::before, .language-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .skill-icon, .project-icon {
-            font-size: 3.5rem;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-            transition: transform 0.4s ease;
-        }
-
-        .skill-card:hover .skill-icon, .project-card:hover .project-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .skill-card h3, .project-card h3, .language-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--dark-grey);
-            font-size: 1.6rem;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        .skill-card p, .project-card p {
-            font-size: 1rem;
-            color: var(--text-color);
-            margin-bottom: 20px;
-        }
-
-        /* --- Progress Bar Styles --- */
-        .progress-bar-container {
-            width: 100%;
-            background-color: var(--border-color);
-            border-radius: 8px;
-            height: 15px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue-light), var(--primary-blue));
-            border-radius: 8px;
-            transition: width 1s ease-in-out;
-            position: relative;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            animation: progress-shine 2s infinite linear;
-        }
-
-        @keyframes progress-shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        .progress-text {
-            font-size: 0.95rem;
-            color: var(--primary-blue-dark);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .currently-studying {
-            margin-top: 50px;
-            font-size: 1.4rem;
-            color: var(--primary-blue-dark);
-            font-weight: 600;
-            padding: 20px;
-            background-color: rgba(0, 123, 255, 0.08);
-            border-radius: var(--border-radius-md);
-            display: inline-block;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 1s ease-out;
-        }
-
-        .currently-studying i {
-            margin-right: 12px;
-            font-size: 1.7rem;
-            color: var(--primary-blue);
-        }
-
-        /* --- Project Card Specifics --- */
-        .project-details {
-            width: 100%;
-            text-align: left;
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .project-details .deadline {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-bottom: 10px;
-            display: block;
-            font-weight: 500;
-        }
-
-        .project-details .deadline i {
-            margin-right: 8px;
-            color: var(--primary-blue-dark);
-        }
-
-        .project-details .progress-bar-container.small {
-            height: 10px;
-            margin-top: 10px;
-        }
-
-        .project-details .tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .project-details .tech-tag {
-            background-color: var(--primary-blue-light);
-            color: var(--primary-white);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .project-details .project-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .project-details .project-link {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .project-details .project-link:hover {
-            color: var(--primary-blue-dark);
-        }
-
-        /* --- Language Section Specifics --- */
-        .language-grid {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-
-        .language-card .flag-icon {
-            width: 70px;
-            height: 45px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 20px;
-            object-fit: cover;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.4s ease;
-        }
-
-        .language-card:hover .flag-icon {
-            transform: scale(1.1);
-        }
-
-        .language-card .proficiency-level {
-            font-size: 1.1rem;
-            color: var(--dark-grey);
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .proficiency-bar-visual {
-            width: 100%;
-            height: 10px;
-            background-color: var(--border-color);
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .proficiency-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue-light), var(--primary-blue));
-            border-radius: 5px;
-            transition: width 1s ease-in-out;
-        }
-
-        .language-card.learning {
-            border: 2px dashed var(--primary-blue);
-            background-color: rgba(0, 123, 255, 0.03);
-        }
-
-        .language-card.learning .language-icon {
-            font-size: 3.5rem;
-            color: var(--primary-blue-dark);
-            margin-bottom: 20px;
-            animation: pulse-border 1.5s infinite ease-in-out;
-        }
-
-        @keyframes pulse-border {
-            0% { transform: scale(1); opacity: 1; border-color: var(--primary-blue); }
-            50% { transform: scale(1.05); opacity: 0.9; border-color: var(--primary-blue-light); }
-            100% { transform: scale(1); opacity: 1; border-color: var(--primary-blue); }
-        }
-
-        /* --- Current Activity Section --- */
-        .current-activity-box {
-            background: linear-gradient(45deg, var(--primary-blue), var(--primary-blue-light));
-            color: var(--primary-white);
-            border-radius: var(--border-radius-lg);
-            padding: 40px;
-            margin: 0 auto;
-            max-width: 800px;
-            box-shadow: var(--box-shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .current-activity-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="rgba(255,255,255,0.1)" viewBox="0 0 100 100"><circle cx="25" cy="25" r="5"></circle><circle cx="75" cy="75" r="5"></circle></svg>') repeat;
-            opacity: 0.8;
-            z-index: 0;
-        }
-
-        .current-activity-icon {
-            font-size: 5rem;
-            margin-bottom: 25px;
-            z-index: 1;
-            animation: bounceIn 1.5s ease-out;
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); opacity: 1; }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-
-        .current-activity-box p {
-            font-size: 1.5rem;
-            font-style: italic;
-            margin: 0;
-            line-height: 1.6;
-            text-align: center;
-            max-width: 90%;
-            z-index: 1;
-        }
-
-        /* --- Tables for Study/Deadlines (New Visuals) --- */
-        .data-table-container {
-            margin-top: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .data-table {
-            flex: 1 1 45%; /* Allow two tables side-by-side on larger screens */
-            min-width: 350px; /* Minimum width for tables */
-            background-color: var(--primary-white);
-            border-radius: var(--border-radius-md);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .data-table:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .data-table h3 {
-            background-color: var(--primary-blue);
-            color: var(--primary-white);
-            padding: 15px 20px;
-            margin: 0;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .data-table h3 i {
-            margin-right: 10px;
-        }
-
-        .data-table table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        .data-table th, .data-table td {
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: left;
-        }
-
-        .data-table th {
-            background-color: var(--light-grey);
-            color: var(--primary-blue-dark);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .data-table tbody tr:nth-child(even) {
-            background-color: rgba(0, 123, 255, 0.02); /* Subtle zebra striping */
-        }
-
-        .data-table tbody tr:hover {
-            background-color: rgba(0, 123, 255, 0.05);
-        }
-
-        .data-table td i {
-            margin-right: 8px;
-            color: var(--primary-blue);
-        }
-
-        /* --- Login Section --- */
-        .login-form-container {
-            background-color: var(--primary-white);
-            border: 1px solid var(--border-color);
-            border-radius: var(--border-radius-lg);
-            padding: 40px;
-            margin: 0 auto;
-            max-width: 550px;
-            box-shadow: var(--box-shadow);
-            text-align: left;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .login-form-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .login-form-container p {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .login-form .input-group {
-            margin-bottom: 25px;
-        }
-
-        .login-form label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--dark-grey);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .login-form label i {
-            margin-right: 10px;
-            color: var(--primary-blue);
-        }
-
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: var(--border-radius-md);
-            font-size: 1.05rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background-color: var(--light-grey);
-        }
-
-        .password-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .password-container input {
-            padding-right: 40px; /* Space for the icon */
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: var(--primary-blue);
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-        }
-
-        .toggle-password:hover {
-            color: var(--primary-blue-dark);
-        }
-
-        .login-form input[type="text"]:focus,
-        .login-form input[type="password"]:focus {
-            outline: none;
-            border-color: var(--primary-blue-light);
-            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
-            background-color: var(--primary-white);
-        }
-
-        .btn-login {
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-blue-light));
-            color: var(--primary-white);
-            padding: 15px 30px;
-            border: none;
-            border-radius: var(--border-radius-md);
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-login:hover {
-            background: linear-gradient(90deg, var(--primary-blue-dark), var(--primary-blue));
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-        }
-
-        .signup-link {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 1rem;
-        }
-
-        .signup-link a {
-            color: var(--primary-blue-dark);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .signup-link a:hover {
-            color: var(--primary-blue);
-            text-decoration: underline;
-        }
-
-        /* --- Footer Styles --- */
-        footer {
-            background-color: var(--dark-grey);
-            color: var(--primary-white);
-            padding: 30px 0;
-            text-align: center;
-            font-size: 0.95rem;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        footer p {
-            margin: 0;
-            margin-bottom: 15px;
-        }
-
-        .social-links {
-            margin-top: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .social-links a {
-            color: var(--primary-white);
-            font-size: 1.8rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-blue-light);
-            transform: translateY(-5px) scale(1.1);
-        }
-
-        /* --- Responsive Design (Media Queries) --- */
-
-        /* Tablets and smaller desktops */
-        @media (max-width: 992px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            header h1 {
-                font-size: 2.8rem;
-            }
-
-            header nav ul {
-                gap: 15px;
-                margin-top: 20px;
-            }
-
-            header nav ul li a {
-                font-size: 1.05rem;
-                padding: 8px 15px;
-            }
-
-            .section-box {
-                padding: 40px 0;
-                margin-bottom: 40px;
-            }
-
-            .section-box h2 {
-                font-size: 2.2rem;
-                margin-bottom: 30px;
-            }
-
-            .section-icon {
-                font-size: 2.5rem;
-                margin-right: 15px;
-            }
-
-            .grid-container {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 25px;
-                padding: 0 15px;
-            }
-
-            .skill-card, .project-card, .language-card {
-                padding: 25px;
-            }
-
-            .skill-card h3, .project-card h3, .language-card h3 {
-                font-size: 1.4rem;
-            }
-
-            .currently-studying {
-                font-size: 1.2rem;
-                padding: 15px;
-            }
-
-            .currently-studying i {
-                font-size: 1.5rem;
-            }
-
-            .current-activity-box {
-                padding: 30px;
-                max-width: 700px;
-            }
-
-            .current-activity-icon {
-                font-size: 4.5rem;
-                margin-bottom: 20px;
-            }
-
-            .current-activity-box p {
-                font-size: 1.3rem;
-            }
-
-            .data-table-container {
-                flex-direction: column; /* Stack tables vertically */
-                align-items: center;
-            }
-
-            .data-table {
-                flex: 1 1 90%; /* Take more width when stacked */
-                min-width: unset; /* Remove min-width constraint */
-                max-width: 500px; /* Max width for single table on tablet */
-            }
-
-            .login-form-container {
-                padding: 30px;
-                max-width: 450px;
-            }
-
-            .btn-login {
-                font-size: 1.1rem;
-                padding: 12px 25px;
-            }
-        }
-
-        /* Mobile specific styles */
-        @media (max-width: 768px) {
-            header .container {
-                flex-wrap: nowrap; /* Prevent title and toggle from wrapping */
-                justify-content: space-between;
-            }
-
-            header h1 {
-                font-size: 2.2rem;
-                text-align: center; /* Center title on mobile */
-                flex-grow: 0; /* Don't expand */
-            }
-
-            .menu-toggle {
-                display: block; /* Show hamburger icon */
-            }
-
-            header nav {
-                position: fixed;
-                top: 0;
-                right: -100%; /* Start off-screen */
-                width: 70%; /* Width of the mobile menu */
-                height: 100%;
-                background: linear-gradient(180deg, var(--primary-blue-dark), var(--primary-blue));
-                padding-top: 80px; /* Space for the fixed header */
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-                transition: right 0.4s ease-in-out;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                overflow-y: auto; /* Enable scrolling for long menus */
-            }
-
-            header nav.active {
-                right: 0; /* Slide in */
-            }
-
-            header nav ul {
-                flex-direction: column; /* Stack nav items */
-                align-items: center;
-                gap: 20px; /* More space between items */
-                width: 100%;
-                margin-top: 20px;
-            }
-
-            header nav ul li {
-                width: 90%; /* Make list items take more width */
-                text-align: center;
-            }
-
-            header nav ul li a {
-                display: block; /* Make links fill their list item space */
-                padding: 15px 20px;
-                background-color: rgba(255, 255, 255, 0.1); /* Slight background for menu items */
-                border-radius: var(--border-radius-md);
-            }
-
-            header nav ul li a:hover {
-                background-color: rgba(255, 255, 255, 0.25);
-            }
-
-            /* Overlay when menu is open */
-            .overlay {
-                display: none; /* Hidden by default */
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 999; /* Below menu, above content */
-                transition: opacity 0.4s ease;
-            }
-
-            .overlay.active {
-                display: block;
-                opacity: 1;
-            }
-
-            body.menu-open {
-                overflow: hidden; /* Prevent scrolling when menu is open */
-            }
-
-            /* Adjust main content sections for mobile */
-            .section-box {
-                padding: 30px 0;
-                margin-bottom: 30px;
-            }
-
-            .section-box h2 {
-                font-size: 2rem;
-                flex-direction: column; /* Stack icon and text */
-                margin-bottom: 25px;
-            }
-
-            .section-icon {
-                margin-right: 0;
-                margin-bottom: 10px;
-                font-size: 2.5rem;
-            }
-
-            .grid-container {
-                grid-template-columns: 1fr; /* Single column layout for cards */
-                gap: 20px;
-                padding: 0 15px;
-            }
-
-            .skill-card, .project-card, .language-card {
-                padding: 20px;
-            }
-
-            .skill-card h3, .project-card h3, .language-card h3 {
-                font-size: 1.3rem;
-                margin-bottom: 10px;
-            }
-
-            .skill-icon, .project-icon, .language-icon {
-                font-size: 3rem;
-                margin-bottom: 15px;
-            }
-
-            .progress-bar-container {
-                height: 12px;
-            }
-
-            .currently-studying {
-                font-size: 1.1rem;
-                padding: 12px;
-            }
-
-            .currently-studying i {
-                font-size: 1.3rem;
-            }
-
-            .current-activity-box {
-                padding: 25px;
-            }
-
-            .current-activity-icon {
-                font-size: 4rem;
-                margin-bottom: 20px;
-            }
-
-            .current-activity-box p {
-                font-size: 1.2rem;
-            }
-
-            .data-table-container {
-                gap: 20px;
-            }
-
-            .data-table h3 {
-                font-size: 1.3rem;
-                padding: 12px 15px;
-            }
-
-            .data-table th, .data-table td {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-
-            .login-form-container {
-                padding: 25px;
-            }
-
-            .login-form label {
-                font-size: 1rem;
-            }
-
-            .login-form input[type="text"],
-            .login-form input[type="password"] {
-                padding: 12px;
-                font-size: 1rem;
-            }
-
-            .btn-login {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-
-            .signup-link {
-                font-size: 0.9rem;
-            }
-
-            footer {
-                padding: 20px 0;
-            }
-
-            .social-links a {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* Extra Small Phones */
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 10px;
-            }
-
-            header h1 {
-                font-size: 1.8rem;
-            }
-
-            header nav ul li a {
-                font-size: 0.9rem;
-                padding: 6px 10px;
-            }
-
-            .section-box {
-                padding: 25px 0;
-                margin-bottom: 25px;
-            }
-
-            .section-box h2 {
-                font-size: 1.7rem;
-                margin-bottom: 20px;
-            }
-
-            .section-icon {
-                font-size: 2.2rem;
-                margin-bottom: 8px;
-            }
-
-            .grid-container {
-                padding: 0 10px;
-                gap: 15px;
-            }
-
-            .skill-card, .project-card, .language-card {
-                padding: 18px;
-            }
-
-            .skill-card h3, .project-card h3, .language-card h3 {
-                font-size: 1.2rem;
-            }
-
-            .skill-icon, .project-icon, .language-icon {
-                font-size: 2.5rem;
-            }
-
-            .progress-text {
-                font-size: 0.85rem;
-            }
-
-            .currently-studying {
-                font-size: 1rem;
-                padding: 10px;
-            }
-
-            .currently-studying i {
-                font-size: 1.2rem;
-            }
-
-            .current-activity-box {
-                padding: 20px;
-            }
-
-            .current-activity-icon {
-                font-size: 3.5rem;
-            }
-
-            .current-activity-box p {
-                font-size: 1.05rem;
-                max-width: 100%;
-            }
-
-            .data-table h3 {
-                font-size: 1.2rem;
-                padding: 10px;
-            }
-
-            .data-table th, .data-table td {
-                padding: 8px 10px;
-                font-size: 0.85rem;
-            }
-
-            .login-form-container {
-                padding: 20px;
-            }
-
-            .login-form label {
-                font-size: 0.95rem;
-            }
-
-            .login-form input[type="text"],
-            .login-form input[type="password"] {
-                padding: 10px;
-            }
-
-            .btn-login {
-                font-size: 0.95rem;
-                padding: 8px 15px;
-            }
-
-            .social-links a {
-                font-size: 1.4rem;
-            }
-.productivity-hero {
-  margin: 60px auto 0;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  background: var(--primary-white);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--box-shadow);
-  overflow: hidden;
-  padding: 30px 20px;
-}
-
-@media (min-width: 1200px) {
-  .productivity-hero {
-    width: 100%;
-    left: auto;
-    right: auto;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1200px;
-  }
-}
-
-.hero-header {
-  text-align: center;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: var(--primary-blue-dark);
-  font-family: 'Montserrat', sans-serif;
-}
-
-.hero-header i {
-  font-size: 2rem;
-  color: var(--primary-blue);
-}
-
-.hero-header h3 {
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.chart-wrapper {
-  position: relative;
-  height: 600px; /* Critical */
-  width: 100%;
-  margin: 0 auto;
-}
-
-.chart-legend {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 20px;
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--text-color);
-}
-
-.chart-legend span {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.chart-legend i {
-  font-size: 0.8rem;
-}
-
-/* Dark Mode */
-body.dark .productivity-hero { background: #1a1a1a; }
-body.dark .hero-header { color: #4da6ff; }
-body.dark .chart-legend { color: #e0e0e0; }
-        }
-    </style>
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <h1>Neer's Journey</h1>
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <div class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#learning">Learning</a></li>
-                        <li><a href="#working">Working On</a></li>
-                        <li><a href="#languages">Languages</a></li>
-                        <li><a href="#current-activity">Current Focus</a></li>
-                        <li><a href="#study-deadlines">Study &
-                                Deadlines</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#login">Login</a></li>
-                    </ul>
-                </nav>
+<html lang="en" class="scroll-smooth">
+<%- include('partials/head', { title: "Neer's Chronicle - Portfolio & Personal Journey" }) %>
+<body class="bg-journalBg text-journalText font-body antialiased selection:bg-journalAccent/25 selection:text-journalText page-fade-in">
+
+    <%- include('partials/nav') %>
+
+    <main class="max-w-7xl mx-auto px-6 py-12 space-y-24">
+        
+        <!-- Premium Editorial Hero Section -->
+        <section class="text-center py-16 md:py-24 space-y-6 max-w-3xl mx-auto">
+            <span class="text-xs font-mono uppercase tracking-widest text-journalAccent2 font-semibold">
+                Creative Developer & Chronicler
+            </span>
+            <h1 class="font-display text-4xl md:text-6xl font-black text-journalText leading-tight">
+                Building refined digital tools & slow-thought writing.
+            </h1>
+            <p class="text-base md:text-lg text-journalMuted leading-relaxed font-reading max-w-2xl mx-auto">
+                Welcome to my personal archive. Below, explore my ongoing learning loops, active side-projects, languages, and technical timelines. Sign in to unlock my private journaling space.
+            </p>
+            <div class="flex justify-center gap-4 pt-4">
+                <a href="#projects" class="bg-journalAccent hover:bg-journalAccent-hover text-white px-6 py-3 rounded-full text-sm font-semibold transition-all hover-lift">
+                    Explore My Work
+                </a>
+                <a href="#login" class="bg-journalSurface border border-journalBorder hover:bg-journalAccent-light text-journalText px-6 py-3 rounded-full text-sm font-semibold transition-all hover-lift">
+                    Unlock Private Journal
+                </a>
             </div>
-        </header>
+        </section>
 
-        <div class="overlay" id="menuOverlay"></div>
-        <main>
-            <section id="learning" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-brain section-icon"></i> What I'm
-                        Learning</h2>
-                    <div class="grid-container">
-                        <div class="skill-card">
-                            <i class="fab fa-python skill-icon"></i>
-                            <h3>Python from GeeksforGeeks</h3>
-                            <p>Mastering the fundamentals of Python
-                                programming.</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar"
-                                    style="width: 85%;"></div>
+        <!-- What I'm Learning Section -->
+        <section id="learning" class="space-y-8 scroll-mt-24">
+            <div class="border-b border-journalBorder pb-4 flex items-center justify-between">
+                <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fas fa-brain text-journalAccent text-xl md:text-2xl"></i> What I'm Learning
+                </h2>
+                <span class="text-xs font-mono text-journalMuted">01 / SKILLS</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <% if (typeof skills !== 'undefined' && skills && skills.length > 0) { %>
+                    <% skills.forEach(skill => { %>
+                        <div class="deckled-card space-y-4">
+                            <div class="flex items-center justify-between">
+                                <i class="fas <%= skill.icon || 'fa-brain' %> text-2xl text-journalAccent"></i>
+                                <span class="text-xs font-mono text-journalMuted">Active Study</span>
                             </div>
-                            <span class="progress-text">85% Proficient</span>
+                            <h3 class="font-display text-xl font-bold"><%= skill.name %></h3>
+                            <p class="text-sm text-journalMuted font-reading"><%= skill.desc %></p>
+                            <div class="space-y-2">
+                                <div class="w-full bg-journalBorder h-2 rounded-full overflow-hidden">
+                                    <div class="bg-journalAccent h-full rounded-full" style="width: <%= skill.progress %>%;"></div>
+                                </div>
+                                <span class="text-xs font-mono text-journalAccent font-semibold"><%= skill.progress %>% Progress</span>
+                            </div>
                         </div>
-                        <div class="skill-card">
-                            <i class="fas fa-video skill-icon"></i>
-                            <h3>Video Editing</h3>
-                            <p>Exploring techniques for creating compelling
-                                video content.</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar"
-                                    style="width: 70%;"></div>
-                            </div>
-                            <span class="progress-text">70% Progress</span>
+                    <% }) %>
+                <% } else { %>
+                    <!-- Fallback if no skills loaded -->
+                    <div class="deckled-card space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="fab fa-python text-3xl text-journalAccent"></i>
+                            <span class="text-xs font-mono text-journalMuted">Active Study</span>
                         </div>
-                        <div class="skill-card">
-                            <i class="fas fa-camera skill-icon"></i>
-                            <h3>Video Shooting</h3>
-                            <p>Learning the art of capturing high-quality video
-                                footage.</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar"
-                                    style="width: 60%;"></div>
+                        <h3 class="font-display text-xl font-bold">Python from GeeksforGeeks</h3>
+                        <p class="text-sm text-journalMuted font-reading">Mastering fundamental algorithms, deep data structures, and asynchronous libraries.</p>
+                        <div class="space-y-2">
+                            <div class="w-full bg-journalBorder h-2 rounded-full overflow-hidden">
+                                <div class="bg-journalAccent h-full rounded-full" style="width: 85%;"></div>
                             </div>
-                            <span class="progress-text">60% Covered</span>
-                        </div>
-                        <div class="skill-card">
-                            <i class="fas fa-book-open skill-icon"></i>
-                            <h3>[Another Skill You're Learning]</h3>
-                            <p>Brief description of the skill.</p>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar"
-                                    style="width: 45%;"></div>
-                            </div>
-                            <span class="progress-text">45% Explored</span>
+                            <span class="text-xs font-mono text-journalAccent font-semibold">85% Proficient</span>
                         </div>
                     </div>
-                    <p class="currently-studying"><i class="fas fa-star"></i>
-                        Currently Focusing on **All Three Skills**</p>
-                </div>
-            </section>
-<section id="working" class="section-box">
-  <div class="container">
-    <h2><i class="fas fa-laptop-code section-icon"></i> What I'm Working On & Side Projects</h2>
+                <% } %>
+            </div>
 
-    <!-- Project Cards Grid -->
-    <div class="grid-container">
-      <div class="project-card">
-        <i class="fas fa-globe-americas project-icon"></i>
-        <h3>AI based knowledge base for students</h3>
-        <p>Developing a web application that uses AI to provide personalized learning recommendations.</p>
-        <div class="project-details">
-          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Mar 15, 2026</span>
-          <div class="progress-bar-container small">
-            <div class="progress-bar" style="width: 30%;"></div>
-          </div>
-          <span class="progress-text">30% Development</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <i class="fas fa-mobile-alt project-icon"></i>
-        <h3>Making earth one family</h3>
-        <p>Developing a mobile app that connects people from different parts of the world to promote cultural exchange.</p>
-        <div class="project-details">
-          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Aug 30, 2026</span>
-          <div class="progress-bar-container small">
-            <div class="progress-bar" style="width: 20%;"></div>
-          </div>
-          <span class="progress-text">20% Research Phase</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <i class="fas fa-robot project-icon"></i>
-        <h3>Automated Conversational AI Bot</h3>
-        <p>Building an AI-powered Conversational bot to handle social media dm.</p>
-        <div class="project-details">
-          <span class="deadline"><i class="far fa-calendar-alt"></i> Target: Jan 31, 2026</span>
-          <div class="progress-bar-container small">
-            <div class="progress-bar" style="width: 80%;"></div>
-          </div>
-          <span class="progress-text">80% Core Logic</span>
-        </div>
-      </div>
-    </div>
+            <div class="bg-journalSurface-soft/40 border border-journalBorder/60 rounded-xl p-4 flex items-center gap-3 max-w-md">
+                <i class="fas fa-star text-journalAccent2"></i>
+                <p class="text-xs font-mono text-journalText">Currently focusing on all three skillsets simultaneously.</p>
+            </div>
+        </section>
 
-    <!-- FULL-WIDTH HERO CHART -->
-    <div class="productivity-hero">
-      <div class="hero-header">
-        <i class="fas fa-chart-line"></i>
-        <h3>90-Day Productivity Challenge (Sep 2025)</h3>
-      </div>
-      <div class="chart-wrapper">
-        <canvas id="productivityChart" aria-label="90-Day Productivity Line Chart - Animated Loop" role="img"></canvas>
-      </div>
-      <div class="chart-legend">
-        <span><i class="fas fa-circle" style="color:#FF5733;"></i> Work</span>
-        <span><i class="fas fa-circle" style="color:#33FF57;"></i> Completed</span>
-        <span><i class="fas fa-circle" style="color:#3357FF;"></i> Pending</span>
-      </div>
-    </div>
-  </div>
-</section>
+        <!-- Working On & Side Projects (Features Productivity Challenge Loop) -->
+        <section id="working" class="space-y-8 scroll-mt-24">
+            <div class="border-b border-journalBorder pb-4 flex items-center justify-between">
+                <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fas fa-laptop-code text-journalAccent text-xl md:text-2xl"></i> Active Engagements
+                </h2>
+                <span class="text-xs font-mono text-journalMuted">02 / LABS</span>
+            </div>
 
-            <section id="languages" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-globe-americas section-icon"></i>
-                        Languages I Speak</h2>
-                    <div class="grid-container language-grid">
-                        <div class="language-card">
-                            <img src="https://flagcdn.com/in.svg"
-                                alt="India Flag" class="flag-icon">
-                            <h3>Hindi</h3>
-                            <p class="proficiency-level">Native Speaker</p>
-                            <div class="proficiency-bar-visual">
-                                <div class="proficiency-bar-fill"
-                                    style="width: 100%;"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <% if (typeof projects !== 'undefined' && projects && projects.length > 0) { %>
+                    <% projects.forEach(proj => { %>
+                        <div class="deckled-card space-y-4">
+                            <div class="flex items-center justify-between">
+                                <i class="fas <%= proj.icon || 'fa-laptop-code' %> text-2xl text-journalAccent"></i>
+                                <span class="text-xs font-mono text-journalMuted"><%= proj.progress === 100 ? 'Completed' : 'Active' %></span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold"><%= proj.title %></h3>
+                            <p class="text-sm text-journalMuted font-reading"><%= proj.desc %></p>
+                            <div class="space-y-3 pt-2">
+                                <span class="text-xs font-mono text-journalAccent block"><i class="far fa-calendar-alt mr-1"></i> Target: <%= proj.date ? new Date(proj.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A' %></span>
+                                <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-journalAccent h-full rounded-full" style="width: <%= proj.progress %>%;"></div>
+                                </div>
+                                <span class="text-xs font-mono text-journalMuted block"><%= proj.progress %>% Development</span>
                             </div>
                         </div>
-                        <div class="language-card">
-                            <img src="https://flagcdn.com/gb.svg" alt="UK Flag"
-                                class="flag-icon">
-                            <h3>English</h3>
-                            <p class="proficiency-level">Fluent (Professional
-                                Working)</p>
-                            <div class="proficiency-bar-visual">
-                                <div class="proficiency-bar-fill"
-                                    style="width: 95%;"></div>
+                    <% }) %>
+                <% } else { %>
+                    <!-- Fallback if no projects loaded -->
+                    <div class="deckled-card space-y-4">
+                        <h3 class="font-display text-lg font-bold">AI Knowledge Base</h3>
+                        <p class="text-sm text-journalMuted font-reading">A custom web interface designed to dynamically aggregate and suggest learning resources based on interactive student feedback.</p>
+                        <div class="space-y-3 pt-2">
+                            <span class="text-xs font-mono text-journalAccent2 block"><i class="far fa-calendar-alt mr-1"></i> Target: Mar 15, 2026</span>
+                            <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-journalAccent2 h-full rounded-full" style="width: 30%;"></div>
                             </div>
-                        </div>
-                        <div class="language-card">
-                            <img src="https://flagcdn.com/ru.svg"
-                                alt="Russia Flag" class="flag-icon">
-                            <h3>Russian</h3>
-                            <p class="proficiency-level">Intermediate
-                                (Conversational)</p>
-                            <div class="proficiency-bar-visual">
-                                <div class="proficiency-bar-fill"
-                                    style="width: 70%;"></div>
-                            </div>
-                        </div>
-                        <div class="language-card learning">
-                            <i
-                                class="fas fa-chalkboard-teacher language-icon"></i>
-                            <h3>Russian</h3>
-                            <p class="proficiency-level">Currently Learning </p>
-                            <div class="proficiency-bar-visual">
-                                <div class="proficiency-bar-fill"
-                                    style="width: 25%;"></div>
-                            </div>
+                            <span class="text-xs font-mono text-journalMuted block">30% Development</span>
                         </div>
                     </div>
-                </div>
-            </section>
+                <% } %>
+            </div>
 
-            <section id="current-activity" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-cogs section-icon"></i> Currently What
-                        I'm Doing</h2>
-                    <div class="current-activity-box">
-                        <i class="fas fa-chart-line current-activity-icon"></i>
-                        <p>I'm primarily focused on **optimizing backend
-                            performance** for high-traffic applications, diving
-                            deep into database indexing, query optimization, and
-                            microservices architecture. Continuous learning is
-                            my mantra!</p>
+            <!-- Productivity Loop Chart Container -->
+            <div class="bg-journalSurface border border-journalBorder rounded-2xl p-6 md:p-8 space-y-6 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-chart-line text-journalAccent text-lg"></i>
+                    <h3 class="font-display text-lg font-bold">90-Day Productivity Timeline (Animated Challenge)</h3>
+                </div>
+                <div class="relative h-[300px] md:h-[400px] w-full">
+                    <canvas id="productivityChart" aria-label="90-Day Productivity Chart" role="img"></canvas>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-xs font-mono text-journalMuted pt-2">
+                    <span class="flex items-center gap-2"><i class="fas fa-circle text-[#FF5733]"></i> Study / Research</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-circle text-[#33FF57]"></i> Goals Hit</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-circle text-[#3357FF]"></i> Pending Sprint Work</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages I Speak Section -->
+        <section id="languages" class="space-y-8 scroll-mt-24">
+            <div class="border-b border-journalBorder pb-4 flex items-center justify-between">
+                <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fas fa-globe-americas text-journalAccent text-xl md:text-2xl"></i> Languages I Speak
+                </h2>
+                <span class="text-xs font-mono text-journalMuted">03 / VOICES</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Hindi -->
+                <div class="bg-journalSurface border border-journalBorder p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                    <img src="https://flagcdn.com/in.svg" alt="India Flag" class="w-12 h-8 object-cover rounded-md border border-journalBorder shadow-sm sepia-[0.2]">
+                    <h3 class="font-display font-bold text-lg">Hindi</h3>
+                    <p class="text-xs font-mono text-journalMuted">Native / Mother Tongue</p>
+                    <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-journalAccent h-full rounded-full" style="width: 100%;"></div>
                     </div>
                 </div>
-            </section>
 
-            <section id="study-deadlines" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-calendar-alt section-icon"></i> What
-                        I'm Studying & Deadlines</h2>
-                    <div class="data-table-container">
-                        <div class="data-table">
-                            <h3><i class="fas fa-book-reader"></i> Study Focus
-                                Areas</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Topic</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><i class="fas fa-code"></i> Advanced
-                                            Algorithms</td>
-                                        <td>In Progress</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-network-wired"></i>
-                                            Distributed Systems</td>
-                                        <td>Starting Soon</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-sitemap"></i>
-                                            Design Patterns</td>
-                                        <td>Revisiting</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-palette"></i> UI/UX
-                                            Principles</td>
-                                        <td>Ongoing Self-Study</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="data-table">
-                            <h3><i class="fas fa-hourglass-half"></i> Upcoming
-                                Deadlines</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Project/Task</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><i class="fas fa-file-code"></i>
-                                            Portfolio v2 Launch</td>
-                                        <td>Sept 15, 2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-bug"></i> Bug Fix
-                                            Sprint End</td>
-                                        <td>Aug 20, 2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-lightbulb"></i> New
-                                            Feature Pitch</td>
-                                        <td>Oct 5, 2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i class="fas fa-chart-pie"></i>
-                                            Data Analysis Report</td>
-                                        <td>Nov 10, 2025</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                <!-- English -->
+                <div class="bg-journalSurface border border-journalBorder p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                    <img src="https://flagcdn.com/gb.svg" alt="UK Flag" class="w-12 h-8 object-cover rounded-md border border-journalBorder shadow-sm sepia-[0.2]">
+                    <h3 class="font-display font-bold text-lg">English</h3>
+                    <p class="text-xs font-mono text-journalMuted">Fluent / Professional</p>
+                    <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-journalAccent h-full rounded-full" style="width: 95%;"></div>
                     </div>
                 </div>
-            </section>
 
-            <section id="projects" class="section-box">
-                <div class="container">
-                    <h2><i class="fas fa-folder-open section-icon"></i> My Projects</h2>
-                    <div class="grid-container">
-                        <div class="project-card">
-                            <i class="fas fa-code project-icon"></i>
-                            <h3>Personal Portfolio Website</h3>
-                            <p>A responsive portfolio website showcasing my skills, projects, and journey. Built with HTML, CSS, JavaScript, and Node.js.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Dec 2024</span>
-                                <div class="tech-tags">
-                                    <span class="tech-tag">HTML</span>
-                                    <span class="tech-tag">CSS</span>
-                                    <span class="tech-tag">JavaScript</span>
-                                    <span class="tech-tag">Node.js</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/Nee-sudo/portfolio" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                                </div>
-                            </div>
+                <!-- Russian (Conversational) -->
+                <div class="bg-journalSurface border border-journalBorder p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                    <img src="https://flagcdn.com/ru.svg" alt="Russia Flag" class="w-12 h-8 object-cover rounded-md border border-journalBorder shadow-sm sepia-[0.2]">
+                    <h3 class="font-display font-bold text-lg">Russian</h3>
+                    <p class="text-xs font-mono text-journalMuted">Intermediate Conversational</p>
+                    <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-journalAccent h-full rounded-full" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <!-- Russian Learning -->
+                <div class="bg-journalSurface-soft/40 border border-dashed border-journalBorder p-5 rounded-2xl flex flex-col items-center text-center justify-center space-y-3">
+                    <i class="fas fa-chalkboard-teacher text-3xl text-journalAccent2"></i>
+                    <h3 class="font-display font-bold text-lg text-journalAccent2">Russian</h3>
+                    <p class="text-xs font-mono text-journalMuted">Currently Upskilling</p>
+                    <div class="w-full bg-journalBorder h-1.5 rounded-full overflow-hidden">
+                        <div class="bg-journalAccent2 h-full rounded-full" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Focus Section -->
+        <section id="current-activity" class="space-y-6 scroll-mt-24">
+            <div class="bg-journalSurface border border-journalBorder p-8 rounded-3xl flex flex-col md:flex-row items-center gap-6 max-w-4xl mx-auto shadow-sm">
+                <div class="w-16 h-16 shrink-0 bg-journalAccent/10 text-journalAccent rounded-full flex items-center justify-center text-2xl">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-display text-xl font-bold">What I'm Focusing On Right Now</h3>
+                    <p class="text-sm md:text-base font-reading text-journalMuted leading-relaxed">
+                        <% if (typeof activity !== 'undefined' && activity) { %>
+                            <%= activity %>
+                        <% } else { %>
+                            I'm primarily focused on <strong class="text-journalAccent">optimizing backend architecture</strong> for resilient apps, diving deep into indexing strategies, query planning, connection pooling, and secure cookie schemas. Continuous code refinement is my guide.
+                        <% } %>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Focus & Deadlines Section -->
+        <section id="study-deadlines" class="space-y-8 scroll-mt-24">
+            <div class="border-b border-journalBorder pb-4 flex items-center justify-between">
+                <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fas fa-calendar-alt text-journalAccent text-xl md:text-2xl"></i> Study Timelines & Sprints
+                </h2>
+                <span class="text-xs font-mono text-journalMuted">04 / SPRINTS</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Topics Table -->
+                <div class="bg-journalSurface border border-journalBorder rounded-2xl overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-journalBorder bg-journalSurface-soft/40">
+                        <h3 class="font-display font-bold text-sm flex items-center gap-2 m-0"><i class="fas fa-book-reader text-journalAccent"></i> Topics Under Review</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm font-body">
+                            <thead>
+                                <tr class="border-b border-journalBorder text-journalMuted uppercase text-[10px] tracking-wider bg-journalSurface-soft/20">
+                                    <th class="px-6 py-3.5 font-bold">Subject Focus</th>
+                                    <th class="px-6 py-3.5 font-bold">Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-journalBorder">
+                                <% if (typeof study !== 'undefined' && study && study.length > 0) { %>
+                                    <% study.forEach(item => { %>
+                                        <tr class="hover:bg-journalBg/40 transition-colors">
+                                            <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-code text-journalAccent/75"></i> <%= item.topic %></td>
+                                            <td class="px-6 py-4">
+                                                <% if (item.status === 'In Progress') { %>
+                                                    <span class="bg-journalAccent/10 text-journalAccent px-2.5 py-1 rounded-full text-xs font-semibold">In Progress</span>
+                                                <% } else if (item.status === 'Starting Soon') { %>
+                                                    <span class="bg-journalAccent2/10 text-journalAccent2 px-2.5 py-1 rounded-full text-xs font-semibold">Starting Soon</span>
+                                                <% } else if (item.status === 'Revisiting') { %>
+                                                    <span class="bg-journalMuted/15 text-journalMuted px-2.5 py-1 rounded-full text-xs font-semibold">Revisiting</span>
+                                                <% } else { %>
+                                                    <span class="bg-journalAccent/10 text-journalAccent px-2.5 py-1 rounded-full text-xs font-semibold"><%= item.status %></span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <!-- Fallback Topics -->
+                                    <tr class="hover:bg-journalBg/40 transition-colors">
+                                        <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-code text-journalAccent/75"></i> Advanced Algorithms</td>
+                                        <td class="px-6 py-4"><span class="bg-journalAccent/10 text-journalAccent px-2.5 py-1 rounded-full text-xs font-semibold">In Progress</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-journalBg/40 transition-colors">
+                                        <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-network-wired text-journalAccent/75"></i> Distributed Systems</td>
+                                        <td class="px-6 py-4"><span class="bg-journalAccent2/10 text-journalAccent2 px-2.5 py-1 rounded-full text-xs font-semibold">Starting Soon</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-journalBg/40 transition-colors">
+                                        <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-sitemap text-journalAccent/75"></i> Design Patterns</td>
+                                        <td class="px-6 py-4"><span class="bg-journalMuted/15 text-journalMuted px-2.5 py-1 rounded-full text-xs font-semibold">Revisiting</span></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Deadlines Table -->
+                <div class="bg-journalSurface border border-journalBorder rounded-2xl overflow-hidden shadow-sm">
+                    <div class="px-6 py-4 border-b border-journalBorder bg-journalSurface-soft/40">
+                        <h3 class="font-display font-bold text-sm flex items-center gap-2 m-0"><i class="fas fa-hourglass-half text-journalAccent"></i> Milestones</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm font-body">
+                            <thead>
+                                <tr class="border-b border-journalBorder text-journalMuted uppercase text-[10px] tracking-wider bg-journalSurface-soft/20">
+                                    <th class="px-6 py-3.5 font-bold">Target Initiative</th>
+                                    <th class="px-6 py-3.5 font-bold">Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-journalBorder">
+                                <% if (typeof deadlines !== 'undefined' && deadlines && deadlines.length > 0) { %>
+                                    <% deadlines.forEach(item => { %>
+                                        <tr class="hover:bg-journalBg/40 transition-colors">
+                                            <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-file-code text-journalAccent/75"></i> <%= item.task %></td>
+                                            <td class="px-6 py-4 font-mono text-xs text-journalAccent font-semibold"><%= item.date ? new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'N/A' %></td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <!-- Fallback Deadlines -->
+                                    <tr class="hover:bg-journalBg/40 transition-colors">
+                                        <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-file-code text-journalAccent/75"></i> Portfolio v2 Launch</td>
+                                        <td class="px-6 py-4 font-mono text-xs text-journalAccent font-semibold">Sept 15, 2025</td>
+                                    </tr>
+                                    <tr class="hover:bg-journalBg/40 transition-colors">
+                                        <td class="px-6 py-4 font-medium flex items-center gap-2"><i class="fas fa-bug text-journalAccent/75"></i> Bug Fix Sprint End</td>
+                                        <td class="px-6 py-4 font-mono text-xs text-journalAccent font-semibold">Aug 20, 2025</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Projects Grid -->
+        <section id="projects" class="space-y-8 scroll-mt-24">
+            <div class="border-b border-journalBorder pb-4 flex items-center justify-between">
+                <h2 class="font-display text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fas fa-folder-open text-journalAccent text-xl md:text-2xl"></i> Featured Portfolio
+                </h2>
+                <span class="text-xs font-mono text-journalMuted">05 / PORTFOLIO</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project Card 1 -->
+                <div class="deckled-card flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="fas fa-globe-asia text-3xl text-journalAccent2"></i>
+                            <span class="text-xs font-mono text-journalMuted">Completed</span>
                         </div>
-                        <div class="project-card">
-                            <i class="fas fa-robot project-icon"></i>
-                            <h3>AI Chatbot Assistant</h3>
-                            <p>An intelligent chatbot for handling customer queries, built with Python and machine learning libraries.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Nov 2024</span>
-                                <div class="tech-tags">
-                                    <span class="tech-tag">Python</span>
-                                    <span class="tech-tag">TensorFlow</span>
-                                    <span class="tech-tag">NLP</span>
-                                    <span class="tech-tag">Flask</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/Nee-sudo/ai-chatbot" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                                </div>
-                            </div>
+                        <h3 class="font-display text-xl font-bold">Personal Portfolio Website</h3>
+                        <p class="text-sm text-journalMuted font-reading leading-relaxed">
+                            A beautifully responsive editorial web space housing full skill metrics, projects, timelines, and private thoughts. Stored on custom containers.
+                        </p>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-journalBorder">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">HTML5/EJS</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Tailwind CSS</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Express.js</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Node.js</span>
                         </div>
-                        <div class="project-card">
-                            <i class="fas fa-mobile-alt project-icon"></i>
-                            <h3>Mobile Task Manager App</h3>
-                            <p>A cross-platform mobile app for task management with real-time synchronization and collaborative features.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Oct 2024</span>
-                                <div class="tech-tags">
-                                    <span class="tech-tag">React Native</span>
-                                    <span class="tech-tag">Firebase</span>
-                                    <span class="tech-tag">Redux</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/Nee-sudo/task-manager" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> App Store</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-card">
-                            <i class="fas fa-chart-line project-icon"></i>
-                            <h3>Data Visualization Dashboard</h3>
-                            <p>An interactive dashboard for data analysis and visualization, featuring real-time charts and customizable widgets.</p>
-                            <div class="project-details">
-                                <span class="deadline"><i class="far fa-calendar-alt"></i> Completed: Sep 2024</span>
-                                <div class="tech-tags">
-                                    <span class="tech-tag">D3.js</span>
-                                    <span class="tech-tag">React</span>
-                                    <span class="tech-tag">Node.js</span>
-                                    <span class="tech-tag">MongoDB</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://github.com/Nee-sudo/data-dashboard" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
-                                </div>
-                            </div>
+                        <div class="flex gap-4 text-xs font-mono">
+                            <a href="https://github.com/Nee-sudo/portfolio" target="_blank" rel="noopener noreferrer" class="text-journalAccent hover:text-journalAccent-hover font-semibold"><i class="fab fa-github mr-1"></i> Github</a>
+                            <a href="#" class="text-journalMuted hover:text-journalAccent"><i class="fas fa-external-link-alt mr-1"></i> Live Demo</a>
                         </div>
                     </div>
                 </div>
-            </section>
 
-<section id="login" class="section-box">
-    <div class="container">
-        <h2><i class="fas fa-user-secret section-icon"></i> Login to Know More About Me</h2>
-        <div class="login-form-container">
-            <p>Unlock a deeper insight into my professional journey, detailed project breakdowns, and exclusive content. Your unique access awaits!</p>
-            <% if (error) { %>
-                <p style="color: red; text-align: center;"><%= error %></p>
-            <% } %>
-            <form action="/login" method="POST" class="login-form">
+                <!-- Project Card 2 -->
+                <div class="deckled-card flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="fas fa-robot text-3xl text-journalAccent"></i>
+                            <span class="text-xs font-mono text-journalMuted">AI Integration</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold">AI Chatbot Assistant</h3>
+                        <p class="text-sm text-journalMuted font-reading leading-relaxed">
+                            An intelligent conversational agent structured for natural language reasoning, intent resolution, and customer query redirection.
+                        </p>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-journalBorder">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Python</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">TensorFlow</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">NLP</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Flask</span>
+                        </div>
+                        <div class="flex gap-4 text-xs font-mono">
+                            <a href="https://github.com/Nee-sudo/ai-chatbot" target="_blank" rel="noopener noreferrer" class="text-journalAccent hover:text-journalAccent-hover font-semibold"><i class="fab fa-github mr-1"></i> Github</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="deckled-card flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="fas fa-mobile-alt text-3xl text-journalAccent"></i>
+                            <span class="text-xs font-mono text-journalMuted">Productivity</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold">Mobile Task Manager App</h3>
+                        <p class="text-sm text-journalMuted font-reading leading-relaxed">
+                            Cross-platform native companion app optimizing task priorities, deadline schedules, and secure synchronized cloud structures.
+                        </p>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-journalBorder">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">React Native</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Firebase</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Redux State</span>
+                        </div>
+                        <div class="flex gap-4 text-xs font-mono">
+                            <a href="https://github.com/Nee-sudo/task-manager" target="_blank" rel="noopener noreferrer" class="text-journalAccent hover:text-journalAccent-hover font-semibold"><i class="fab fa-github mr-1"></i> Github</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="deckled-card flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <i class="fas fa-chart-pie text-3xl text-journalAccent2"></i>
+                            <span class="text-xs font-mono text-journalMuted">Analytics</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold">Interactive Analytics Dashboard</h3>
+                        <p class="text-sm text-journalMuted font-reading leading-relaxed">
+                            An advanced metrics playground using dynamic scaling observers, customizable drag widgets, and fluid transitions.
+                        </p>
+                    </div>
+                    <div class="space-y-4 pt-4 border-t border-journalBorder">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">D3.js Visualization</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">React</span>
+                            <span class="text-[10px] font-mono bg-journalAccent-light text-journalAccent px-2.5 py-1 rounded-md font-semibold">Node Server</span>
+                        </div>
+                        <div class="flex gap-4 text-xs font-mono">
+                            <a href="https://github.com/Nee-sudo/data-dashboard" target="_blank" rel="noopener noreferrer" class="text-journalAccent hover:text-journalAccent-hover font-semibold"><i class="fab fa-github mr-1"></i> Github</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Elegant Authentication Section -->
+        <section id="login" class="space-y-8 scroll-mt-24 max-w-lg mx-auto">
+            <div class="deckled-card space-y-6 border border-journalAccent/30 shadow-2xl relative bg-journalSurface/90 backdrop-blur-xl">
+                <div class="text-center space-y-2">
+                    <div class="w-14 h-14 bg-journalAccent/10 text-journalAccent border border-journalAccent/30 rounded-2xl flex items-center justify-center text-2xl mx-auto shadow-inner">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h2 class="font-display text-2xl md:text-3xl font-extrabold text-journalText m-0">Secure Chronicle Entrance</h2>
+                    <p class="text-xs text-journalMuted font-mono uppercase tracking-widest">AUTHORIZED JOURNAL ACCESS ONLY</p>
+                </div>
+
+                <% if (error) { %>
+                    <div class="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 rounded-xl p-3 text-xs flex items-center gap-2">
+                        <i class="fas fa-exclamation-circle text-sm shrink-0 text-red-500"></i>
+                        <span class="font-semibold"><%= error %></span>
+                    </div>
+                <% } %>
+
+                <form action="/login" method="POST" class="space-y-5">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    
+                    <div class="space-y-2">
+                        <label for="username" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                            <i class="fas fa-user-shield text-journalAccent"></i> Username or Email
+                        </label>
+                        <input type="text" id="username" name="username" placeholder="Enter assigned username" required autofocus
+                               class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl px-4 py-3 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="password" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                            <i class="fas fa-key text-journalAccent"></i> Access Key / Password
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" placeholder="••••••••••••" required
+                                   class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-xl pl-4 pr-12 py-3 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
+                            <button type="button" id="togglePasswordBtn" class="absolute right-4 top-3.5 text-journalMuted hover:text-journalAccent transition-colors" aria-label="Toggle Password Visibility">
+                                <i class="fas fa-eye text-sm" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <label class="flex items-center gap-2 text-journalMuted cursor-pointer hover:text-journalText">
+                            <input type="checkbox" name="remember" class="rounded border-journalBorder text-journalAccent focus:ring-0 bg-journalSurface">
+                            <span>Remember session</span>
+                        </label>
+                        <button type="button" onclick="openForgotModal()" class="text-journalAccent hover:underline font-semibold bg-transparent border-0 cursor-pointer">
+                            Forgot password?
+                        </button>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <button type="submit" class="w-full bg-journalAccent hover:bg-journalAccent-hover text-white py-3.5 px-6 rounded-xl font-bold text-sm transition-all hover-lift shadow-lg flex items-center justify-center gap-2">
+                            <i class="fas fa-book-open text-xs"></i> Enter Chronicle
+                        </button>
+
+                        <a href="/request-invitation" class="w-full bg-journalSurface border border-journalBorder hover:border-journalAccent text-journalText py-3 px-6 rounded-xl font-bold text-xs transition-all hover-lift text-center flex items-center justify-center gap-2">
+                            <i class="fas fa-envelope-open-text text-xs text-journalAccent"></i> Request Chronicle Invitation
+                        </a>
+                    </div>
+                </form>
+
+                <div class="border-t border-journalBorder/60 pt-4 text-center space-y-2">
+                    <a href="/admin/login" class="text-[11px] font-mono text-journalMuted hover:text-journalAccent transition-colors flex items-center justify-center gap-1.5 uppercase tracking-wider">
+                        <i class="fas fa-user-lock text-[10px]"></i> Admin Portal Login
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="fixed inset-0 bg-journalBg/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="deckled-card w-full max-w-md mx-4 space-y-6 border border-journalAccent/30 shadow-2xl relative transform scale-95 transition-transform duration-300">
+            <button type="button" onclick="closeForgotModal()" class="absolute right-4 top-4 text-journalMuted hover:text-journalAccent transition-colors">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 bg-journalAccent/10 text-journalAccent rounded-full flex items-center justify-center text-xl mx-auto">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <h3 class="font-display text-xl font-bold m-0">Reset Credentials</h3>
+                <p class="text-xs text-journalMuted font-mono">ENTER REGISTERED EMAIL FOR LINK</p>
+            </div>
+            <div id="forgotPasswordMsg" class="hidden text-xs rounded-lg p-3"></div>
+            <form id="forgotPasswordForm" class="space-y-4">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="input-group">
-                    <label for="username"><i class="fas fa-user"></i> Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                <div class="space-y-2">
+                    <label for="forgotEmail" class="text-xs font-mono font-bold text-journalText flex items-center gap-1.5 uppercase tracking-wider">
+                        <i class="fas fa-envelope text-journalAccent"></i> Email Address
+                    </label>
+                    <input type="email" id="forgotEmail" name="email" placeholder="neer_7007@example.com" required
+                           class="w-full text-sm font-body bg-journalSurface border border-journalBorder rounded-lg px-4 py-3 focus:outline-none focus:border-journalAccent text-journalText placeholder:text-journalMuted transition-colors shadow-inner">
                 </div>
-                <div class="input-group">
-                    <label for="password"><i class="fas fa-key"></i> Password</label>
-                    <div class="password-container">
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
-                    </div>
-                </div>
-                <button type="submit" class="btn-login">Secure Login</button>
-                <p class="signup-link">New here? <a href="/signup">Request invite</a></p>
+                <button type="submit" class="w-full bg-journalAccent hover:bg-journalAccent-hover text-white py-3 px-6 rounded-lg font-bold text-sm transition-all hover-lift shadow-md flex items-center justify-center gap-2">
+                    <span id="forgotSubmitText">Dispatch Reset Instructions</span>
+                    <i class="fas fa-paper-plane text-xs"></i>
+                </button>
             </form>
         </div>
     </div>
-</section>
-        </main>
 
-        <footer>
-            <div class="container">
-                <p>&copy; 2025 Neeraj Chauhan. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="www.linkedin.com/in/neeraj-chauhan-3ba593244" aria-label="LinkedIn Profile"><i
-                            class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/Nee-sudo" aria-label="GitHub Profile"><i
-                            class="fab fa-github"></i></a>
-                    <!-- <a href="#" aria-label="Twitter Profile"><i
-                            class="fab fa-twitter"></i></a> -->
-                    <a href="#" aria-label="Email Me"><i
-                            class="fas fa-envelope"></i></a>
-                </div>
-            </div>
-        </footer>
+    <%- include('partials/footer') %>
 
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menuToggle');
-            const mainNav = document.getElementById('mainNav');
-            const menuOverlay = document.getElementById('menuOverlay');
-            const navLinks = mainNav.querySelectorAll('a');
+    <!-- Chart.js configuration & password reveal handler -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script>
+    // Modal controls
+    function openForgotModal() {
+        const modal = document.getElementById('forgotPasswordModal');
+        const modalContent = modal.querySelector('.deckled-card');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+        }, 10);
+    }
 
-            function toggleMenu() {
-                mainNav.classList.toggle('active');
-                menuOverlay.classList.toggle('active');
-                document.body.classList.toggle('menu-open'); // Prevent body scroll
-            }
+    function closeForgotModal() {
+        const modal = document.getElementById('forgotPasswordModal');
+        const modalContent = modal.querySelector('.deckled-card');
+        modal.classList.add('opacity-0');
+        modalContent.classList.add('scale-95');
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            // Reset state
+            document.getElementById('forgotPasswordForm').reset();
+            const msgDiv = document.getElementById('forgotPasswordMsg');
+            msgDiv.classList.add('hidden');
+            msgDiv.className = 'hidden text-xs rounded-lg p-3';
+        }, 300);
+    }
 
-            menuToggle.addEventListener('click', toggleMenu);
-            menuOverlay.addEventListener('click', toggleMenu); // Close menu when clicking overlay
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle AJAX Forgot Password Form Submission
+        const forgotForm = document.getElementById('forgotPasswordForm');
+        const msgDiv = document.getElementById('forgotPasswordMsg');
+        const submitText = document.getElementById('forgotSubmitText');
 
-            // Close menu when a navigation link is clicked (for smoother mobile navigation)
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (mainNav.classList.contains('active')) {
-                        toggleMenu(); // Close menu after clicking a link
+        if (forgotForm) {
+            forgotForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitText.textContent = 'Processing dispatch...';
+                msgDiv.classList.add('hidden');
+
+                const email = document.getElementById('forgotEmail').value;
+                const csrf = forgotForm.querySelector('input[name="_csrf"]').value;
+
+                fetch('/forgot-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, _csrf: csrf })
+                })
+                .then(async res => {
+                    const data = await res.json();
+                    if (!res.ok) {
+                        throw new Error(data.error || 'Password reset request failed.');
                     }
+                    return data;
+                })
+                .then(data => {
+                    submitText.textContent = 'Dispatch Reset Instructions';
+                    msgDiv.className = 'bg-green-500/10 border border-green-500/20 text-green-600 rounded-lg p-3 text-xs';
+                    msgDiv.textContent = data.message || 'An email has been dispatched with reset instructions.';
+                    msgDiv.classList.remove('hidden');
+                    forgotForm.reset();
+                })
+                .catch(err => {
+                    submitText.textContent = 'Dispatch Reset Instructions';
+                    msgDiv.className = 'bg-red-500/10 border border-red-500/20 text-red-600 rounded-lg p-3 text-xs';
+                    msgDiv.textContent = err.message;
+                    msgDiv.classList.remove('hidden');
                 });
             });
+        }
+        // Password visibility toggle
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePasswordIcon');
+
+        if (togglePasswordBtn && passwordInput && toggleIcon) {
+            togglePasswordBtn.addEventListener('click', function() {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                toggleIcon.className = isPassword ? 'fas fa-eye-slash text-sm' : 'fas fa-eye text-sm';
+            });
+        }
+
+        // Live Animated Productivity Chart Setup
+        const canvas = document.getElementById('productivityChart');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        
+        function getChartColors() {
+            const isDark = document.documentElement.classList.contains('dark');
+            return {
+                text: isDark ? '#9e9893' : '#706b67',
+                grid: isDark ? 'rgba(230,228,226,0.06)' : 'rgba(44,42,41,0.06)',
+                tooltipBg: isDark ? '#1c1b1a' : '#ffffff',
+                tooltipBorder: isDark ? '#2e2b29' : '#e6e2de'
+            };
+        }
+
+        let colors = getChartColors();
+
+        const labels = Array.from({length: 28}, (_, i) => {
+            const d = new Date(2025, 8, 1 + i);
+            return `${d.getDate()}/${d.getMonth() + 1}`;
         });
+
+        const data = {
+            labels,
+            datasets: [
+                { label: 'Work', data: [4,0,0,0,0,0,0,0,3,3,5,0,4,0,0,1,0,0,0,0,2,3,3,3,3,3,3,3], borderColor: '#FF5733', backgroundColor: '#FF5733', tension: 0.3, pointRadius: 4 },
+                { label: 'Completed', data: [2,0,0,0,0,0,0,0,1,1,4,0,2,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0], borderColor: '#33FF57', backgroundColor: '#33FF57', tension: 0.3, pointRadius: 4 },
+                { label: 'Pending', data: [2,0,0,0,0,0,0,0,2,2,1,0,2,0,0,0,0,0,0,0,1,3,3,3,3,3,3,3], borderColor: '#3357FF', backgroundColor: '#3357FF', tension: 0.3, pointRadius: 4 }
+            ].map(ds => ({ ...ds, fill: false, pointHoverRadius: 6 }))
+        };
+
+        const revealLoopPlugin = {
+            id: 'revealLoop',
+            afterInit(chart) {
+                chart._progress = 0;
+                chart._direction = 1;
+                chart._speed = 0.005;
+
+                const animate = () => {
+                    if (!chart.ctx) return;
+                    let p = chart._progress + (chart._direction * chart._speed);
+                    if (p >= 1) { p = 1; chart._direction = -1; }
+                    if (p <= 0) { p = 0; chart._direction = 1; }
+                    chart._progress = p;
+                    chart.update('none');
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            },
+            beforeDatasetDraw(chart, args) {
+                if (args.meta.type !== 'line') return;
+                const { ctx, chartArea } = chart;
+                const progress = chart._progress || 0;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(chartArea.left, chartArea.top, (chartArea.right - chartArea.left) * progress, chartArea.bottom - chartArea.top);
+                ctx.clip();
+            },
+            afterDatasetDraw(chart) {
+                if (chart.ctx?.restore) chart.ctx.restore();
+            }
+        };
+
+        let chartInstance = new Chart(ctx, {
+            type: 'line',
+            data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 0 },
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: colors.tooltipBg,
+                        titleColor: 'var(--color-text)',
+                        bodyColor: 'var(--color-text)',
+                        borderColor: colors.tooltipBorder,
+                        borderWidth: 1,
+                        padding: 10,
+                        bodyFont: { family: 'Plus Jakarta Sans' },
+                        titleFont: { family: 'Merriweather', weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: colors.text, font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: colors.grid } },
+                    y: { ticks: { color: colors.text, stepSize: 1, font: { size: 10, family: 'JetBrains Mono' } }, grid: { color: colors.grid }, beginAtZero: true, suggestedMax: 6 }
+                }
+            },
+            plugins: [revealLoopPlugin]
+        });
+
+        // Listen for theme transitions to update Chart.js colors
+        window.addEventListener('theme-changed', function(e) {
+            colors = getChartColors();
+            chartInstance.options.scales.x.ticks.color = colors.text;
+            chartInstance.options.scales.x.grid.color = colors.grid;
+            chartInstance.options.scales.y.ticks.color = colors.text;
+            chartInstance.options.scales.y.grid.color = colors.grid;
+            chartInstance.options.plugins.tooltip.backgroundColor = colors.tooltipBg;
+            chartInstance.options.plugins.tooltip.borderColor = colors.tooltipBorder;
+            chartInstance.update();
+        });
+    });
     </script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.querySelector('.login-form');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-
-    loginForm.addEventListener('submit', function(event) {
-        let valid = true;
-        let errorMessage = '';
-
-        // Check if username is empty
-        if (!usernameInput.value.trim()) {
-            valid = false;
-            errorMessage += 'Username is required.\n';
-        }
-
-        // Check if password is empty or too short
-        if (!passwordInput.value.trim()) {
-            valid = false;
-            errorMessage += 'Password is required.\n';
-        } else if (passwordInput.value.length < 6) {
-            valid = false;
-            errorMessage += 'Password must be at least 6 characters.\n';
-        }
-
-        if (!valid) {
-            event.preventDefault(); // Prevent form submission
-            alert(errorMessage); // Replace with a better UI feedback (e.g., error div)
-        }
-    });
-
-
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-
-    // Check for saved theme preference or default to light mode
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    if (currentTheme === 'dark') {
-        body.classList.add('dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    }
-
-    themeToggle.addEventListener('click', function() {
-        body.classList.toggle('dark');
-        const isDark = body.classList.contains('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-        // Toggle icon
-        if (isDark) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-
-    togglePassword.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const canvas = document.getElementById('productivityChart');
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  const isDark = document.body.classList.contains('dark');
-  const textColor = isDark ? '#e0e0e0' : '#333';
-  const gridColor = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-
-  const labels = Array.from({length: 28}, (_, i) => {
-    const d = new Date(2025, 8, 1 + i);
-    return `${d.getDate()}/${d.getMonth() + 1}`;
-  });
-
-  const data = {
-    labels,
-    datasets: [
-      { label: 'Work', data: [4,0,0,0,0,0,0,0,3,3,5,0,4,0,0,1,0,0,0,0,2,3,3,3,3,3,3,3], borderColor: '#FF5733', backgroundColor: '#FF5733', tension: 0.3, pointRadius: 6 },
-      { label: 'Completed', data: [2,0,0,0,0,0,0,0,1,1,4,0,2,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0], borderColor: '#33FF57', backgroundColor: '#33FF57', tension: 0.3, pointRadius: 6 },
-      { label: 'Pending', data: [2,0,0,0,0,0,0,0,2,2,1,0,2,0,0,0,0,0,0,0,1,3,3,3,3,3,3,3], borderColor: '#3357FF', backgroundColor: '#3357FF', tension: 0.3, pointRadius: 6 }
-    ].map(ds => ({ ...ds, fill: false, pointHoverRadius: 8 }))
-  };
-
-  const revealLoopPlugin = {
-    id: 'revealLoop',
-    afterInit(chart) {
-      chart._progress = 0;
-      chart._direction = 1;
-      chart._speed = 0.004;
-
-      const animate = () => {
-        let p = chart._progress + (chart._direction * chart._speed);
-        if (p >= 1) { p = 1; chart._direction = -1; }
-        if (p <= 0) { p = 0; chart._direction = 1; }
-        chart._progress = p;
-        chart.update('none');
-        requestAnimationFrame(animate);
-      };
-      animate();
-    },
-    beforeDatasetDraw(chart, args) {
-      if (args.meta.type !== 'line') return;
-      const { ctx, chartArea } = chart;
-      const progress = chart._progress || 0;
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(chartArea.left, chartArea.top, (chartArea.right - chartArea.left) * progress, chartArea.bottom - chartArea.top);
-      ctx.clip();
-    },
-    afterDatasetDraw(chart) {
-      if (chart.ctx?.restore) chart.ctx.restore();
-    }
-  };
-
-  new Chart(ctx, {
-    type: 'line',
-    data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      animation: { duration: 0 },
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: isDark ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,0.9)',
-          titleColor: textColor,
-          bodyColor: textColor,
-          borderColor: '#007bff',
-          borderWidth: 1
-        }
-      },
-      scales: {
-        x: { ticks: { color: textColor, font: { size: 12 } }, grid: { color: gridColor } },
-        y: { ticks: { color: textColor, stepSize: 1, font: { size: 12 } }, grid: { color: gridColor }, beginAtZero: true, suggestedMax: 6 }
-      }
-    },
-    plugins: [revealLoopPlugin]
-  });
-});
-</script>
-    </body>
+</body>
 </html>
