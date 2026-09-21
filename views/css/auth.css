@@ -76,7 +76,10 @@ body.dark .signup-form-container, body.dark .login-form-container {
     gap: var(--spacing-lg);
     text-align: left;
 }
-
+/* Example */
+.input {
+  color: black; /* e.g., #ffffff or #333333 */
+}
 .input-group {
     display: flex;
     flex-direction: column;

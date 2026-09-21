@@ -14,6 +14,8 @@ const sanitizeHtml = require('sanitize-html');
 const multer = require('multer');
 const crypto = require('crypto');
 require('dotenv').config();
+const dns = require('dns');
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 const User = require('./models/user.js');
 const NeersFriend = require('./models/neers-friend');
